@@ -8,7 +8,10 @@ template<typename K, typename V> ostream& operator<<(ostream& os, const pair<K, 
 template<typename T_container, typename T = typename enable_if<!is_same<T_container, string>::value, typename T_container::value_type>::type> ostream& operator<<(ostream &os, const T_container &v) {
     os << "\n{";
     string sep;
-    for (const T &x : v) os << sep << x, sep = ", ";
+    for (const T &x : v) {
+        os << sep << x;
+        sep = ", ";
+    }
     return os << '}';
 }
 
@@ -17,7 +20,11 @@ void debug_helper() {
 }
 
 template<typename Head, typename... Tail> void debug_helper(Head H, Tail... T) {
-    cerr << H; if (sizeof...(T)) cerr << ", "; debug_helper(T...);
+    cerr << H; 
+    if (sizeof...(T)) {
+        cerr << ", "; 
+    }
+    debug_helper(T...);
 }
 
 /*
@@ -26,7 +33,9 @@ template<typename T> void debug_container(string name, T begin, T end, int line_
     while (begin != end) {
         cerr << (*begin);
         ++begin;
-        if (begin != end) cerr << ", ";
+        if (begin != end) {
+            cerr << ", ";
+        }
     }
     cerr << "}" << endl;
 }
