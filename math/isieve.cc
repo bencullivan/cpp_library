@@ -1,5 +1,6 @@
 /*
     The sieve of Eratosthenes.
+    Generates every prime number less than or equal to N.
     Time: O(N)
     Source: https://www.geeksforgeeks.org/sieve-of-eratosthenes/
 */
