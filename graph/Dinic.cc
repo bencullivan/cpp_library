@@ -5,7 +5,7 @@
 */
 struct Dinic {
     vector<vector<int>> adj; // adj[i] is the list of indices of the out-edges of the ith vertex
-    vector<pair<int, int>> cut; // the edges that form the min cut
+    vector<pair<int, int>> cut; // the edges that form the min s-t cut
     vector<int> to; // to[i] is the vertex that the ith edge points to
     vector<long long> cap; // cap[i] is the capacity of the ith edge
     vector<int> level; // level[i] is the level of the ith vertex
@@ -13,7 +13,7 @@ struct Dinic {
     queue<int> q; // for bfs
     int source; // the source vertex
     int sink; // the sink vertex
-    long long mf = 0; // the value of the max flow
+    long long mf = 0; // the value of the max s-t flow
     const long long MAX_CAP = 5e18; // the maximum edge capacity
 
     // constructs a redisual network with no edges
@@ -81,7 +81,7 @@ struct Dinic {
         return 0;
     }
 
-    // finds the max flow from s to t
+    // finds the max s-t flow
     long long max_flow(int s, int t) {
         source = s;
         sink = t;
@@ -99,7 +99,7 @@ struct Dinic {
         return mf;
     }
 
-    // finds the min st cut
+    // finds the min s-t cut
     void min_cut() {
         bfs();
         for (int u = 0; u < (int) level.size(); u++) {
