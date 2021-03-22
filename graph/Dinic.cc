@@ -16,7 +16,7 @@ struct Dinic {
     long long mf = 0; // the value of the max flow
     const long long MAX_CAP = 5e18; // the maximum edge capacity
 
-    // constructs a redisual network with 0 edges
+    // constructs a redisual network with no edges
     Dinic(int _n) : adj(_n), level(_n), ptr(_n) {}
 
     // allocates space for _m/2 edges
@@ -42,7 +42,7 @@ struct Dinic {
         adj[v].push_back(cap.size() - 1);
     }
 
-    // finds the level of each vertex, beginning from the source
+    // finds the level of each reachable vertex, beginning from the source
     // returns whether the sink is reachable from the source
     bool bfs() {
         fill(level.begin(), level.end(), -1);

@@ -1,5 +1,5 @@
-// This is the code that is included on line 5 of the templates
-// source: neal (cf)
+// This is the code that is included on line 5 of the templates.
+// Source: neal (cf)
 
 template<typename K, typename V> ostream& operator<<(ostream& os, const pair<K, V>& p) {
     return os << "(" << p.first << ", " << p.second << ")";
