@@ -1,11 +1,11 @@
 /*
-    Disjoint set union.
+    Disjoint Set Union.
 */
-struct Dsu {
+struct DSU {
     std::vector<int> par; // par[i] is the parent vertex of vertex i or -1 if i is a head
     std::vector<int> sz; // sz[i] is the size of the set with head i
 
-    Dsu(int _n) : par(_n, -1), sz(_n, 1) {}
+    DSU(int _n) : par(_n, -1), sz(_n, 1) {}
 
     // returns the head of x's set (performs path compression)
     int find(int x) {
@@ -33,4 +33,4 @@ struct Dsu {
     int size(int x) {
         return sz[find(x)];
     }
-}; // Dsu
+}; // DSU
