@@ -5,20 +5,22 @@
         - build_Segtree: O(N)
         - upd: O(log(N))
         - get: O(log(N))
+    Source: https://cp-algorithms.com/data_structures/segment_tree.html
 */
 struct Segtree {
+    struct Node;
     vector<Node> data;
     int len;
 
-    Segtree(int _len) : len(_len), data(4 * _len) {}
+    Segtree(int _len) : data(4 * _len), len(_len) {}
 
-    Segtree(vector<Node>& input) : len(_input.size()), data(4 * input.size()) {
+    Segtree(vector<Node>& input) : data(4 * input.size()), len(input.size()) {
         build_Segtree(1, 0, len - 1, input);
     }
 
     void build_Segtree(int i, int tl, int tr, vector<Node>& input) {
-        if (left == right) {
-            data[i] = input[l];
+        if (tl == tr) {
+            data[i] = input[tl];
             return;
         }
         int tm = (tl + tr) >> 1;
@@ -55,7 +57,8 @@ struct Segtree {
             return data[i];
         }
         int tm = (tl + tr) >> 1;
-        return combine(get(i << 1, tl, tm, l, min(tm, r)), get(i << 1 | 1, tm + 1, tr, max(tm + 1, l), r));
+        return combine(get(i << 1, tl, tm, l, min(tm, r)), 
+                       get(i << 1 | 1, tm + 1, tr, max(tm + 1, l), r));
     }
 
     // queries the segment [l, r]
