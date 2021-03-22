@@ -12,8 +12,8 @@
 */
 template<typename T> 
 struct Fenwick2d {
-    int N, M;
     vector<vector<T>> data;
+    int N, M;
 
     Fenwick2d(int _N, int _M) : N(_N), M(_M), data(_N + 1, vector<T>(_M + 1)) {}
 

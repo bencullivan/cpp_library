@@ -8,8 +8,8 @@
 */
 template<typename T> 
 struct FArray {
-    int len;
     vector<T> data;
+    int len;
 
     FArray(int _len) {
         len = compute_pow(_len);
