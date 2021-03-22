@@ -66,14 +66,14 @@ struct Lazy {
         assign_push(i);
         int tm = (tl + tr) >> 1;
         assign_upd(i << 1, tl, tm, l, min(tm, r), v);
-        assign_upd(i << 1 | 1, tm + 1, tr, max(tl, tm + 1), r, v);
+        assign_upd(i << 1 | 1, tm + 1, tr, max(tm + 1, l), r, v);
         data[i] = combine(data[i << 1], data[i << 1 | 1]);
     }
 
     // combines v with the elements in the range [l, r]
     void combine_upd(int i, int tl, int tr, int l, int r, Node v) {
-        if (tl == l && tr == r) {
-
+        if (l > r) {
+            return;
         } else if (tl == x && tr == x) {
             data[i] = v;
             return;
@@ -81,14 +81,18 @@ struct Lazy {
         combine_push(i);
         int tm = (tl + tr) >> 1;
         combine_upd(i << 1, tl, tm, l, min(tm, r), v);
-        combine_upd(i << 1 | 1, tm + 1, tr, max(tl, tm + 1), r, v);
+        combine_upd(i << 1 | 1, tm + 1, tr, max(tm + 1, l), r, v);
         data[i] = combine(data[i << 1], data[i << 1 | 1]);
         data[i] = combine(data[i << 1], data[i << 1 | 1]);
     }
 
     // updates the range [l, r]
     void upd(int l, int r, Node v) {
-        return assign ? assign_upd(1, 0, len - 1, l, r, v) : combine_upd(1, 0, len - 1, l, r, v);
+        if (assign) {
+            assign_upd(1, 0, len - 1, l, r, v);
+        } else {
+            combine_upd(1, 0, len - 1, l, r, v);
+        }
     }
 
     // queries the range [l, r]
@@ -101,7 +105,7 @@ struct Lazy {
         assign_push(i);
         int tm = (tl + tr) >> 1;
         return combine(assign_get(i << 1, tl, tm, l, min(tm, r), v), 
-                       assign_get(i << 1 | 1, tm + 1, tr, max(tl, tm + 1), r, v));
+                       assign_get(i << 1 | 1, tm + 1, tr, max(tm + 1, l), r, v));
     }
 
     // queries the range [l, r]
@@ -114,12 +118,16 @@ struct Lazy {
         combine_push(i);
         int tm = (tl + tr) >> 1;
         return combine(combine_get(i << 1, tl, tm, l, min(tm, r), v), 
-                       combine_get(i << 1 | 1, tm + 1, tr, max(tl, tm + 1), r, v));
+                       combine_get(i << 1 | 1, tm + 1, tr, max(tm + 1, l), r, v));
     }
 
     // queries the range [l, r]
     Node get(int l, int r) {
-        return assign ? assign_get(1, 0, len - 1, l, r) : combine_get(1, 0, len - 1, l, r);
+        if (assign) {
+            return assign_get(1, 0, len - 1, l, r);
+        } else {
+            return combine_get(1, 0, len - 1, l, r);
+        }
     }
 
 // --------------------------------------

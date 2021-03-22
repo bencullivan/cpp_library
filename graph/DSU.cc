@@ -12,7 +12,11 @@ struct DSU {
 
     // returns the head of x's set (performs path compression)
     int find(int x) {
-        return par[x] < 0 ? x : par[x] = find(par[x]);
+        if (par[x] < 0) {
+            return x;
+        } else {
+            return par[x] = find(par[x]);
+        }
     }
 
     // returns whether x and y are in the same set
