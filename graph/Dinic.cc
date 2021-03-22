@@ -62,6 +62,7 @@ struct Dinic {
     }
 
     // attempts to push 'push_flow' units of flow from vertex u toward the sink i.e. up a level
+    // returns the number of units that were pushed
     long long dfs(int u, long long push_flow) {
         if (u == sink || push_flow == 0) {
             return push_flow;
