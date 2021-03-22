@@ -70,7 +70,7 @@ struct Segtree {
         Node() {
             // init default values
         }
-    }
+    };
     Node combine(const Node& a, const Node& b) {
 
     }
