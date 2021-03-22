@@ -1,5 +1,5 @@
 /*
-    1D Prefix sums and point updates in O(log(n)).
+    1D Prefix sums and point updates in O(log(N)).
     1-indexed.
 */
 template<typename T>
