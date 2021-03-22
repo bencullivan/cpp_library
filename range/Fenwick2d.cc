@@ -1,9 +1,9 @@
 /*
-    2D Fenwick tree for rectangular sum queries on a 2D matrix.
+    2D Fenwick tree for rectangular sum queries and point updates on a 2D matrix.
     1-indexed.
     Time: 
         - build_Fenwick2d: O(N*M*log(N*M))
-        - update: O(log(N*M))
+        - upd: O(log(N*M))
         - get: O(log(N*M))
     Sources:
         - https://cp-algorithms.com/data_structures/fenwick.html
@@ -25,32 +25,32 @@ struct Fenwick2d {
     void build_Fenwick2d(vector<vector<T>>& input) {
         for (int i = 1; i <= N; i++) {
             for (int j = 1; j <= M; j++) {
-                update(i, j, input[i - 1][j - 1]);
+                upd(i, j, input[i - 1][j - 1]);
             }
         }
     }
 
-    // add value to the element at (x, y)
-    void update(int a, int b, T value) {
-        for (int i = a; i <= N; i += (i & -i)) {
-            for (int j = b; j <= M; j += (j & -j)) {
+    // adds value to the element at (x, y)
+    void upd(int a, int b, T value) {
+        for (int i = a; i <= N; i += i & -i) {
+            for (int j = b; j <= M; j += j & -j) {
                 data[i][j] += value;
             }
         }
     }
 
-    // get the sum of the rectangle with top left corner (1, 1) and bottom right corner (a, b)
+    // gets the sum of the rectangle with top left corner (1, 1) and bottom right corner (a, b)
     T get(int a, int b) {
         T sum = 0;
-        for (int i = a; i > 0; i -= (i & -i)) {
-            for (int j = b; j > 0; j -= (j & -j)) {
+        for (int i = a; i > 0; i -= i & -i) {
+            for (int j = b; j > 0; j -= j & -j) {
                 sum += data[i][j];
             }
         }
         return sum;
     }
 
-    // get the sum of the rectangle with top left corner (a, b) and bottom right corner (c, d)
+    // gets the sum of the rectangle with top left corner (a, b) and bottom right corner (c, d)
     T get(int a, int b, int c, int d) {
         return get(c, d) - get(c, b - 1) - get(a - 1, d) + get(a - 1, b - 1);
     }
