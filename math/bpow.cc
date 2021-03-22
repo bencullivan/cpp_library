@@ -1,4 +1,7 @@
-// a to the b mod m
+/*
+    a^b % m
+    Time: O(log(b))
+*/
 long long bpow(long long a, long long b, long long m) {
     long long r = 1;
     while (b > 0) {
