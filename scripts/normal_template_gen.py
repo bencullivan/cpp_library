@@ -9,4 +9,3 @@ for i in range(2, len(sys.argv)):
         with open(os.path.join(folder_path, sys.argv[i] + '.cc'), 'w') as destination_file:
             for line in template_file:
                 destination_file.write(line)
-

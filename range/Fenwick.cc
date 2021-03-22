@@ -1,16 +1,17 @@
 /*
-    1D Prefix sums and point updates in O(log(N)).
+    1D Prefix sums and point updates.
     1-indexed.
+    Time:
+        - upd: O(log(N))
+        - get: O(log(N))
 */
 template<typename T>
 struct Fenwick {
     vector<T> data;
     int len;
 
-    // constructs a Fenwick tree of length _len with every element equal to 0
     Fenwick(int _len) : data(_len+1), len(_len + 1) {}
 
-    // constructs a Fenwick tree with the elements initialized to the elements of input
     Fenwick(vector<T>& input) : data(input.size() + 1), len((int) input.size() + 1) {
         for (int i = 1; i < len; i++) {
             upd(i, input[i - 1]);

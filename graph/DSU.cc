@@ -1,5 +1,8 @@
 /*
     Disjoint Set Union.
+    Time:
+        all operations: O(\alpha(N)) (amortized)
+                        \alpha(N) will not exceed 4
 */
 struct DSU {
     std::vector<int> par; // par[i] is the parent vertex of vertex i or -1 if i is a head

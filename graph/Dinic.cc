@@ -1,6 +1,7 @@
 /*
     Max flow using Dinic's algorithm.
-    O(E*V^2)
+    Time:
+        - O(E*V^2)
     Source: https://cp-algorithms.com/graph/dinic.html
 */
 struct Dinic {
