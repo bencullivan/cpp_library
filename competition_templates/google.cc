@@ -11,11 +11,10 @@ void solve() {
     
 }
 int main() {
-    ios_base::sync_with_stdio(0);
-    cin.tie(0);
-    int cases;
-    cin >> cases;
-    for (int case_num = 1; case_num <= cases; case_num++) {
+    ios_base::sync_with_stdio(0), cin.tie(0);
+    int tt;
+    cin >> tt;
+    for (int case_num = 1; case_num <= tt; case_num++) {
         cout << "Case #" << case_num << ": ";
         solve();
     }
