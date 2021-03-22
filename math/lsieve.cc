@@ -5,18 +5,20 @@
     Source: https://www.geeksforgeeks.org/sieve-of-eratosthenes/
 */
 vector<long long> primes;
+vector<long long> spf; // smallest prime factor
+vector<bool> is_prime;
 void sieve(long long N) {
-    vector<bool> is_prime(N + 1, true);
-    vector<long long> smallest_prime_factor(N + 1);
+    is_prime.resize(N + 1, true);
+    spf.resize(N + 1);
     is_prime[0] = is_prime[1] = false;
     for (long long i = 2; i <= N; i++) {
         if (is_prime[i]) {
-            smallest_prime_factor[i] = i;
+            spf[i] = i;
             primes.push_back(i);
         }
-        for (long long j = 0; j < (long long) primes.size() && primes[j] <= smallest_prime_factor[i] && i * primes[j] <= N; j++) {
+        for (long long j = 0; j < (long long) primes.size() && primes[j] <= spf[i] && i * primes[j] <= N; j++) {
             is_prime[i * primes[j]] = false;
-            smallest_prime_factor[i * primes[j]] = primes[j];
+            spf[i * primes[j]] = primes[j];
         }
     }
 }
