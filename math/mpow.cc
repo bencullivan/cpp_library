@@ -2,7 +2,7 @@
     a^b % m
     Time: O(log(b))
 */
-long long bpow(long long a, long long b, long long m) {
+long long mpow(long long a, long long b, long long m) {
     long long r = 1;
     while (b > 0) {
         if (b & 1) r = (r * a) % m;
