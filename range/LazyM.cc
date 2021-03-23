@@ -100,11 +100,11 @@ struct LazyM {
     // CHANGE
     struct Lazy {
         int op = 0; // the lazy operation type (0 means no operation)
-        ll v = -5e18;
+        long long v = -5e18;
     };
     struct Node {
         Lazy lazy;
-        ll v = -5e18;
+        long long v = -5e18;
     };
     Node combine(const Node& a, const Node& b) {
         // the function with which two nodes are combined during queries

@@ -76,7 +76,7 @@ struct Segtree {
 // --------------------------------------
     // CHANGE
     struct Node {
-        ll v = 0;
+        long long v = 0;
     };
     Node combine(const Node& a, const Node& b) {
         return {a.v + b.v};
