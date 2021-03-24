@@ -43,7 +43,7 @@ template<typename T> void debug_container(std::string name, T begin, T end, int 
             std::cerr << ", ";
         }
     }
-    std::cerr << "}" << endl;
+    std::cerr << "}" << std::endl;
 }
 */
 
