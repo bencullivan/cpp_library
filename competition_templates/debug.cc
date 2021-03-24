@@ -1,17 +1,31 @@
-// This is the code that is included on line 5 of the templates.
+// This code is included in all the files that I compile with g++ to enable easy debugging.
+// The compilation function that I use:
+// function com() {
+//     g++-10 -arch x86_64 -std=gnu++17 -O2 -Wall -D LOL_DEBUG=1 -include /Users/bencullivan/documents/CppLibrary/competition_templates/debug.cc $1".cc" && ./a.out
+// }
+// ex:
+// com normal
+
+
+#include <iostream>
+#include <type_traits>
+#include <utility>
+#include <string>
+#include <assert.h>
+
 
 // stl pair
 template<typename K, typename V>
-ostream& operator<<(ostream& os, const pair<K, V>& p) {
+std::ostream& operator<<(std::ostream& os, const std::pair<K, V>& p) {
     return os << "(" << p.first << ", " << p.second << ")";
 }
 
 // any type of stl container
 // Source: neal (cf)
-template<typename T_container, typename T = typename enable_if<!is_same<T_container, string>::value, typename T_container::value_type>::type>
-ostream& operator<<(ostream &os, const T_container &v) {
+template<typename T_container, typename T = typename std::enable_if<!std::is_same<T_container, std::string>::value, typename T_container::value_type>::type>
+std::ostream& operator<<(std::ostream &os, const T_container &v) {
     os << "\n{";
-    string sep;
+    std::string sep;
     for (const T &x : v) {
         os << sep << x;
         sep = ", ";
@@ -19,34 +33,36 @@ ostream& operator<<(ostream &os, const T_container &v) {
     return os << '}';
 }
 
+/*
+template<typename T> void debug_container(std::string name, T begin, T end, int line_num) {
+    std::cerr << line_num << ": " << name << " = {";
+    while (begin != end) {
+        std::cerr << (*begin);
+        ++begin;
+        if (begin != end) {
+            std::cerr << ", ";
+        }
+    }
+    std::cerr << "}" << endl;
+}
+*/
+
+
 void debug_helper() {
-    cerr << endl;
+    std::cerr << std::endl;
 }
 
 template<typename Head, typename... Tail>
 void debug_helper(Head H, Tail... T) {
-    cerr << H; 
+    std::cerr << H;
     if (sizeof...(T)) {
-        cerr << ", "; 
+        std::cerr << ", "; 
     }
     debug_helper(T...);
 }
 
-/*
-template<typename T> void debug_container(string name, T begin, T end, int line_num) {
-    cerr << line_num << ": " << name << " = {";
-    while (begin != end) {
-        cerr << (*begin);
-        ++begin;
-        if (begin != end) {
-            cerr << ", ";
-        }
-    }
-    cerr << "}" << endl;
-}
-*/
-
 // Source: neal (cf)
-#define dbg(...) cout << __LINE__ << " [" << #__VA_ARGS__ << "]: ", debug_helper(__VA_ARGS__)
+#define dbg(...) std::cerr << __LINE__ << " [" << #__VA_ARGS__ << "]: ", debug_helper(__VA_ARGS__)
+
 //#define dbc(container) debug_container(#container, (container).begin(), (container).end(), __LINE__)
 //#define dbci(star,ende) debug_container(#star, star, ende, __LINE__)

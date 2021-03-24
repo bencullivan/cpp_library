@@ -1,11 +1,9 @@
 #include <bits/stdc++.h>
-using namespace std;
-using ll = long long;
-#ifdef LOL_DEBUG
-#include debug_path
-#else
+#ifndef LOL_DEBUG
 #define dbg(...) 101
 #endif
+using namespace std;
+using ll = long long;
 const char df = '\n';
 void solve() {
     
