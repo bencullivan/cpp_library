@@ -25,8 +25,7 @@ void debug_helper() {
 
 template<typename Head, typename... Tail>
 void debug_helper(Head H, Tail... T) {
-    if (is_array<H>::value) output_array(H);
-    else cerr << H; 
+    cerr << H; 
     if (sizeof...(T)) {
         cerr << ", "; 
     }

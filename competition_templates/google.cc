@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 using ll = long long;
-#ifdef IL_MIO_PORTATILE
+#ifdef LOL_DEBUG
 #include debug_path
 #else
 #define dbg(...) 101
