@@ -60,34 +60,34 @@ std::ostream& operator<<(std::ostream &os, const T_container &v) {
 
 /*
 template<typename T> void debug_container(std::string name, T begin, T end, int line_num) {
-    std::cerr << line_num << ": " << name << " = {";
+    std::cout << line_num << ": " << name << " = {";
     while (begin != end) {
-        std::cerr << (*begin);
+        std::cout << (*begin);
         ++begin;
         if (begin != end) {
-            std::cerr << ", ";
+            std::cout << ", ";
         }
     }
-    std::cerr << "}" << std::endl;
+    std::cout << "}" << std::endl;
 }
 */
 
 
 void debug_helper() {
-    std::cerr << RESET << std::endl;
+    std::cout << RESET << std::endl;
 }
 
 template<typename Head, typename... Tail>
 void debug_helper(Head H, Tail... T) {
-    std::cerr << H;
+    std::cout << H;
     if (sizeof...(T)) {
-        std::cerr << ", "; 
+        std::cout << ", "; 
     }
     debug_helper(T...);
 }
 
 // Source: neal (cf)
-#define dbg(...) std::cerr << GREEN << __LINE__ << " [" << #__VA_ARGS__ << "]: ", debug_helper(__VA_ARGS__)
+#define dbg(...) std::cout << GREEN << __LINE__ << " [" << #__VA_ARGS__ << "]: ", debug_helper(__VA_ARGS__)
 //#define dbc(container) debug_container(#container, (container).begin(), (container).end(), __LINE__)
 //#define dbci(star,ende) debug_container(#star, star, ende, __LINE__)
 
