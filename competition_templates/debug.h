@@ -1,10 +1,14 @@
 // This code is included in all the files that I compile with g++ to enable easy debugging.
 // The compilation function that I use:
 // function com() {
-//     g++-10 -arch x86_64 -std=gnu++17 -O2 -Wall -D LOL_DEBUG=1 -include /Users/bencullivan/documents/CppLibrary/competition_templates/debug.cc $1".cc" && ./a.out
+//     g++-10 -arch x86_64 -std=gnu++17 -O2 -Wall -include /Users/bencullivan/documents/CppLibrary/competition_templates/debug.cc $1".cc" && ./a.out
 // }
 // ex:
 // com normal
+
+
+#ifndef LOL_DEBUG
+#define LOL_DEBUG
 
 
 #include <iostream>
@@ -66,3 +70,6 @@ void debug_helper(Head H, Tail... T) {
 
 //#define dbc(container) debug_container(#container, (container).begin(), (container).end(), __LINE__)
 //#define dbci(star,ende) debug_container(#star, star, ende, __LINE__)
+
+
+#endif
