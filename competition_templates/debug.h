@@ -18,6 +18,27 @@
 #include <assert.h>
 
 
+// the following are UBUNTU/LINUX, and MacOS ONLY terminal color codes.
+// Source: https://stackoverflow.com/questions/9158150/colored-output-in-c/9158263
+#define RESET   "\033[0m"
+#define BLACK   "\033[30m"
+#define RED     "\033[31m"
+#define GREEN   "\033[32m"
+#define YELLOW  "\033[33m"
+#define BLUE    "\033[34m"
+#define MAGENTA "\033[35m"
+#define CYAN    "\033[36m"
+#define WHITE   "\033[37m"
+#define BOLDBLACK   "\033[1m\033[30m"
+#define BOLDRED     "\033[1m\033[31m"
+#define BOLDGREEN   "\033[1m\033[32m"
+#define BOLDYELLOW  "\033[1m\033[33m"
+#define BOLDBLUE    "\033[1m\033[34m"
+#define BOLDMAGENTA "\033[1m\033[35m"
+#define BOLDCYAN    "\033[1m\033[36m"
+#define BOLDWHITE   "\033[1m\033[37m"
+
+
 // stl pair
 template<typename K, typename V>
 std::ostream& operator<<(std::ostream& os, const std::pair<K, V>& p) {
@@ -53,7 +74,7 @@ template<typename T> void debug_container(std::string name, T begin, T end, int 
 
 
 void debug_helper() {
-    std::cerr << std::endl;
+    std::cerr << RESET << std::endl;
 }
 
 template<typename Head, typename... Tail>
@@ -66,8 +87,7 @@ void debug_helper(Head H, Tail... T) {
 }
 
 // Source: neal (cf)
-#define dbg(...) std::cerr << __LINE__ << " [" << #__VA_ARGS__ << "]: ", debug_helper(__VA_ARGS__)
-
+#define dbg(...) std::cerr << GREEN << __LINE__ << " [" << #__VA_ARGS__ << "]: ", debug_helper(__VA_ARGS__)
 //#define dbc(container) debug_container(#container, (container).begin(), (container).end(), __LINE__)
 //#define dbci(star,ende) debug_container(#star, star, ende, __LINE__)
 

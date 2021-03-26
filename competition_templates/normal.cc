@@ -7,7 +7,11 @@ using ll = long long;
 const char df = '\n';
 
 void solve() {
-    
+    string s = "hi";
+    string t = "ay";
+    dbg(s);
+    cout << "hey" << df;
+    dbg(t);
 }
 
 int main() {
