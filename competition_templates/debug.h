@@ -72,4 +72,5 @@ void debug_helper(Head H, Tail... T) {
 //#define dbci(star,ende) debug_container(#star, star, ende, __LINE__)
 
 
+//#ifndef LOL_DEBUG
 #endif
