@@ -7,7 +7,7 @@ using ll = long long;
 const char df = '\n';
 
 void solve() {
-
+    
 }
 
 int main() {
