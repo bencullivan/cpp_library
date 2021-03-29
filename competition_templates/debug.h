@@ -99,10 +99,10 @@ long long _arr_dims[10];
 
 void fill_arr_dims() {}
 
-template<typename H, typename... T>
-void fill_arr_dims(H h, T... t) {
-    _arr_dims[_n_dims++] = (long long) h;
-    fill_arr_dims(t...);
+template<typename Head, typename... Tail>
+void fill_arr_dims(Head H, Tail... T) {
+    _arr_dims[_n_dims++] = (long long) H;
+    fill_arr_dims(T...);
 }
 
 // 1d array
