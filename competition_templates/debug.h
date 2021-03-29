@@ -144,7 +144,7 @@ void fill_arr_dims(H h, T... t) {
 
 /*
 // 4d array
-#define dba4(_arr,...) std::cout << GREEN << __LINE__ << " [" << #_arr << "]: \n{"; _n_dims = 0; fill_arr_dims(__VA_ARGS__); \
+#define dba4(_arr,...) std::cout << MAGENTA << __LINE__ << " [" << #_arr << "]:" << GREEN << "\n{"; _n_dims = 0; fill_arr_dims(__VA_ARGS__); \
     for (long long _i = 0; _i < _arr_dims[0]; _i++) { \
         std::cout << "\n{"; \
         for (long long _j = 0; _j < _arr_dims[1]; _j++) { \
