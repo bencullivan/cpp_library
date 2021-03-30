@@ -8,15 +8,17 @@
 using namespace std;
 using ll = long long;
 const char df = '\n';
+#define MULTIPLE_TESTS 1
 
 void solve() {
-    
 }
 
 int main() {
     ios_base::sync_with_stdio(0), cin.tie(0);
     int tt = 1;
+#if MULTIPLE_TESTS
     cin >> tt;
+#endif
     for (int i = 1; i <= tt; i++) {
         cout << "Case #" << i << ": ";
         solve();
