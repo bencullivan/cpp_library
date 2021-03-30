@@ -11,7 +11,6 @@ const char df = '\n';
 #define MULTIPLE_TESTS 1
 
 void solve() {
-    
 }
 
 int main() {
