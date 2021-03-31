@@ -8,7 +8,7 @@
 using namespace std;
 using ll = long long;
 const char df = '\n';
-#define MULTIPLE_TESTS 1
+const bool multi = 1;
 
 void solve() {
 }
@@ -16,13 +16,9 @@ void solve() {
 int main() {
     ios_base::sync_with_stdio(0), cin.tie(0);
 
-#if MULTIPLE_TESTS
-    int tt;
-    cin >> tt;
+    int tt = 1;
+    if (multi) cin >> tt;
     for (int i = 0; i < tt; i++) solve();
-#else
-    solve();
-#endif
 
     return 0;
 }
