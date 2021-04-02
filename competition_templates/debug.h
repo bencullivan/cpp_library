@@ -100,7 +100,7 @@ void fill_arr_dims(Head H, Tail... T) {
 }
 
 // 1d array
-#define dbg1(_arr,...) std::cout << MAGENTA << __LINE__ << " [" << #_arr << "]:" << GREEN << "\n{"; _n_dims = 0; fill_arr_dims(__VA_ARGS__); \
+#define dba1(_arr,...) std::cout << MAGENTA << __LINE__ << " [" << #_arr << "]:" << GREEN << "\n{"; _n_dims = 0; fill_arr_dims(__VA_ARGS__); \
     for (long long _i = 0; _i < _arr_dims[0]; _i++) { \
         std::cout << _arr[_i]; \
         if (_i < _arr_dims[0]-1) std::cout << ", "; \
@@ -108,7 +108,7 @@ void fill_arr_dims(Head H, Tail... T) {
     std::cout << "}" << RESET << endl;
 
 // 2d array
-#define dbg2(_arr,...) std::cout << MAGENTA << __LINE__ << " [" << #_arr << "]:" << GREEN << "\n{"; _n_dims = 0; fill_arr_dims(__VA_ARGS__); \
+#define dba2(_arr,...) std::cout << MAGENTA << __LINE__ << " [" << #_arr << "]:" << GREEN << "\n{"; _n_dims = 0; fill_arr_dims(__VA_ARGS__); \
     for (long long _i = 0; _i < _arr_dims[0]; _i++) { \
         std::cout << "\n{"; \
         for (long long _j = 0; _j < _arr_dims[1]; _j++) { \
@@ -120,7 +120,7 @@ void fill_arr_dims(Head H, Tail... T) {
     std::cout << "}" << RESET << std::endl;
 
 // 3d array
-#define dbg3(_arr,...) std::cout << MAGENTA << __LINE__ << " [" << #_arr << "]:" << GREEN << "\n{"; _n_dims = 0; fill_arr_dims(__VA_ARGS__); \
+#define dba3(_arr,...) std::cout << MAGENTA << __LINE__ << " [" << #_arr << "]:" << GREEN << "\n{"; _n_dims = 0; fill_arr_dims(__VA_ARGS__); \
     for (long long _i = 0; _i < _arr_dims[0]; _i++) { \
         std::cout << "\n{"; \
         for (long long _j = 0; _j < _arr_dims[1]; _j++) { \
@@ -138,7 +138,7 @@ void fill_arr_dims(Head H, Tail... T) {
 
 /*
 // 4d array
-#define dbg4(_arr,...) std::cout << MAGENTA << __LINE__ << " [" << #_arr << "]:" << GREEN << "\n{"; _n_dims = 0; fill_arr_dims(__VA_ARGS__); \
+#define dba4(_arr,...) std::cout << MAGENTA << __LINE__ << " [" << #_arr << "]:" << GREEN << "\n{"; _n_dims = 0; fill_arr_dims(__VA_ARGS__); \
     for (long long _i = 0; _i < _arr_dims[0]; _i++) { \
         std::cout << "\n{"; \
         for (long long _j = 0; _j < _arr_dims[1]; _j++) { \
