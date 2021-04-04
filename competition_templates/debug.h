@@ -56,33 +56,33 @@ std::ostream& operator<<(std::ostream &os, const T_container &v) {
 
 /*
 template<typename T> void debug_container(std::string name, T begin, T end, int line_num) {
-    std::cout << line_num << ": " << name << " = {";
+    std::cerr << line_num << ": " << name << " = {";
     while (begin != end) {
-        std::cout << (*begin);
+        std::cerr << (*begin);
         ++begin;
         if (begin != end) {
-            std::cout << ", ";
+            std::cerr << ", ";
         }
     }
-    std::cout << "}" << std::endl;
+    std::cerr << "}" << std::endl;
 }
 */
 
 void debug_helper() {
-    std::cout << RESET << std::endl;
+    std::cerr << RESET << std::endl;
 }
 
 template<typename Head, typename... Tail>
 void debug_helper(Head H, Tail... T) {
-    std::cout << H;
+    std::cerr << H;
     if (sizeof...(T)) {
-        std::cout << ", "; 
+        std::cerr << ", "; 
     }
     debug_helper(T...);
 }
 
 // Source: neal (cf)
-#define dbg(...) std::cout << MAGENTA << __LINE__ << " [" << #__VA_ARGS__ << "]: " << GREEN, debug_helper(__VA_ARGS__)
+#define dbg(...) std::cerr << MAGENTA << __LINE__ << " [" << #__VA_ARGS__ << "]: " << GREEN, debug_helper(__VA_ARGS__)
 //#define dbc(container) debug_container(#container, (container).begin(), (container).end(), __LINE__)
 //#define dbci(star,ende) debug_container(#star, star, ende, __LINE__)
 
@@ -100,63 +100,63 @@ void fill_arr_dims(Head H, Tail... T) {
 }
 
 // 1d array
-#define dba1(_arr,...) std::cout << MAGENTA << __LINE__ << " [" << #_arr << "]:" << GREEN << "\n{"; _n_dims = 0; fill_arr_dims(__VA_ARGS__); \
+#define dba1(_arr,...) std::cerr << MAGENTA << __LINE__ << " [" << #_arr << "]:" << GREEN << "\n{"; _n_dims = 0; fill_arr_dims(__VA_ARGS__); \
     for (long long _i = 0; _i < _arr_dims[0]; _i++) { \
-        std::cout << _arr[_i]; \
-        if (_i < _arr_dims[0]-1) std::cout << ", "; \
+        std::cerr << _arr[_i]; \
+        if (_i < _arr_dims[0]-1) std::cerr << ", "; \
     } \
-    std::cout << "}" << RESET << endl;
+    std::cerr << "}" << RESET << endl;
 
 // 2d array
-#define dba2(_arr,...) std::cout << MAGENTA << __LINE__ << " [" << #_arr << "]:" << GREEN << "\n{"; _n_dims = 0; fill_arr_dims(__VA_ARGS__); \
+#define dba2(_arr,...) std::cerr << MAGENTA << __LINE__ << " [" << #_arr << "]:" << GREEN << "\n{"; _n_dims = 0; fill_arr_dims(__VA_ARGS__); \
     for (long long _i = 0; _i < _arr_dims[0]; _i++) { \
-        std::cout << "\n{"; \
+        std::cerr << "\n{"; \
         for (long long _j = 0; _j < _arr_dims[1]; _j++) { \
-            std::cout << _arr[_i][_j]; \
-            if (_j < _arr_dims[1]-1) std::cout << ", "; \
+            std::cerr << _arr[_i][_j]; \
+            if (_j < _arr_dims[1]-1) std::cerr << ", "; \
         } \
-        std::cout << "},"; \
+        std::cerr << "},"; \
     } \
-    std::cout << "}" << RESET << std::endl;
+    std::cerr << "}" << RESET << std::endl;
 
 // 3d array
-#define dba3(_arr,...) std::cout << MAGENTA << __LINE__ << " [" << #_arr << "]:" << GREEN << "\n{"; _n_dims = 0; fill_arr_dims(__VA_ARGS__); \
+#define dba3(_arr,...) std::cerr << MAGENTA << __LINE__ << " [" << #_arr << "]:" << GREEN << "\n{"; _n_dims = 0; fill_arr_dims(__VA_ARGS__); \
     for (long long _i = 0; _i < _arr_dims[0]; _i++) { \
-        std::cout << "\n{"; \
+        std::cerr << "\n{"; \
         for (long long _j = 0; _j < _arr_dims[1]; _j++) { \
-            std::cout << "{"; \
+            std::cerr << "{"; \
             for (long long _k = 0; _k < _arr_dims[2]; _k++) { \
-                std::cout << _arr[_i][_j][_k]; \
-                if (_k < _arr_dims[2]-1) std::cout << ", "; \
+                std::cerr << _arr[_i][_j][_k]; \
+                if (_k < _arr_dims[2]-1) std::cerr << ", "; \
             } \
-            std::cout << "}"; \
-            if (_j < _arr_dims[1]-1) std::cout << ", "; \
+            std::cerr << "}"; \
+            if (_j < _arr_dims[1]-1) std::cerr << ", "; \
         } \
-        std::cout << "},"; \
+        std::cerr << "},"; \
     } \
-    std::cout << "}" << RESET << std::endl;
+    std::cerr << "}" << RESET << std::endl;
 
 /*
 // 4d array
-#define dba4(_arr,...) std::cout << MAGENTA << __LINE__ << " [" << #_arr << "]:" << GREEN << "\n{"; _n_dims = 0; fill_arr_dims(__VA_ARGS__); \
+#define dba4(_arr,...) std::cerr << MAGENTA << __LINE__ << " [" << #_arr << "]:" << GREEN << "\n{"; _n_dims = 0; fill_arr_dims(__VA_ARGS__); \
     for (long long _i = 0; _i < _arr_dims[0]; _i++) { \
-        std::cout << "\n{"; \
+        std::cerr << "\n{"; \
         for (long long _j = 0; _j < _arr_dims[1]; _j++) { \
-            std::cout << "\n{"; \
+            std::cerr << "\n{"; \
             for (long long _k = 0; _k < _arr_dims[2]; _k++) { \
-                std::cout << "{"; \
+                std::cerr << "{"; \
                 for (long long _l = 0; _l < _arr_dims[3]; _l++) { \
-                    std::cout << _arr[_i][_j][_k][_l]; \
-                    if (_l < _arr_dims[3]-1) std::cout << ", "; \
+                    std::cerr << _arr[_i][_j][_k][_l]; \
+                    if (_l < _arr_dims[3]-1) std::cerr << ", "; \
                 } \
-                std::cout << "}"; \
-                if (_k < _arr_dims[2]-1) std::cout << ", "; \
+                std::cerr << "}"; \
+                if (_k < _arr_dims[2]-1) std::cerr << ", "; \
             } \
-            std::cout << "},"; \
+            std::cerr << "},"; \
         } \
-        std::cout << "},"; \
+        std::cerr << "},"; \
     } \
-    std::cout << "}" << RESET << std::endl;
+    std::cerr << "}" << RESET << std::endl;
 */
 
 #endif // LOL_DEBUG
