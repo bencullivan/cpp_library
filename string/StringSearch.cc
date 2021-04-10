@@ -130,4 +130,4 @@ struct StringSearch {
             }
         }
     }
-}; // StringSearch (String Search)
+}; // StringSearch
