@@ -5,7 +5,7 @@
     Source: https://www.geeksforgeeks.org/sieve-of-eratosthenes/
 */
 vector<long long> primes;
-vector<long long> spf; // smallest prime factor
+vector<long long> spf;
 vector<bool> is_prime;
 void sieve(long long N) {
     is_prime.resize(N + 1, true);

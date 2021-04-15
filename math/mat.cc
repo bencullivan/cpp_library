@@ -1,5 +1,5 @@
 template<typename T>
-using matrix = vector<vector<T>>
+using matrix = vector<vector<T>>;
 
 template<typename T>
 matrix<T> mat_mult(matrix<T>& mat1, matrix<T>& mat2) {
