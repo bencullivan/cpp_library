@@ -83,4 +83,3 @@ struct Segtree {
     }
 // --------------------------------------
 }; // Segtree
-using Node = Segtree::Node;

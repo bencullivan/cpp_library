@@ -130,5 +130,3 @@ struct LazyS {
     }
 // --------------------------------------
 }; // LazyS
-using Lazy = LazyS::Lazy;
-using Node = LazyS::Node;

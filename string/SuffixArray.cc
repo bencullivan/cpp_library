@@ -1,7 +1,7 @@
-/*
-    Suffix Array
-    Time: O(N*log(N))
-    Source: https://cp-algorithms.com/string/suffix-array.html
+/**
+ * Suffix Array
+ * Time: O(N*log(N))
+ * Source: https://cp-algorithms.com/string/suffix-array.html
 */
 struct SuffixArray {
     const int alphabet = 256;

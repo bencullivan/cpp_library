@@ -5,9 +5,9 @@
 */
 struct StringSearch {
     vector<int> pi; // pi[i] is the length of the longest prefix of s that is also a suffix of the substring ending at i
-    vector<int> locs; // the locations of the target pattern from kmp
-    vector<int> occs; // the number of occurrences of each prefix
     vector<int> zarray; // zarray[i] is the length of the longest substring beginning from s[i] that is also a prefix of s
+    vector<int> locs; // the locations of the target pattern from kmp or z
+    vector<int> occs; // the number of occurrences of each prefix
 
     /*
         Computes for each index, i, the length of the longest string that is 

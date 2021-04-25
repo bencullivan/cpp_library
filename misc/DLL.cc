@@ -1,3 +1,11 @@
+/**
+ * Circular Doubly Linked List with a Sentinel
+ * Time:
+ *      - insert: O(1)
+ *      - erase: O(1)
+ *      - find: O(N)
+ * Source: me
+ */
 template<typename T>
 struct LNode {
     T data;
@@ -6,7 +14,6 @@ struct LNode {
     LNode(T _data) : data(_data), prev(nullptr), next(nullptr) {}
     LNode(T _data, LNode *_prev, LNode *_next) : data(_data), prev(_prev), next(_next) {}
 };
-
 template<typename T>
 struct DLL {
     LNode<T> *sentinel;
@@ -43,6 +50,7 @@ struct DLL {
         len++;
     }
 
+    // removes the node from the list
     void erase(LNode<T> *to_erase) {
         assert(to_erase != sentinel);
         to_erase->next->prev = to_erase->prev;
@@ -50,4 +58,17 @@ struct DLL {
         delete to_erase;
         len--;
     }
-};
+
+    // returns a pointer to a node containing the specified value \
+    // or nullptr if the specified value is not in the list
+    LNode<T>* find(const T& val) {
+        LNode<T>* cur = sentinel->next;
+        while (cur != sentinel) {
+            if (cur->data == val) {
+                return cur;
+            }
+            cur = cur->next;
+        }
+        return nullptr;
+    }
+}; // DLL

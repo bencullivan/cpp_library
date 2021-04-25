@@ -6,6 +6,7 @@
 // ex:
 // com normal
 
+//#ifdef LOCAL
 #ifndef LOL_DEBUG
 #define LOL_DEBUG
 
@@ -42,7 +43,7 @@ std::ostream& operator<<(std::ostream& os, const std::pair<K, V>& p) {
 }
 
 // any type of stl container
-// Source: neal (cf)
+// Source: neal
 template<typename T_container, typename T = typename std::enable_if<!std::is_same<T_container, std::string>::value, typename T_container::value_type>::type>
 std::ostream& operator<<(std::ostream &os, const T_container &v) {
     os << "\n{";
@@ -53,20 +54,6 @@ std::ostream& operator<<(std::ostream &os, const T_container &v) {
     }
     return os << '}';
 }
-
-/*
-template<typename T> void debug_container(std::string name, T begin, T end, int line_num) {
-    std::cerr << line_num << ": " << name << " = {";
-    while (begin != end) {
-        std::cerr << (*begin);
-        ++begin;
-        if (begin != end) {
-            std::cerr << ", ";
-        }
-    }
-    std::cerr << "}" << std::endl;
-}
-*/
 
 void debug_helper() {
     std::cerr << RESET << std::endl;
@@ -81,10 +68,8 @@ void debug_helper(Head H, Tail... T) {
     debug_helper(T...);
 }
 
-// Source: neal (cf)
+// Source: neal
 #define dbg(...) std::cerr << MAGENTA << __LINE__ << " [" << #__VA_ARGS__ << "]: " << GREEN, debug_helper(__VA_ARGS__)
-//#define dbc(container) debug_container(#container, (container).begin(), (container).end(), __LINE__)
-//#define dbci(star,ende) debug_container(#star, star, ende, __LINE__)
 
 // Array output
 
@@ -100,15 +85,17 @@ void fill_arr_dims(Head H, Tail... T) {
 }
 
 // 1d array
-#define dba1(_arr,...) std::cerr << MAGENTA << __LINE__ << " [" << #_arr << "]:" << GREEN << "\n{"; _n_dims = 0; fill_arr_dims(__VA_ARGS__); \
+#define dba1(_arr,...) { \
+    std::cerr << MAGENTA << __LINE__ << " [" << #_arr << "]:" << GREEN << "\n{"; _n_dims = 0; fill_arr_dims(__VA_ARGS__); \
     for (long long _i = 0; _i < _arr_dims[0]; _i++) { \
         std::cerr << _arr[_i]; \
         if (_i < _arr_dims[0]-1) std::cerr << ", "; \
     } \
-    std::cerr << "}" << RESET << endl;
+    std::cerr << "}" << RESET << endl; }
 
 // 2d array
-#define dba2(_arr,...) std::cerr << MAGENTA << __LINE__ << " [" << #_arr << "]:" << GREEN << "\n{"; _n_dims = 0; fill_arr_dims(__VA_ARGS__); \
+#define dba2(_arr,...) { \
+    std::cerr << MAGENTA << __LINE__ << " [" << #_arr << "]:" << GREEN << "\n{"; _n_dims = 0; fill_arr_dims(__VA_ARGS__); \
     for (long long _i = 0; _i < _arr_dims[0]; _i++) { \
         std::cerr << "\n{"; \
         for (long long _j = 0; _j < _arr_dims[1]; _j++) { \
@@ -117,10 +104,11 @@ void fill_arr_dims(Head H, Tail... T) {
         } \
         std::cerr << "},"; \
     } \
-    std::cerr << "}" << RESET << std::endl;
+    std::cerr << "}" << RESET << std::endl; }
 
 // 3d array
-#define dba3(_arr,...) std::cerr << MAGENTA << __LINE__ << " [" << #_arr << "]:" << GREEN << "\n{"; _n_dims = 0; fill_arr_dims(__VA_ARGS__); \
+#define dba3(_arr,...) { \
+    std::cerr << MAGENTA << __LINE__ << " [" << #_arr << "]:" << GREEN << "\n{"; _n_dims = 0; fill_arr_dims(__VA_ARGS__); \
     for (long long _i = 0; _i < _arr_dims[0]; _i++) { \
         std::cerr << "\n{"; \
         for (long long _j = 0; _j < _arr_dims[1]; _j++) { \
@@ -134,11 +122,11 @@ void fill_arr_dims(Head H, Tail... T) {
         } \
         std::cerr << "},"; \
     } \
-    std::cerr << "}" << RESET << std::endl;
+    std::cerr << "}" << RESET << std::endl; }
 
-/*
 // 4d array
-#define dba4(_arr,...) std::cerr << MAGENTA << __LINE__ << " [" << #_arr << "]:" << GREEN << "\n{"; _n_dims = 0; fill_arr_dims(__VA_ARGS__); \
+#define dba4(_arr,...) { \
+    std::cerr << MAGENTA << __LINE__ << " [" << #_arr << "]:" << GREEN << "\n{"; _n_dims = 0; fill_arr_dims(__VA_ARGS__); \
     for (long long _i = 0; _i < _arr_dims[0]; _i++) { \
         std::cerr << "\n{"; \
         for (long long _j = 0; _j < _arr_dims[1]; _j++) { \
@@ -156,7 +144,7 @@ void fill_arr_dims(Head H, Tail... T) {
         } \
         std::cerr << "},"; \
     } \
-    std::cerr << "}" << RESET << std::endl;
-*/
+    std::cerr << "}" << RESET << std::endl; }
 
 #endif // LOL_DEBUG
+//#endif // LOCAL

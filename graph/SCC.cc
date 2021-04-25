@@ -1,8 +1,8 @@
-//#define USE_SET
 /*
     Finds all strongly connected components of a directed graph with N vertices and M edges.
     Time: O(N+M)
 */
+//#define USE_SET
 struct SCC {
     vector<vector<int>> G;
     vector<vector<int>> G_rev;

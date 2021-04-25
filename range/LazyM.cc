@@ -126,5 +126,3 @@ struct LazyM {
     }
 // --------------------------------------
 }; // LazyM
-using Lazy = LazyM::Lazy;
-using Node = LazyM::Node;
