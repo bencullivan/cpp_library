@@ -68,7 +68,7 @@ struct StringSearch {
     }
 
     /*
-        Counts the number of unique substrings that appear in s.
+        Counts the number of unique substrings that appear in s
         Time: O(N^2)
     */
     long long count_unique(string& s) {
@@ -83,7 +83,7 @@ struct StringSearch {
     }
 
     /*
-        Generates the array used in the z algorithm.
+        Generates the array used in the z algorithm
     */
     void z(string& s) {
         int left = -1;
@@ -116,7 +116,7 @@ struct StringSearch {
     }
 
     /*
-        Z algorithm to find all occurrences of t in s.
+        Z algorithm to find all occurrences of t in s
         Time: O(N+M)
     */
     void z_search(string& s, string& t, const string& separator) {
