@@ -83,7 +83,7 @@ struct StringSearch {
     }
 
     /*
-        Generates the array used in the z algorithm
+        Generates the array used in the z algorithm.
     */
     void z(string& s) {
         int left = -1;
