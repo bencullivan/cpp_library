@@ -116,7 +116,7 @@ struct StringSearch {
     }
 
     /*
-        Z algorithm to find all occurrences of t in s
+        Z algorithm to find all occurrences of t in s.
         Time: O(N+M)
     */
     void z_search(string& s, string& t, const string& separator) {
