@@ -1,5 +1,4 @@
 /*
-    String Search
     Provides various operations for searching within strings.
     Source: https://cp-algorithms.com/string/prefix-function.html (lps, kmp, occs, unique)
 */
