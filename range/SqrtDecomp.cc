@@ -1,3 +1,11 @@
+/**
+ * Sqrt Decomposition
+ * Time: 
+ *      - build: O(N)
+ *      - upd: O(sqrt(N))
+ *      - get: O(sqrt(N))
+ * Source: https://cp-algorithms.com/data_structures/sqrt_decomposition.html
+ */
 struct SqrtDecomp {
     struct Node;
     struct Lazy;
@@ -24,17 +32,20 @@ struct SqrtDecomp {
         if (lseg == rseg) {
             for (int i = l; i <= r; i++) {
                 data[i] = lazy_combine(data[i], lz);
+                segs[lseg] = lazy_combine(segs[lseg], lz);
             }
             return;
         }
         for (int i = l; i <= (lseg + 1) * root - 1; i++) {
             data[i] = lazy_combine(data[i], lz);
+            segs[lseg] = lazy_combine(segs[lseg], lz);
         }
         for (int i = lseg + 1; i < rseg; i++) {
             lazy_absorb(lazy[i], lz);
         }
         for (int i = rseg * root; i <= r; i++) {
             data[i] = lazy_combine(data[i], lz);
+            segs[rseg] = lazy_combine(segs[rseg], lz);
         }
     }
 
@@ -64,7 +75,7 @@ struct SqrtDecomp {
 // --------------------------------------
     // CHANGE
     struct Node {
-        long long v = 0;
+        ll v = 0;
     };
     Node combine(const Node& a, const Node& b) {
 
@@ -74,7 +85,7 @@ struct SqrtDecomp {
     }
 
     struct Lazy {
-        long long v;
+        ll v;
     };
     Node lazy_combine(const Node& a, const Lazy& b) {
 

@@ -42,7 +42,8 @@ struct LazyS {
         // handle the different operation types when updating the current node
         if (data[i].lazy.op == 1) {
             data[i] = duplicate(data[i].lazy, tr - tl + 1);
-        } else if (data[i].lazy.op == 2) {
+        }
+        else if (data[i].lazy.op == 2) {
             data[i] = push_combine(data[i], duplicate(data[i].lazy, tr - tl + 1));
         }
         if (tl != tr) {
@@ -107,9 +108,11 @@ struct LazyS {
         // determines how the lazy info of two nodes is combined, assume b was updated after a
         if (b.op == 2) {
             return {a.op == 1 ? 1 : 2, a.v + b.v}; // if a is an assignment, leave it as an assigment
-        } else if (b.op == 1) {
+        }
+        else if (b.op == 1) {
             return b; // since b is an assignment we overwrite the lazy info of a
-        } else {
+        }
+        else {
             return a; // since b has no operation, leave a unchanged
         }
     }

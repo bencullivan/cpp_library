@@ -43,7 +43,8 @@ struct Segtree {
         int tm = (tl + tr) >> 1;
         if (x <= tm) {
             upd(i << 1, tl, tm, x, v);
-        } else {
+        }
+        else {
             upd(i << 1 | 1, tm + 1, tr, x, v);
         }
         // update the current node
