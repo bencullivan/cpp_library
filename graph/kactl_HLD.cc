@@ -13,7 +13,6 @@ using vi = vector<int>;
  * "new X" otherwise has an overhead of something like 0.05us + 16 bytes per allocation.
  * Status: tested
  */
-// #pragma once
 
 // Either globally or in a single class:
 static char buf[450 << 20];
@@ -36,9 +35,6 @@ void operator delete(void*) {}
  * Usage: Node* tr = new Node(v, 0, sz(v));
  * Status: stress-tested a bit
  */
-// #pragma once
-
-// #include "../various/BumpAllocator.h"
 
 const int inf = 1e9;
 struct Node {
@@ -113,9 +109,6 @@ void destroy(Node* x) {
  * Time: O((\log N)^2)
  * Status: stress-tested against old HLD
  */
-// #pragma once
-
-// #include "../data-structures/LazySegmentTree.h"
 
 template <bool VALS_EDGES> struct HLD {
 	int N, tim = 0;

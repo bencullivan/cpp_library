@@ -98,22 +98,11 @@ struct LazyS {
  
 // --------------------------------------
     // CHANGE
+
     struct Lazy {
         int op = 0; // the lazy operation type (0 means no operation)
         long long v = 0;
     };
-    struct Node {
-        Lazy lazy;
-        long long v = 0;
-    };
-    Node combine(const Node& a, const Node& b) {
-        // the function with which two nodes are combined during queries
-        return {Lazy(), a.v + b.v};
-    }
-    Node push_combine(const Node& a, const Node& b) {
-        // the function with which two nodes are combined during updates
-        return {a.lazy, a.v + b.v};
-    }
     Lazy lazy_combine(const Lazy& a, const Lazy& b) {
         // determines how the lazy info of two nodes is combined, assume b was updated after a
         if (b.op == 2) {
@@ -128,5 +117,19 @@ struct LazyS {
         // duplicates the lazy info of a node to simulate updating every node in the segment
         return {a, a.v * c};
     }
+
+    struct Node {
+        Lazy lazy;
+        long long v = 0;
+    };
+    Node combine(const Node& a, const Node& b) {
+        // the function with which two nodes are combined during queries
+        return {Lazy(), a.v + b.v};
+    }
+    Node push_combine(const Node& a, const Node& b) {
+        // the function with which two nodes are combined during updates
+        return {a.lazy, a.v + b.v};
+    }
+    
 // --------------------------------------
 }; // LazyS

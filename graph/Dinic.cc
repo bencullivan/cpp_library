@@ -1,9 +1,8 @@
-/*
-    Max flow using Dinic's algorithm.
-    Time:
-        - O(E*V^2)
-    Source: https://cp-algorithms.com/graph/dinic.html
-*/
+/**
+ * Max flow using Dinic's algorithm.
+ * Time: O(E*V^2)
+ * Source: https://cp-algorithms.com/graph/dinic.html
+ */
 struct Dinic {
     vector<vector<int>> adj; // adj[i] is the list of indices of the out-edges of the ith vertex
     vector<pair<int, int>> cut; // the edges that form the min s-t cut
@@ -11,9 +10,9 @@ struct Dinic {
     vector<long long> cap; // cap[i] is the capacity of the ith edge
     vector<int> level; // level[i] is the level of the ith vertex
     vector<int> ptr; // ptr[i] points to the next unvisited neighbor of the ith vertex
-    queue<int> q; // for bfs
-    int source; // the source vertex
-    int sink; // the sink vertex
+    queue<int> q;
+    int source;
+    int sink;
     long long mf = 0; // the value of the max s-t flow
     const long long MAX_CAP = 5e18; // the maximum edge capacity
 

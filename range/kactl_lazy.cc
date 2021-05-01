@@ -13,7 +13,6 @@ using vi = vector<int>;
  * "new X" otherwise has an overhead of something like 0.05us + 16 bytes per allocation.
  * Status: tested
  */
-// #pragma once
 
 // Either globally or in a single class:
 static char buf[450 << 20];
@@ -36,9 +35,6 @@ void operator delete(void*) {}
  * Usage: Node* tr = new Node(v, 0, sz(v));
  * Status: stress-tested a bit
  */
-// #pragma once
-
-// #include "../various/BumpAllocator.h"
 
 const int inf = 1e9;
 struct Node {

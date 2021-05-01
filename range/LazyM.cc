@@ -98,10 +98,22 @@ struct LazyM {
  
 // --------------------------------------
     // CHANGE
+
     struct Lazy {
         int op = 0; // the lazy operation type (0 means no operation)
         long long v = -5e18;
     };
+    Lazy lazy_combine(const Lazy& a, const Lazy& b) {
+        // determines how the lazy info of two nodes is combined, assume b was updated after a
+        if (b.op == 2) {
+            return {a.op == 1 ? 1 : 2, a.v + b.v}; // if a is an assignment, leave it as an assigment
+        } else if (b.op == 1) {
+            return b; // since b is an assignment we overwrite the lazy info of a
+        } else {
+            return a; // since b has no operation, leave a unchanged
+        }
+    }
+
     struct Node {
         Lazy lazy;
         long long v = -5e18;
@@ -113,16 +125,6 @@ struct LazyM {
     Node push_combine(const Node& a, const Lazy& b) {
         // the function with which two nodes are combined during updates
         return {b, a.v + b.v};
-    }
-    Lazy lazy_combine(const Lazy& a, const Lazy& b) {
-        // determines how the lazy info of two nodes is combined, assume b was updated after a
-        if (b.op == 2) {
-            return {a.op == 1 ? 1 : 2, a.v + b.v}; // if a is an assignment, leave it as an assigment
-        } else if (b.op == 1) {
-            return b; // since b is an assignment we overwrite the lazy info of a
-        } else {
-            return a; // since b has no operation, leave a unchanged
-        }
     }
 // --------------------------------------
 }; // LazyM

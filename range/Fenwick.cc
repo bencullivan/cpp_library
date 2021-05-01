@@ -4,7 +4,6 @@
     Time:
         - upd: O(log(N))
         - get: O(log(N))
-    Source: me
 */
 template<typename T>
 struct Fenwick {

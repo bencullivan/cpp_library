@@ -25,7 +25,7 @@ struct Segtree {
             data[i] = input[tl];
             return;
         }
-        // this node is not a leaf -> recurse on children
+        // this node is not a leaf, recurse on children
         int tm = (tl + tr) >> 1;
         build_Segtree(i << 1, tl, tm, input);
         build_Segtree(i << 1 | 1, tm + 1, tr, input);
@@ -39,7 +39,7 @@ struct Segtree {
             data[i] = v; // we are at x
             return;
         }
-        // we are not at x that is being updated -> recurse on the child that has x as a leaf
+        // we are not at x, recurse on the child that has x as a leaf
         int tm = (tl + tr) >> 1;
         if (x <= tm) {
             upd(i << 1, tl, tm, x, v);
@@ -58,12 +58,12 @@ struct Segtree {
     // queries the segment [l, r]
     Node get(int i, int tl, int tr, int l, int r) {
         if (tr < l || tl > r) {
-            return Node(); // we are out of range -> return the default value
+            return Node(); // we are out of range, return the default value
         }
         if (tl >= l && tr <= r) {
             return data[i]; // this node's entire segment is in the range 
         }
-        // we are partially in the range -> recurse on children
+        // we are partially in the range, recurse on children
         int tm = (tl + tr) >> 1;
         return combine(get(i << 1, tl, tm, l, r), get(i << 1 | 1, tm + 1, tr, l, r));
     }

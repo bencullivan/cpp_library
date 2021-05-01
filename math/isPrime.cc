@@ -1,3 +1,4 @@
+using ull = unsigned long long;
 /**
  * Author: chilli, Ramchandra Apte, Noam527, Simon Lindholm
  * Date: 2019-04-24
@@ -14,9 +15,6 @@
  * are 64-bit, as on e.g. MSVC, the implementation is only valid for
  * $0 \le a, b \le c < 2^{52} \approx 4.5 \cdot 10^{15}$.
  */
-// #pragma once
-
-typedef unsigned long long ull;
 ull modmul(ull a, ull b, ull M) {
 	//ll ret = a * b - M * ull(1.L / M * a * b);
 	//return ret + M * (ret < 0) - M * (ret >= (ll)M);
@@ -39,10 +37,6 @@ ull modpow(ull b, ull e, ull mod) {
  * Time: 7 times the complexity of $a^b \mod c$.
  * Status: Stress-tested
  */
-// #pragma once
-
-// #include "ModMulLL.h"
-
 bool isPrime(ull n) {
 	if (n < 2 || n % 6 % 4 != 1) return (n | 1) == 3;
 	ull A[] = {2, 325, 9375, 28178, 450775, 9780504, 1795265022},

@@ -14,13 +14,3 @@ template<typename T> struct chash {
         return hash_f(x) ^ RANDOM;
     }
 };
-#include <ext/pb_ds/assoc_container.hpp>
-#include <ext/pb_ds/tree_policy.hpp>
-template <typename K, typename V, typename Hash = chash<K>>
-using hmap = __gnu_pbds::gp_hash_table<K, V, Hash>;
-template <typename K, typename Hash = chash<K>>
-using hset = hmap<K, __gnu_pbds::null_type, Hash>;
-template<typename K, typename V>
-using imap = __gnu_pbds::tree<K, V, std::less<K>, __gnu_pbds::rb_tree_tag, __gnu_pbds::tree_order_statistics_node_update>;
-template<typename K>
-using iset = imap<K, __gnu_pbds::null_type>;
