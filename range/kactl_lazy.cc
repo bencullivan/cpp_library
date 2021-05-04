@@ -88,8 +88,8 @@ struct Node {
 };
 
 void destroy(Node* x) {
-    if (!x) return;
-    destroy(x->l);
-    destroy(x->r);
-    delete x;
+	if (!x) return;
+	destroy(x->l);
+	destroy(x->r);
+	delete x;
 }

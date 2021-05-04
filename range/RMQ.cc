@@ -22,7 +22,7 @@ struct RMQ {
 				jmp[k][j] = query_op(jmp[k - 1][j], jmp[k - 1][j + pw]);
 		}
 	}
-    // gets the minimum of the range [a, b)
+	// gets the minimum of the range [a, b)
 	T get(int a, int b) {
 		assert(a < b); // or return inf if a == b
 		int dep = 31 - __builtin_clz(b - a);

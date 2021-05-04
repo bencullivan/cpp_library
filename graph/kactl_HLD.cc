@@ -88,10 +88,10 @@ struct Node {
 };
 
 void destroy(Node* x) {
-    if (!x) return;
-    destroy(x->l);
-    destroy(x->r);
-    delete x;
+	if (!x) return;
+	destroy(x->l);
+	destroy(x->r);
+	delete x;
 }
 
 /**
@@ -117,7 +117,7 @@ template <bool VALS_EDGES> struct HLD {
 	Node *tree;
 	HLD(vector<vi> adj_)
 		: N(sz(adj_)), adj(adj_), par(N, -1), siz(N, 1), depth(N),
-		  rt(N),pos(N),tree(new Node(0, N)){ dfsSz(0); dfsHld(0); }
+		rt(N),pos(N),tree(new Node(0, N)){ dfsSz(0); dfsHld(0); }
 	void dfsSz(int v) {
 		if (par[v] != -1) adj[v].erase(find(all(adj[v]), par[v]));
 		for (int& u : adj[v]) {
@@ -148,7 +148,7 @@ template <bool VALS_EDGES> struct HLD {
 	int queryPath(int u, int v) { // Modify depending on problem
 		int res = -1e9;
 		process(u, v, [&](int l, int r) {
-			    res = max(res, tree->query(l, r));
+				res = max(res, tree->query(l, r));
 		});
 		return res;
 	}
