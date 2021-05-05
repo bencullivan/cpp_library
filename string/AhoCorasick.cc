@@ -43,8 +43,6 @@ struct AhoCorasick {
 
 	// call after inserting all words into the trie
 	void build() {
-		data[0].sl = 0; // the root is linked to itself
-		data[0].el = 0;
 		queue<int> q;
 		q.push(0);
 		while (q.size() && data[q.front()].par == 0) { // process the root and its children
