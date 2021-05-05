@@ -138,13 +138,13 @@ int gen_base(const int before, const int after) {
 using poly_hash_mint = _modnum<1000000123>;
 
 struct MutablePolyHash {
-	static const int mod = (int)1e9+123;	// prime mod of polynomial hashing
-	static vector<poly_hash_mint> pow1;		// powers of base modulo mod
-	static vector<ull> pow2;				// powers of base modulo 2^64
-	static int base;						// base (point of hashing)
+	static const int mod = (int)1e9+123; // prime mod of polynomial hashing
+	static vector<poly_hash_mint> pow1;  // powers of base modulo mod
+	static vector<ull> pow2;             // powers of base modulo 2^64
+	static int base;                     // base (point of hashing)
 
-	Fenwick<poly_hash_mint> pref1; 			// hash on prefix modulo 1e9+123
-	Fenwick<ull> pref2;						// hash on prefix modulo 2^64
+	Fenwick<poly_hash_mint> pref1;       // hash on prefix modulo 1e9+123
+	Fenwick<ull> pref2;                  // hash on prefix modulo 2^64
 
 	MutablePolyHash(string& s) : pref1(s.size()), pref2(s.size()) {
 		assert(base < mod);

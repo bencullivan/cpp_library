@@ -1,7 +1,8 @@
 #include <bits/stdc++.h>
 
-typedef long long ll;
+typedef unsigned ui;
 typedef unsigned long long ull;
+typedef long long ll;
 using namespace std;
 
 signed main() {

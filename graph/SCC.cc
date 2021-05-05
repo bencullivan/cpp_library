@@ -36,7 +36,8 @@ struct SCC {
 		for (int neighbor:G_rev[current_vertex]) {
 			if (which_scc[neighbor] == -1) {
 				dfs(neighbor, current_scc, neighbors);
-			} else if (which_scc[neighbor] != which_scc[current_vertex]) {
+			}
+			else if (which_scc[neighbor] != which_scc[current_vertex]) {
 				neighbors.push_back(which_scc[neighbor]);
 			}
 		}
