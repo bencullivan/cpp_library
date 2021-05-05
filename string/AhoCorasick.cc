@@ -1,7 +1,15 @@
+/**
+ * Aho Corasick
+ * Finds occurrences of dictionary words in a text.
+ * Time: O(N + M + C) where N is the length of the text, M is the combined length of the dictionary words and C is the number of matches.
+ * Sources:
+ *  - https://www.toptal.com/algorithms/aho-corasick-algorithm
+ *  - https://www.geeksforgeeks.org/aho-corasick-algorithm-pattern-searching/
+ */
 struct AhoCorasick {
 	static constexpr int alpha = 26; // change
 	static constexpr char base_ch = 'a'; // change
-
+ 
 	struct Node {
 		int ch[alpha];  // the edges to child nodes
 		int par;        // the index of the parent node
@@ -13,18 +21,18 @@ struct AhoCorasick {
 			memset(ch, -1, alpha * sizeof(int));
 		}
 	};
-
+ 
 	vector<Node> data; // the trie
 	vector<int> lengths;  // the lengths of the words in the dictionary
 	vector<vector<int>> duplicates; // use if duplicates are allowed
-
+ 
 	AhoCorasick() : data(1, Node(0, 0)) {}
-
+ 
 	void reserve(int n) {
 		lengths.reserve(n);
 		duplicates.reserve(n);
 	}
-
+ 
 	void insert(string& s, int idx) {
 		int cur = 0;
 		for (int i = 0; i < (int)s.size(); i++) {
@@ -40,7 +48,7 @@ struct AhoCorasick {
 		if (data[cur].id != -1) duplicates[data[cur].id].push_back(idx);
 		else data[cur].id = idx;
 	}
-
+ 
 	// call after inserting all words into the trie
 	void build() {
 		queue<int> q;
@@ -75,10 +83,13 @@ struct AhoCorasick {
 			}
 		}
 	}
-
+ 
+	// CHANGE
+	void process_op(int id, int i) { // MUST BE O(1)
+	}
+ 
 	// process a text to find where dictionary words occur in it
-	template<typename F> // function op(id, i) where id is the id of the string that occurs and i is the index in t MUST BE O(1)
-	void process(string &t, F &&op) {
+	void process(string &t) {
 		int cur = 0; // we begin at the root
 		for (int i = 0; i < (int)t.size(); i++) {
 			int c = t[i]-base_ch;
@@ -90,7 +101,7 @@ struct AhoCorasick {
 			}
 			int end = data[cur].el; // we will now process all the words that are suffixes of the current path
 			while (end > 0) {
-				op(data[end].id, i); 
+				process_op(data[end].id, i); 
 				end = data[data[end].sl].el;
 			}
 		}
