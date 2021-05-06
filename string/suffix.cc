@@ -157,8 +157,7 @@ std::vector<int> sa_is(const std::vector<int>& s, int upper) {
 			rec_s[lms_map[sorted_lms[i]]] = rec_upper;
 		}
 
-		auto rec_sa =
-			sa_is<THRESHOLD_NAIVE, THRESHOLD_DOUBLING>(rec_s, rec_upper);
+		auto rec_sa = sa_is<THRESHOLD_NAIVE, THRESHOLD_DOUBLING>(rec_s, rec_upper);
 
 		for (int i = 0; i < m; i++) {
 			sorted_lms[i] = lms[rec_sa[i]];
@@ -207,8 +206,7 @@ std::vector<int> suffix_array(const std::string& s) {
 // Linear-Time Longest-Common-Prefix Computation in Suffix Arrays and Its
 // Applications
 template <class T>
-std::vector<int> lcp_array(const std::vector<T>& s,
-						const std::vector<int>& sa) {
+std::vector<int> lcp_array(const std::vector<T>& s, const std::vector<int>& sa) {
 	int n = int(s.size());
 	assert(n >= 1);
 	std::vector<int> rnk(n);
@@ -239,5 +237,3 @@ std::vector<int> lcp_array(const std::string& s, const std::vector<int>& sa) {
 }
 
 }  // namespace atcoder
-
-using namespace atcoder;

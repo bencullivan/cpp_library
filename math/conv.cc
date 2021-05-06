@@ -1,7 +1,33 @@
-/**
- * ATCODER CONVOLUTION
- * https://github.com/atcoder/ac-library
- */
+#ifndef ATCODER_INTERNAL_BITOP_HPP
+#define ATCODER_INTERNAL_BITOP_HPP 1
+
+namespace atcoder {
+
+namespace internal {
+
+// @param n `0 <= n`
+// @return minimum non-negative `x` s.t. `n <= 2**x`
+int ceil_pow2(int n) {
+	int x = 0;
+	while ((1U << x) < (ui)(n)) x++;
+	return x;
+}
+
+// @param n `1 <= n`
+// @return minimum non-negative `x` s.t. `(n & (1 << x)) != 0`
+int bsf(ui n) {
+	return __builtin_ctz(n);
+}
+
+}  // namespace internal
+
+}  // namespace atcoder
+
+#endif  // ATCODER_INTERNAL_BITOP_HPP
+
+#ifndef ATCODER_INTERNAL_MATH_HPP
+#define ATCODER_INTERNAL_MATH_HPP 1
+
 namespace atcoder {
 
 namespace internal {
@@ -31,6 +57,16 @@ struct barrett {
 	// @param b `0 <= b < m`
 	// @return `a * b % m`
 	ui mul(ui a, ui b) const {
+		// [1] m = 1
+		// a = b = im = 0, so okay
+
+		// [2] m >= 2
+		// im = ceil(2^64 / m)
+		// -> im * m = 2^64 + r (0 <= r < m)
+		// let z = a*b = c*m + d (0 <= c, d < m)
+		// a*b * im = (c*m + d) * im = c*(im*m) + d*im = c*2^64 + c*r + d*im
+		// c*r + d*im < m * m + m * im < m * m + 2^64 + m <= 2^64 + m * (m + 1) < 2^64 * 2
+		// ((ab * im) >> 64) == c or c + 1
 		ull z = a;
 		z *= b;
 		ull x = (ull)(((unsigned __int128)(z)*im) >> 64);
@@ -173,12 +209,27 @@ ull floor_sum_unsigned(ull n, ull m, ull a, ull b) {
 
 		ull y_max = a * n + b;
 		if (y_max < m) break;
+		// y_max < m * (n + 1)
+		// floor(y_max / m) <= n
 		n = (ull)(y_max / m);
 		b = (ull)(y_max % m);
 		std::swap(m, a);
 	}
 	return ans;
 }
+
+}  // namespace internal
+
+}  // namespace atcoder
+
+#endif  // ATCODER_INTERNAL_MATH_HPP
+
+#ifndef ATCODER_INTERNAL_TYPE_TRAITS_HPP
+#define ATCODER_INTERNAL_TYPE_TRAITS_HPP 1
+
+namespace atcoder {
+
+namespace internal {
 
 template <class T> using is_signed_int128 = typename std::conditional<std::is_same<T, __int128_t>::value || std::is_same<T, __int128>::value, std::true_type, std::false_type>::type;
 template <class T> using is_unsigned_int128 = typename std::conditional<std::is_same<T, __uint128_t>::value || std::is_same<T, unsigned __int128>::value, std::true_type, std::false_type>::type;
@@ -190,6 +241,19 @@ template <class T> using to_unsigned = typename std::conditional<is_signed_int12
 template <class T> using is_signed_int_t = std::enable_if_t<is_signed_int<T>::value>;
 template <class T> using is_unsigned_int_t = std::enable_if_t<is_unsigned_int<T>::value>;
 template <class T> using to_unsigned_t = typename to_unsigned<T>::type;
+
+}  // namespace internal
+
+}  // namespace atcoder
+
+#endif  // ATCODER_INTERNAL_TYPE_TRAITS_HPP
+
+#ifndef ATCODER_MODINT_HPP
+#define ATCODER_MODINT_HPP 1
+
+namespace atcoder {
+
+namespace internal {
 
 struct modint_base {};
 struct static_modint_base : modint_base {};
@@ -436,19 +500,18 @@ template <class> struct is_dynamic_modint : public std::false_type {};
 template <int id> struct is_dynamic_modint<dynamic_modint<id>> : public std::true_type {};
 template <class T> using is_dynamic_modint_t = std::enable_if_t<is_dynamic_modint<T>::value>;
 
-// @param n `0 <= n`
-// @return minimum non-negative `x` s.t. `n <= 2**x`
-int ceil_pow2(int n) {
-	int x = 0;
-	while ((1U << x) < (ui)(n)) x++;
-	return x;
-}
+}  // namespace internal
 
-// @param n `1 <= n`
-// @return minimum non-negative `x` s.t. `(n & (1 << x)) != 0`
-int bsf(ui n) {
-	return __builtin_ctz(n);
-}
+}  // namespace atcoder
+
+#endif  // ATCODER_MODINT_HPP
+
+#ifndef ATCODER_CONVOLUTION_HPP
+#define ATCODER_CONVOLUTION_HPP 1
+
+namespace atcoder {
+
+namespace internal {
 
 template <class mint, internal::is_static_modint_t<mint>* = nullptr>
 void butterfly(std::vector<mint>& a) {
@@ -640,6 +703,23 @@ std::vector<ll> convolution_ll(const std::vector<ll>& a, const std::vector<ll>& 
 		x += (c1[i] * i1) % MOD1 * M2M3;
 		x += (c2[i] * i2) % MOD2 * M1M3;
 		x += (c3[i] * i3) % MOD3 * M1M2;
+		// B = 2^63, -B <= x, r(real value) < B
+		// (x, x - M, x - 2M, or x - 3M) = r (mod 2B)
+		// r = c1[i] (mod MOD1)
+		// focus on MOD1
+		// r = x, x - M', x - 2M', x - 3M' (M' = M % 2^64) (mod 2B)
+		// r = x,
+		//     x - M' + (0 or 2B),
+		//     x - 2M' + (0, 2B or 4B),
+		//     x - 3M' + (0, 2B, 4B or 6B) (without mod!)
+		// (r - x) = 0, (0)
+		//           - M' + (0 or 2B), (1)
+		//           -2M' + (0 or 2B or 4B), (2)
+		//           -3M' + (0 or 2B or 4B or 6B) (3) (mod MOD1)
+		// we checked that
+		//   ((1) mod MOD1) mod 5 = 2
+		//   ((2) mod MOD1) mod 5 = 3
+		//   ((3) mod MOD1) mod 5 = 4
 		ll diff = c1[i] - internal::safe_mod((ll)(x), (ll)(MOD1));
 		if (diff < 0) diff += MOD1;
 		static constexpr ull offset[5] = {0, 0, M1M2M3, 2 * M1M2M3, 3 * M1M2M3};
@@ -652,4 +732,4 @@ std::vector<ll> convolution_ll(const std::vector<ll>& a, const std::vector<ll>& 
 
 }  // namespace atcoder
 
-using namespace atcoder;
+#endif  // ATCODER_CONVOLUTION_HPP
