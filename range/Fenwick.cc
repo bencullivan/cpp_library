@@ -1,10 +1,8 @@
-/*
-	1D Prefix sums and point updates.
-	1-indexed.
-	Time:
-		- upd: O(log(N))
-		- get: O(log(N))
-*/
+// 1D Prefix sums and point updates.
+// 1-indexed.
+// Time:
+//  - upd: O(log(N))
+// 	- get: O(log(N))
 template<typename T>
 struct Fenwick {
 	vector<T> data;

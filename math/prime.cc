@@ -146,7 +146,9 @@ void range(ll L, ll R) {
 			is_prime[j - L] = false;
 		}
 	}
-	if (L == 1) is_prime[0] = false;
+	if (L == 1) {
+		is_prime[0] = false;
+	}
 	primes.clear();
 	for (ll i = 0; i < R - L + 1; i++) {
 		if (is_prime[i]) {
@@ -193,6 +195,8 @@ vector<pair<ll, ll>> pf_precomp(ll x) {
 		ct++;
 		x /= spf[x];
 	}
-	if (ct) prime_factors.emplace_back(cur, ct);
+	if (ct) {
+		prime_factors.emplace_back(cur, ct);
+	}
 	return prime_factors;
 }

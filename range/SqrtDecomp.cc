@@ -1,11 +1,9 @@
-/**
- * Sqrt Decomposition
- * Time: 
- *      - build: O(N)
- *      - upd: O(sqrt(N))
- *      - get: O(sqrt(N))
- * Source: https://cp-algorithms.com/data_structures/sqrt_decomposition.html
- */
+// Sqrt Decomposition
+// Time: 
+// 	- build: O(N)
+// 	- upd: O(sqrt(N))
+// 	- get: O(sqrt(N))
+// Source: https://cp-algorithms.com/data_structures/sqrt_decomposition.html
 struct SqrtDecomp {
 	struct Node;
 	struct Lazy;

@@ -1,15 +1,13 @@
-/*
-	2D Fenwick tree for rectangular sum queries and point updates on a 2D matrix.
-	1-indexed.
-	Time: 
-		- build_Fenwick2d: O(N*M*log(N*M))
-		- upd: O(log(N*M))
-		- get: O(log(N*M))
-	Sources:
-		- https://cp-algorithms.com/data_structures/fenwick.html
-		- https://www.topcoder.com/community/competitive-programming/tutorials/binary-indexed-trees/
-		- https://www.geeksforgeeks.org/two-dimensional-binary-indexed-tree-or-fenwick-tree/
-*/
+// 2D Fenwick tree for rectangular sum queries and point updates on a 2D matrix.
+// 1-indexed.
+// Time: 
+// 	- build_Fenwick2d: O(N*M*log(N*M))
+// 	- upd: O(log(N*M))
+// 	- get: O(log(N*M))
+// Sources:
+// 	- https://cp-algorithms.com/data_structures/fenwick.html
+// 	- https://www.topcoder.com/community/competitive-programming/tutorials/binary-indexed-trees/
+// 	- https://www.geeksforgeeks.org/two-dimensional-binary-indexed-tree-or-fenwick-tree/
 template<typename T> 
 struct Fenwick2d {
 	vector<vector<T>> data;

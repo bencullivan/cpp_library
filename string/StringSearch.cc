@@ -1,18 +1,14 @@
-/*
-	Provides various operations for searching within strings.
-	Source: https://cp-algorithms.com/string/prefix-function.html (lps, kmp, occs, unique)
-*/
+// Provides various operations for searching within strings.
+// Source: https://cp-algorithms.com/string/prefix-function.html (lps, kmp, occs, unique)
 struct StringSearch {
 	vector<int> pi;
 	vector<int> zarray;
 	vector<int> locs; // the locations of the target pattern from kmp or z
 	vector<int> occs; // the number of occurrences of each prefix
 
-	/*
-		Computes for each index, i, the length of the longest string that is 
-		both a prefix and a suffix of s[0...i]
-		Time: O(N)
-	*/
+	// Computes for each index, i, the length of the longest string that is 
+	// both a prefix and a suffix of s[0...i]
+	// Time: O(N)
 	void lps(string& s) {
 		pi.resize(s.size());
 		pi[0] = 0;
@@ -35,10 +31,8 @@ struct StringSearch {
 		}
 	}
 
-	/*
-		KMP algorithm to find all the locations of string t in string s
-		Time: O(N+M)
-	*/
+	// KMP algorithm to find all the locations of string t in string s
+	// Time: O(N+M)
 	void kmp(string& s, string& t, const string& separator) {
 		// make sure that separator does not occur in either string
 		string q = t + separator + s;
@@ -51,10 +45,8 @@ struct StringSearch {
 		}
 	}
 
-	/*
-		Counts the number of occurrences of each prefix of s
-		Time: O(N)
-	*/
+	// Counts the number of occurrences of each prefix of s
+	// Time: O(N)
 	void get_occs(string& s) {
 		if (pi.size() != s.size()) {
 			lps(s);
@@ -75,10 +67,8 @@ struct StringSearch {
 		}
 	}
 
-	/*
-		Counts the number of unique substrings that appear in s
-		Time: O(N^2)
-	*/
+	// Counts the number of unique substrings that appear in s
+	// Time: O(N^2)
 	long long count_unique(string& s) {
 		long long ct = 0;
 		string t;
@@ -90,10 +80,8 @@ struct StringSearch {
 		return ct;
 	}
 
-	/*
-		Generates the array used in the z algorithm
-		zarray[i] is the length of the longest substring beginning from s[i] that is also a prefix of s
-	*/
+	// Generates the array used in the z algorithm
+	// zarray[i] is the length of the longest substring beginning from s[i] that is also a prefix of s
 	void z(string& s) {
 		int left = -1;
 		int right = -1;
@@ -130,10 +118,8 @@ struct StringSearch {
 		}
 	}
 
-	/*
-		Z algorithm to find all occurrences of t in s
-		Time: O(N+M)
-	*/
+	// Z algorithm to find all occurrences of t in s
+	// Time: O(N+M)
 	void z_search(string& s, string& t, const string& separator) {
 		// make sure that separator does not occur in either string
 		string q = t + separator + s;

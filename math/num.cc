@@ -4,21 +4,25 @@
  */
 ll mpow(ll a, ll b, ll m) {
 	ll r = 1;
-	for (; b > 0; a = a * a % m, b >>= 1) if (b & 1) r = r * a % m;
+	for (; b > 0; a = a * a % m, b >>= 1) {
+		if (b & 1) {
+			r = r * a % m;
+		}
+	}
 	return r;
 }
-
+ 
 /**
  * Extended Euclidean algorithm for finding the solution (x, y) to ax+by = gcd(a,b)
  * Returns gcd(a,b)
  * Time: O(log(min(a,b))
  * Source: https://cp-algorithms.com/algebra/extended-euclid-algorithm.html
  */
-ll ext_euc(ll a, ll b, ll& x, ll& y) {
+ll extended_euclidean(ll a, ll b, ll& x, ll& y) {
 	x = 1, y = 0;
 	ll x1 = 0, y1 = 1;
 	ll q, t;
-	while (b) {
+	while (b > 0) {
 		q = a / b;
 		t = x - q * x1;
 		x = x1;
@@ -32,25 +36,7 @@ ll ext_euc(ll a, ll b, ll& x, ll& y) {
 	}
 	return a;
 }
-
-/**
- * Solves the linear diophantine equation ax+by = c
- * Also can be used to solve the linear congruence relation 
- * ax % m = b % m, rewritten as ax+my = b
- * Returns whether a solution exists
- * Time: O(log(min(abs(a),abs(b)))
- * Source: https://cp-algorithms.com/algebra/linear-diophantine-equation.html
- */
-bool lin_dio(ll a, ll b, ll c, ll& x, ll& y, ll& g) {
-	g = ext_euc(abs(a), abs(b), x, y);
-	if (c % g) return false;
-	x *= c / g;
-	y *= c / g;
-	if (a < 0) x = -x;
-	if (b < 0) y = -y;
-	return true;
-}
-
+ 
 /**
  * Modular inverse of a, mod m
  * If m is prime, this is equivalent to mpow(a,m-2)
@@ -59,10 +45,90 @@ bool lin_dio(ll a, ll b, ll c, ll& x, ll& y, ll& g) {
  */
 ll minv(ll a, ll m) {
 	ll x, y;
-	ext_euc(a, m, x, y);
+	extended_euclidean(a, m, x, y);
 	return (x % m + m) % m;
 }
-
+ 
+/**
+ * Solves the linear diophantine equation ax + by = c
+ * Also can be used to solve the linear congruence relation 
+ * ax % m = b % m, rewritten as ax+my = b
+ * Returns whether a solution exists
+ * 
+ * Suppose we have a solution: x0, y0
+ * Now, all solutions (x,y) will be of the form: x = x0 + k*b/g, y = y0 - k*a/g
+ * Where g is gcd(a, b) and k is an arbitrary integer.
+ * Chicken McNugget Theorem: for any positive coprime integers a,b the largest integer that cannot be written 
+ * in the form ax + by for nonnegative x,y is ab - a - b
+ * 
+ * Time: O(log(min(abs(a),abs(b)))
+ * Source: https://cp-algorithms.com/algebra/linear-diophantine-equation.html
+ */
+bool linear_diophantine(ll a, ll b, ll c, ll& x, ll& y, ll& g) {
+	if (a == 0 && b == 0) {
+		x = y = 0;
+		return c == 0;
+	}
+	g = extended_euclidean(abs(a), abs(b), x, y);
+	if (c % g) return false;
+	x *= c / g;
+	y *= c / g;
+	if (a < 0) x = -x;
+	if (b < 0) y = -y;
+	return true;
+}
+ 
+/**
+ * Finds the number of solutions to the linear diophatine equation ax + by = c
+ * subject to constraints minx <= x <= maxx, miny <= y <= maxy
+ * Time: O(log(min(abs(a),abs(b))) 
+ * Source: https://cp-algorithms.com/algebra/linear-diophantine-equation.html
+ */
+ll all_linear_diophantine(ll a, ll b, ll c, ll minx, ll maxx, ll miny, ll maxy) {
+	if (a == 0 && b == 0) {
+		if (c == 0) return (maxx - minx + 1) * (maxy - miny + 1);
+		return 0;
+	}
+ 
+	auto shift_solution = [](ll& x, ll& y, ll a, ll b, ll cnt) {
+		x += cnt * b;
+		y -= cnt * a;
+	};
+ 
+	ll x, y, g;
+	if (!linear_diophantine(a, b, c, x, y, g)) return 0;
+	a /= g;
+	b /= g;
+ 
+	ll sign_a = a > 0 ? +1 : -1;
+	ll sign_b = b > 0 ? +1 : -1;
+ 
+	shift_solution(x, y, a, b, (minx - x) / b);
+	if (x < minx) shift_solution(x, y, a, b, sign_b);
+	if (x > maxx) return 0;
+	ll lx1 = x;
+ 
+	shift_solution(x, y, a, b, (maxx - x) / b);
+	if (x > maxx) shift_solution(x, y, a, b, -sign_b);
+	ll rx1 = x;
+ 
+	shift_solution(x, y, a, b, -(miny - y) / a);
+	if (y < miny) shift_solution(x, y, a, b, -sign_a);
+	if (y > maxy) return 0;
+	ll lx2 = x;
+ 
+	shift_solution(x, y, a, b, -(maxy - y) / a);
+	if (y > maxy) shift_solution(x, y, a, b, sign_a);
+	ll rx2 = x;
+ 
+	if (lx2 > rx2) swap(lx2, rx2);
+	ll lx = max(lx1, lx2);
+	ll rx = min(rx1, rx2);
+ 
+	if (lx > rx) return 0;
+	return (rx - lx) / abs(b) + 1;
+}
+ 
 /**
  * Author: Simon Lindholm
  * Date: 2016-08-31
@@ -98,7 +164,7 @@ ll msqrt(ll a, ll p) {
 	}
 	return 0;
 }
-
+ 
 /**
  * Euler's totient function
  * Calculates the number of integers in the range [1,a] that are coprime to a.
@@ -120,7 +186,7 @@ ll phi(ll a) {
 	if (a > 1) r -= r / a;
 	return r;
 }
-
+ 
 /**
  * Calculates phi(i) for all i in the range [1,n]
  * Time: O(n*log(log(n)))
@@ -138,7 +204,7 @@ vector<ll> all_phi(ll n) {
 	}
 	return ph;
 }
-
+ 
 /**
  * Chinese Remainder Theorem
  * Finds the smallest x such that for all i, x % md[i] = rem[i]
@@ -157,7 +223,7 @@ ll crt(vector<ll>& rem, vector<ll>& md) {
 	return x;
 }
 //#undef ll
-
+ 
 /**
  * Gets all divisors of a beginning from start
  * Start is usually 1 or 2
@@ -166,13 +232,18 @@ ll crt(vector<ll>& rem, vector<ll>& md) {
 vector<ll> get_divs(ll a, ll start) {
 	vector<ll> low, high;
 	ll i = start;
-	for (; i * i < a; i++) if (a % i == 0) low.push_back(i), high.push_back(a / i);
+	for (; i * i < a; i++) {
+		if (a % i == 0) {
+			low.push_back(i);
+			high.push_back(a / i);
+		}
+	}
 	if (i * i == a) low.push_back(i);
 	reverse(high.begin(), high.end());
 	low.insert(low.end(), high.begin(), high.end());
 	return low;
 }
-
+ 
 /**
  * Author: Bjorn Martinsson
  * Date: 2020-06-03
@@ -216,7 +287,7 @@ ll dlog(ll a, ll b, ll m) {
 			return n * i - A[e];
 	return -1;
 }
-
+ 
 /**
  * Primitive root
  * Finds a primitive root, a, modulo m such that 
@@ -249,7 +320,7 @@ ll proot(ll m) {
 	}
 	return -1;
 }
-
+ 
 /**
  * Discrete root
  * Finds one or all x such that x^a % m = b % m
@@ -262,7 +333,9 @@ vector<ll> droot(ll a, ll b, ll m, bool find_all) {
 	assert(g != -1);
 	ll ga = mpow(g, a, m);
 	ll y = dlog(ga, b, m);
-	if (!find_all) return {mpow(g, y, m)};
+	if (!find_all) {
+		return {mpow(g, y, m)};
+	}
 	// since m is prime, we know phi(m) == m - 1
 	ll delta = (m - 1) / __gcd(a, m - 1);
 	vector<ll> ans;

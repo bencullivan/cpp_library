@@ -1,8 +1,17 @@
-// KACTL 
+#ifndef int
 #define int ll
-using vi = vector<int>;
-#define sz(va) (int)(va).size()
-#define all(va) va.begin(),va.end()
+#endif
+
+#ifndef KACTL
+#define KACTL
+
+#define rep(i, a, b) for(int i = a; i < (b); ++i)
+#define all(x) begin(x), end(x)
+#define sz(x) (int)(x).size()
+typedef std::pair<int, int> pii;
+typedef std::vector<int> vi;
+
+#endif // KACTL
 
 // /**
 //  * Author: Simon Lindholm

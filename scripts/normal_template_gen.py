@@ -2,7 +2,7 @@ import sys
 import os
 
 folder_path = sys.argv[1]
-template_path = '/Users/bencullivan/documents/CppLibrary/competition_templates/normal.cc'
+template_path = '/Users/bencullivan/documents/CppLibrary/templates/normal.cc'
 
 for i in range(2, len(sys.argv)):
 	with open(template_path, 'r') as template_file:

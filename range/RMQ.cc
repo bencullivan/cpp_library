@@ -16,7 +16,7 @@ template<class T>
 struct RMQ {
 	vector<vector<T>> jmp;
 	RMQ(const vector<T>& V) : jmp(1, V) {
-		for (int pw = 1, k = 1; pw * 2 <= sz(V); pw *= 2, ++k) {
+		for (int pw = 1, k = 1; pw * 2 <= (int)V.size(); pw *= 2, ++k) {
 			jmp.emplace_back((int)V.size() - pw * 2 + 1);
 			for (int j = 0; j < (int)jmp[k].size(); j++)
 				jmp[k][j] = query_op(jmp[k - 1][j], jmp[k - 1][j + pw]);

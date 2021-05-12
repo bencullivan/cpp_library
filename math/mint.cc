@@ -1,6 +1,4 @@
-/**
- * Source: ecnerwala cp-book https://github.com/ecnerwala/cp-book
- */
+// https://github.com/ecnerwala/cp-book
 template<int _MOD>
 struct Modnum {
 	static constexpr int MOD = _MOD;
@@ -8,8 +6,8 @@ struct Modnum {
 	Modnum() : v(0) {}
 	Modnum(ll _v) : v(int(_v % MOD)) { if (v < 0) v += MOD; }
 	explicit operator int() const { return v; }
-	friend std::ostream& operator << (std::ostream& out, const Modnum& n) { return out << int(n); }
-	friend std::istream& operator >> (std::istream& in, Modnum& n) { ll v_; in >> v_; n = Modnum(v_); return in; }
+	friend istream& operator >> (istream& in, Modnum& n) { ll v_; in >> v_; n = Modnum(v_); return in; }
+	friend ostream& operator << (ostream& out, const Modnum& n) { return out << int(n); }
 	friend bool operator == (const Modnum& a, const Modnum& b) { return a.v == b.v; }
 	friend bool operator != (const Modnum& a, const Modnum& b) { return a.v != b.v; }
 	friend bool operator < (const Modnum& a, const Modnum& b) { return a.v < b.v; }

@@ -8,15 +8,13 @@ int log2Up(int n) {
 	return res;
 }
 
-/**
- * Sqrt Tree
- * Supports associative operations.
- * Time:
- *      - build O(N*log(log(N)))
- *      - update: O(sqrt(N))
- *      - query: O(1)
- *  Source: https://cp-algorithms.com/data_structures/sqrt-tree.html
- */
+// Sqrt Tree
+// Supports associative operations.
+// Time:
+// 	- build O(N*log(log(N)))
+// 	- update: O(sqrt(N))
+// 	- query: O(1)
+// Source: https://cp-algorithms.com/data_structures/sqrt-tree.html
 struct SqrtTree {
 	int n, lg, indexSz;
 	vector<SqrtTreeItem> v;

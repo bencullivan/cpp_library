@@ -1,15 +1,12 @@
-/*
-	Rolling String Hashing
-	Time:
-		- Build: O(N)
-		- Query: O(1)
-	Source: https://codeforces.com/blog/entry/60445
-*/
+// Rolling String Hashing
+// Time:
+// 	- Build: O(N)
+// 	- Query: O(1)
+// Source: https://codeforces.com/blog/entry/60445
 
 // Generate random base in (before, after) open interval:
 int gen_base(const int before, const int after) {
-	auto seed = chrono::duration_cast<chrono::nanoseconds>(chrono::high_resolution_clock::now().time_since_epoch()).count();
-	mt19937 mt_rand(seed);
+	mt19937 mt_rand(chrono::high_resolution_clock::now().time_since_epoch().count());
 	int base = uniform_int_distribution<int>(before+1, after)(mt_rand);
 	return base % 2 == 0 ? base-1 : base;
 }
@@ -51,12 +48,10 @@ struct PolyHash {
 	}
 }; // PolyHash
 
-/*
-	Returns whether the substring of one is lexicographically smaller than the substring of two
-	Method: finds the location of the first differing character between the two strings and then compares that character
-			if there are no differing characters it compares based on substring length
-	Time: O(log(substr_len))
-*/
+// Returns whether the substring of one is lexicographically smaller than the substring of two
+// Method: finds the location of the first differing character between the two strings and then compares that character
+//         if there are no differing characters it compares based on substring length
+// Time: O(log(substr_len))
 bool comp_hash(string& one, PolyHash& one_hash, int one_start, int one_substr_len, 
 				string& two, PolyHash& two_hash, int two_start, int two_substr_len, int mx_pow) {
 	int loc = -1; // the location at which the substrings differ

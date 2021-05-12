@@ -2,7 +2,7 @@ import sys
 import os
 
 folder_path = sys.argv[1]
-template_path = '/Users/bencullivan/documents/CppLibrary/competition_templates/no_cases.cc'
+template_path = '/Users/bencullivan/documents/CppLibrary/templates/no_cases.cc'
 
 for i in range(2, len(sys.argv)):
 	with open(template_path, 'r') as template_file:

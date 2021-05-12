@@ -1,9 +1,7 @@
 #ifndef WTFFT
 #define WTFFT
 
-/**
- * Source: ecnerwala cp-book https://github.com/ecnerwala/cp-book
- */
+// https://github.com/ecnerwala/cp-book
 template<int _MOD>
 struct Modnum {
 	static constexpr int MOD = _MOD;
@@ -105,7 +103,7 @@ struct Complex {
 	friend Complex operator * (const Complex& a, const Complex& b) {
 		return Complex(a.r * b.r - a.i * b.i, a.r * b.i + a.i * b.r);
 	}
-	friend Complex operator / (const Complex& a, int& b) {
+	friend Complex operator / (const Complex& a, const int& b) {
 		return Complex(a.r / b, a.i / b);
 	}
 }; // Complex
@@ -115,7 +113,9 @@ int rev[FFT_N];
 Complex rts[FFT_N];
 
 void fft_init(int n, int lg2) {
-	for (int i = 1; i < n; i++) rev[i] = (rev[i >> 1] >> 1) + ((i & 1) << (lg2 - 1));
+	for (int i = 1; i < n; i++) {
+		rev[i] = (rev[i >> 1] >> 1) + ((i & 1) << (lg2 - 1));
+	}
 	for (int i = 0; i < (n >> 1); i++) {
 		db alpha = 2 * PI * i / n;
 		rts[i + (n >> 1)] = Complex(cos(alpha), sin(alpha));
@@ -126,7 +126,9 @@ void fft_init(int n, int lg2) {
 }
 
 void fft_fast_init(int n, int lg2) {
-	for (int i = 1; i < n; i++) rev[i] = (rev[i >> 1] >> 1) + ((i & 1) << (lg2 - 1));
+	for (int i = 1; i < n; i++) {
+		rev[i] = (rev[i >> 1] >> 1) + ((i & 1) << (lg2 - 1));
+	}
 	rts[1] = Complex(1, 0);
 	for (int k = 1; k < lg2; k++) {
 		db alpha = 2 * PI / (1 << (k + 1));
@@ -139,7 +141,11 @@ void fft_fast_init(int n, int lg2) {
 }
 
 void fft(vector<Complex>& a, int n) {
-	for (int i = 0; i < n; i++) if (i < rev[i]) swap(a[i], a[rev[i]]);
+	for (int i = 0; i < n; i++) {
+		if (i < rev[i]) {
+			swap(a[i], a[rev[i]]);
+		}
+	}
 	for (int k = 1; k < n; k <<= 1) {
 		for (int i = 0; i < n; i += (k << 1)) {
 			for (int j = 0; j < k; j++) {
@@ -154,7 +160,9 @@ void fft(vector<Complex>& a, int n) {
 void fft_inv(vector<Complex>& a, int n) {
 	reverse(a.begin() + 1, a.end());
 	fft(a, n);
-	for (int i = 0; i < n; i++) a[i] = a[i] / n;
+	for (int i = 0; i < n; i++) {
+		a[i] = a[i] / n;
+	}
 }
 
 template<typename fft_mint>
@@ -165,15 +173,29 @@ vector<fft_mint> multiply(const vector<fft_mint>& a, const vector<fft_mint>& b, 
 	constexpr int mask = (1 << base) - 1;
 	int m = a.size() + b.size() - 1;
 	int n = 1, lg2 = 0;
-	if (use_FFT_N) n = FFT_N, lg2 = LG2;
+	if (use_FFT_N) {
+		n = FFT_N;
+		lg2 = LG2;
+	}
 	else {
-		while (n < m) n <<= 1, lg2++;
-		if (use_fast_init) fft_fast_init(n, lg2);
-		else fft_init(n, lg2);
+		while (n < m) {
+			n <<= 1;
+			lg2++;
+		}
+		if (use_fast_init) {
+			fft_fast_init(n, lg2);
+		}
+		else {
+			fft_init(n, lg2);
+		}
 	}
 	vector<Complex> c(n), d(n);
-	for (int i = 0; i < (int)a.size(); i++) c[i] = Complex(a[i].v & mask, a[i].v >> base);
-	for (int i = 0; i < (int)b.size(); i++) d[i] = Complex(b[i].v & mask, b[i].v >> base);
+	for (int i = 0; i < (int)a.size(); i++) {
+		c[i] = Complex(a[i].v & mask, a[i].v >> base);
+	}
+	for (int i = 0; i < (int)b.size(); i++) {
+		d[i] = Complex(b[i].v & mask, b[i].v >> base);
+	}
 	fft(c, n);
 	fft(d, n);
 	vector<Complex> e(n), f(n);

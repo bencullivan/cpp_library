@@ -1,7 +1,6 @@
-/**
- * ATCODER STRING
- * Source Atcoder Library - https://github.com/atcoder/ac-library/blob/master/atcoder/string.hpp
- */
+ // https://github.com/atcoder/ac-library
+#ifndef ATCODER_STRING_HPP
+#define ATCODER_STRING_HPP 1
 
 namespace atcoder {
 
@@ -237,3 +236,5 @@ std::vector<int> lcp_array(const std::string& s, const std::vector<int>& sa) {
 }
 
 }  // namespace atcoder
+
+#endif  // ATCODER_STRING_HPP

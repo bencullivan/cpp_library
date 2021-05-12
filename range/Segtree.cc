@@ -1,12 +1,10 @@
-/*
-	1D Range Queries and Point Updates.
-	0-indexed.
-	Time: 
-		- build_Segtree: O(N)
-		- upd: O(log(N))
-		- get: O(log(N))
-	Source: https://cp-algorithms.com/data_structures/segment_tree.html
-*/
+// 1D Range Queries and Point Updates.
+// 0-indexed.
+// Time: 
+// 	- build_Segtree: O(N)
+// 	- upd: O(log(N))
+// 	- get: O(log(N))
+// Source: https://cp-algorithms.com/data_structures/segment_tree.html
 struct Segtree {
 	struct Node;
 	vector<Node> data;
