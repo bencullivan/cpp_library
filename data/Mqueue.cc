@@ -37,8 +37,8 @@ template<typename T, typename Comparator = std::less<T>> struct Mqueue {
 		return two.top();
 	}
 	T mm() {
-		assert(!one.empty() || !two.empty());
 		if (two.empty()) swap_stack();
+		assert(!two.empty());
 		if (one.empty()) return two.mm();
 		return comp(one.mm(), two.mm()) ? one.mm() : two.mm();
 	}
