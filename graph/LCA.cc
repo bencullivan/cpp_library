@@ -21,8 +21,7 @@ template<typename T, bool use_min = true> struct RMQ { // Build in O(N*log(N)). 
 	T get_val(int a, int b) { return vals[get_index(a, b)]; }
 }; // RMQ
 
-// Build in O(N*log(N)). Query in O(1).
-struct LCA {
+struct LCA { // Build in O(N*log(N)). Query in O(1).
 	vector<int> first_euler, euler;
 	vector<int> depth;
 	RMQ<int> rmq;
