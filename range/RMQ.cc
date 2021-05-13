@@ -1,4 +1,4 @@
-template<typename T, bool use_min = true> struct RMQ { // Build in O(N*log(N)). Query in O(1).
+template<typename T, bool use_min = true> struct RMQ { // Build in O(N*log(N)). Query in O(1). Sources: kactl, Neal Wu.
 	vector<T> vals;
 	vector<vector<int>> table;
 	int select_index(int a, int b) { return (use_min ? vals[a] < vals[b] : vals[a] > vals[b]) ? a : b; }
