@@ -11,24 +11,20 @@ struct Segtree {
 	int len;
 
 	Segtree(int _len) : data(4 * _len), len(_len) {}
-
-	Segtree(vector<Node>& input) : data(4 * input.size()), len(input.size()) {
-		build_Segtree(1, 0, len - 1, input);
-	}
+	Segtree(vector<Node>& input) : data(4 * input.size()), len(input.size()) { build_Segtree(1, 0, len - 1, input); }
 
 	// builds the Segtree using the nodes in the input array
 	void build_Segtree(int i, int tl, int tr, vector<Node>& input) {
 		if (tl == tr) {
-			// the current node is a leaf
-			data[i] = input[tl];
+			data[i] = input[tl]; // the current node is a leaf
 			return;
 		}
 		// this node is not a leaf, recurse on children
-		int tm = (tl + tr) >> 1;
-		build_Segtree(i << 1, tl, tm, input);
-		build_Segtree(i << 1 | 1, tm + 1, tr, input);
+		int tm = (tl + tr) / 2;
+		build_Segtree(i * 2, tl, tm, input);
+		build_Segtree(i * 2 + 1, tm + 1, tr, input);
 		// set the value of this node by combining the values of its children
-		data[i] = combine(data[i << 1], data[i << 1 | 1]);
+		data[i] = combine(data[i * 2], data[i * 2 + 1]);
 	}
 
 	// sets the element at index x to v
@@ -38,15 +34,11 @@ struct Segtree {
 			return;
 		}
 		// we are not at x, recurse on the child that has x as a leaf
-		int tm = (tl + tr) >> 1;
-		if (x <= tm) {
-			upd(i << 1, tl, tm, x, v);
-		}
-		else {
-			upd(i << 1 | 1, tm + 1, tr, x, v);
-		}
+		int tm = (tl + tr) / 2;
+		if (x <= tm) upd(i * 2, tl, tm, x, v);
+		else upd(i * 2 + 1, tm + 1, tr, x, v);
 		// update the current node
-		data[i] = combine(data[i << 1], data[i << 1 | 1]);
+		data[i] = combine(data[i * 2], data[i * 2 + 1]);
 	}
 
 	// sets the element at index x to v
@@ -56,15 +48,11 @@ struct Segtree {
 
 	// queries the segment [l, r]
 	Node get(int i, int tl, int tr, int l, int r) {
-		if (tr < l || tl > r) {
-			return Node(); // we are out of range, return the default value
-		}
-		if (tl >= l && tr <= r) {
-			return data[i]; // this node's entire segment is in the range 
-		}
+		if (tr < l || tl > r) return Node(); // we are out of range, return the default value
+		if (tl >= l && tr <= r) return data[i]; // this node's entire segment is in the range 
 		// we are partially in the range, recurse on children
-		int tm = (tl + tr) >> 1;
-		return combine(get(i << 1, tl, tm, l, r), get(i << 1 | 1, tm + 1, tr, l, r));
+		int tm = (tl + tr) / 2;
+		return combine(get(i * 2, tl, tm, l, r), get(i * 2 + 1, tm + 1, tr, l, r));
 	}
 
 	// queries the segment [l, r]

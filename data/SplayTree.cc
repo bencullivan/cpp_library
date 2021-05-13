@@ -7,13 +7,9 @@
 template<typename K, typename V>
 struct SplayTree {
 	struct Node;
-
 	Node *root = nullptr;
 	int size = 0;
-
-	~SplayTree() {
-		destroy(root);
-	}
+	~SplayTree() { destroy(root); }
 
 	void destroy(Node *cur) {
 		if (!cur) return;
@@ -181,9 +177,7 @@ struct SplayTree {
 
 // --------------------------------------
 	struct Node {
-		Node *l = nullptr;
-		Node *r = nullptr;
-		Node *p = nullptr;
+		Node *l = nullptr, *r = nullptr, *p = nullptr;
 		K k;
 		V v;
 	};

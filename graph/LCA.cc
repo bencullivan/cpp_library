@@ -20,3 +20,27 @@ template<typename T, bool use_min = true> struct RMQ { // Build in O(N*log(N)). 
 	}
 	T get_val(int a, int b) { return vals[get_index(a, b)]; }
 }; // RMQ
+
+// Build in O(N*log(N)). Query in O(1).
+struct LCA {
+	vector<int> first_euler, euler;
+	vector<int> depth;
+	RMQ<int> rmq;
+	LCA(int root, vector<vector<int>>& tr) : first_euler(tr.size()) {
+		euler.reserve(2 * tr.size()), depth.reserve(2 * tr.size());
+		dfs(root, -1, 0, tr);
+		rmq.build(depth);
+		depth.clear();
+	}
+	void dfs(int u, int v, int d, vector<vector<int>>& tr) {
+		first_euler[u] = euler.size();
+		euler.push_back(u), depth.push_back(d);
+		for (int x:tr[u]) if (x != v) {
+			dfs(x, u, d + 1, tr);
+			euler.push_back(u), depth.push_back(d);
+		}
+	}
+	int get_lca(int u, int v) { 
+		return euler[rmq.get_index(min(first_euler[u], first_euler[v]), max(first_euler[u], first_euler[v]) + 1)]; 
+	}
+}; // LCA

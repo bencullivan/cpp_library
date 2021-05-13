@@ -20,13 +20,8 @@ struct StringSearch {
 			// this is because we know that they are the same as the last 6 characters of the string ending at index i - 1
 			// thus, we move to pi[j - 1]
 			int j = pi[i - 1];
-			while (j > 0 && s[i] != s[j]) {
-				j = pi[j - 1];
-			}
-			// if we have found a match, increment
-			if (s[i] == s[j]) {
-				j++;
-			}
+			while (j > 0 && s[i] != s[j]) j = pi[j - 1];
+			if (s[i] == s[j]) j++; // if we have found a match, increment
 			pi[i] = j;
 		}
 	}
@@ -38,33 +33,19 @@ struct StringSearch {
 		string q = t + separator + s;
 		lps(q);
 		locs.clear();
-		for (int i = 2 * t.size(); i < (int) q.size(); i++) {
-			if (pi[i] == (int) t.size()) {
-				locs.push_back(i - 2 * t.size());
-			}
-		}
+		for (int i = 2 * t.size(); i < (int) q.size(); i++) if (pi[i] == (int) t.size()) locs.push_back(i - 2 * t.size());
 	}
 
 	// Counts the number of occurrences of each prefix of s
 	// Time: O(N)
 	void get_occs(string& s) {
-		if (pi.size() != s.size()) {
-			lps(s);
-		}
+		if (pi.size() != s.size()) lps(s);
 		bool must_fill = !occs.empty();
 		occs.resize(s.size() + 1);
-		if (must_fill) {
-			fill(occs.begin(), occs.end(), 0);
-		}
-		for (int i = 0; i < (int) s.size(); i++) {
-			occs[pi[i]]++;
-		}
-		for (int i = s.size() - 1; i >= 0; i--) {
-			occs[pi[i - 1]] += occs[i];
-		}
-		for (int i = 0; i <= (int) s.size(); i++) {
-			occs[i]++;
-		}
+		if (must_fill) fill(occs.begin(), occs.end(), 0);
+		for (int i = 0; i < (int) s.size(); i++) occs[pi[i]]++;
+		for (int i = s.size() - 1; i >= 0; i--) occs[pi[i - 1]] += occs[i];
+		for (int i = 0; i <= (int) s.size(); i++) occs[i]++;
 	}
 
 	// Counts the number of unique substrings that appear in s
@@ -96,22 +77,16 @@ struct StringSearch {
 				// there is a prefix starting at position i
 				left = right = i;
 				// expand the current window while it remains a prefix of s
-				while (right < (int) s.size() - 1 && s[right + 1] == s[right + 1 - left]) {
-					right++;
-				}
+				while (right < (int) s.size() - 1 && s[right + 1] == s[right + 1 - left]) right++;
 				zarray[i] = right - left + 1;
 			}
 			else {
 				// we know that we are in the current window, so the substrings s[i-left...] and s[i...] 
 				// are equal for at least right-i+1 more characters
-				if (zarray[i - left] < right - i + 1) { // we remain inside the current window
-					zarray[i] = zarray[i - left];
-				}
+				if (zarray[i - left] < right - i + 1) zarray[i] = zarray[i - left]; // we remain inside the current window
 				else { // we must expand the current window while it remains a prefix of s
 					left = i;
-					while (right < (int) s.size() - 1 && s[right + 1] == s[right + 1 - left]) {
-						right++;
-					}
+					while (right < (int) s.size() - 1 && s[right + 1] == s[right + 1 - left]) right++;
 					zarray[i] = right - i + 1;
 				}
 			}
@@ -125,10 +100,6 @@ struct StringSearch {
 		string q = t + separator + s;
 		z(q);
 		locs.clear();
-		for (int i = t.size() + 1; i < (int) (q.size() - t.size()) + 1; i++) {
-			if (zarray[i] == (int) t.size()) {
-				locs.push_back(i - t.size() - 1);
-			}
-		}
+		for (int i = t.size() + 1; i < (int) (q.size() - t.size()) + 1; i++) if (zarray[i] == (int) t.size()) locs.push_back(i - t.size() - 1);
 	}
 }; // StringSearch

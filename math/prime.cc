@@ -125,9 +125,7 @@ void sieve(ll N) {
 	for (ll i = 2; i <= N; i++) {
 		if (is_prime[i]) {
 			primes.push_back(i);
-			for (ll j = i * i; j <= N; j += i) {
-				is_prime[j] = false;
-			}
+			for (ll j = i * i; j <= N; j += i) is_prime[j] = false;
 		}
 	}
 }
@@ -141,20 +139,10 @@ void range(ll L, ll R) {
 	ll root = sqrt(R);
 	sieve(root);
 	is_prime = vector<bool>(R - L + 1, true);
-	for (ll i:primes) {
-		for (ll j = max(i * i, (L + i - 1) / i * i); j <= R; j += i) {
-			is_prime[j - L] = false;
-		}
-	}
-	if (L == 1) {
-		is_prime[0] = false;
-	}
+	for (ll i:primes) for (ll j = max(i * i, (L + i - 1) / i * i); j <= R; j += i) is_prime[j - L] = false;
+	if (L == 1) is_prime[0] = false;
 	primes.clear();
-	for (ll i = 0; i < R - L + 1; i++) {
-		if (is_prime[i]) {
-			primes.push_back(i + L);
-		}
-	}
+	for (ll i = 0; i < R - L + 1; i++) if (is_prime[i]) primes.push_back(i + L);
 }
 
 /*
@@ -171,9 +159,8 @@ void spf_sieve(ll N) {
 			spf[i] = i;
 			primes.push_back(i);
 		}
-		for (ll j = 0; j < (ll) primes.size() && primes[j] <= spf[i] && i * primes[j] <= N; j++) {
+		for (ll j = 0; j < (ll) primes.size() && primes[j] <= spf[i] && i * primes[j] <= N; j++) 
 			spf[i * primes[j]] = primes[j];
-		}
 	}
 }
 
@@ -195,8 +182,6 @@ vector<pair<ll, ll>> pf_precomp(ll x) {
 		ct++;
 		x /= spf[x];
 	}
-	if (ct) {
-		prime_factors.emplace_back(cur, ct);
-	}
+	if (ct) prime_factors.emplace_back(cur, ct);
 	return prime_factors;
 }

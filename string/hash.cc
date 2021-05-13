@@ -58,13 +58,8 @@ bool comp_hash(string& one, PolyHash& one_hash, int one_start, int one_substr_le
 	int low = 1, high = min(one_substr_len, two_substr_len);
 	while (low <= high) {
 		int mid = (low + high) / 2;
-		if (one_hash.get(one_start, mid, mx_pow) == two_hash.get(two_start, mid, mx_pow)) {
-			low = mid + 1;
-		}
-		else {
-			loc = mid;
-			high = mid - 1;
-		}
+		if (one_hash.get(one_start, mid, mx_pow) == two_hash.get(two_start, mid, mx_pow)) low = mid + 1;
+		else loc = mid, high = mid - 1;
 	}
 	if (loc == -1) return one_substr_len < two_substr_len;
 	return one[one_start + loc - 1] < two[two_start + loc - 1];
