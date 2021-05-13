@@ -14,7 +14,6 @@ template<typename T> struct Fenwick {
 		for (int i = idx; i > 0; i -= i & -i) res += data[i];
 		return res;
 	}
-
 	// returns the sum of the elements in the range [left, right]
 	T get(int left, int right) {
 		return get(right) - get(left - 1);
