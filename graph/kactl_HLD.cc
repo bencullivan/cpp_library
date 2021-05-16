@@ -1,7 +1,3 @@
-#ifndef int
-#define int ll
-#endif
-
 #ifndef KACTL
 #define KACTL
 
@@ -13,24 +9,25 @@ typedef std::vector<int> vi;
 
 #endif // KACTL
 
-// /**
-//  * Author: Simon Lindholm
-//  * Date: 2015-09-12
-//  * License: CC0
-//  * Source: me
-//  * Description: When you need to dynamically allocate many objects and don't care about freeing them.
-//  * "new X" otherwise has an overhead of something like 0.05us + 16 bytes per allocation.
-//  * Status: tested
-//  */
+/**
+ * Author: Simon Lindholm
+ * Date: 2015-09-12
+ * License: CC0
+ * Source: me
+ * Description: When you need to dynamically allocate many objects and don't care about freeing them.
+ * "new X" otherwise has an overhead of something like 0.05us + 16 bytes per allocation.
+ * Status: tested
+ */
+// #pragma once
 
-// // Either globally or in a single class:
-// static char buf[450 << 20];
-// void* operator new(size_t s) {
-// 	static size_t i = sizeof buf;
-// 	assert(s < i);
-// 	return (void*)&buf[i -= s];
-// }
-// void operator delete(void*) {}
+// Either globally or in a single class:
+static char buf[450 << 20];
+void* operator new(size_t s) {
+	static size_t i = sizeof buf;
+	assert(s < i);
+	return (void*)&buf[i -= s];
+}
+void operator delete(void*) {}
 
 /**
  * Author: Simon Lindholm
@@ -44,6 +41,9 @@ typedef std::vector<int> vi;
  * Usage: Node* tr = new Node(v, 0, sz(v));
  * Status: stress-tested a bit
  */
+// #pragma once
+
+// #include "../various/BumpAllocator.h"
 
 const int inf = 1e9;
 struct Node {
@@ -96,13 +96,6 @@ struct Node {
 	}
 };
 
-void destroy(Node* x) {
-	if (!x) return;
-	destroy(x->l);
-	destroy(x->r);
-	delete x;
-}
-
 /**
  * Author: Benjamin Qi, Oleksandr Kulkov, chilli
  * Date: 2020-01-12
@@ -118,6 +111,9 @@ void destroy(Node* x) {
  * Time: O((\log N)^2)
  * Status: stress-tested against old HLD
  */
+// #pragma once
+
+// #include "../data-structures/LazySegmentTree.h"
 
 template <bool VALS_EDGES> struct HLD {
 	int N, tim = 0;
@@ -126,7 +122,7 @@ template <bool VALS_EDGES> struct HLD {
 	Node *tree;
 	HLD(vector<vi> adj_)
 		: N(sz(adj_)), adj(adj_), par(N, -1), siz(N, 1), depth(N),
-		rt(N),pos(N),tree(new Node(0, N)){ dfsSz(0); dfsHld(0); }
+		  rt(N),pos(N),tree(new Node(0, N)){ dfsSz(0); dfsHld(0); }
 	void dfsSz(int v) {
 		if (par[v] != -1) adj[v].erase(find(all(adj[v]), par[v]));
 		for (int& u : adj[v]) {

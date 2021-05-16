@@ -21,6 +21,9 @@ for line in buf:
 if no_df:
 	target_line = 'using namespace std;'
 
+if sys.argv[3] == 'kactl':
+	target_line = '#include <bits/stdc++.h>'
+
 with open(os.path.join(folder_path, sys.argv[4] + '.cc'), 'w') as destination_file:
 	for line in buf:
 		if line.find(target_line) != -1:

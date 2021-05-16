@@ -1,6 +1,7 @@
 // https://cp-algorithms.com/data_structures/stack_queue_modification.html
 
-template<typename T, typename Comparator = std::less<T>> struct Mstack {
+template<typename T, typename Comparator = std::less<T>>
+struct Mstack {
 	Comparator comp;
 	vector<T> data, mdata;
 	void push(const T& v) {
@@ -14,7 +15,8 @@ template<typename T, typename Comparator = std::less<T>> struct Mstack {
 	bool empty() { return data.empty(); }
 }; // Mstack
 
-template<typename T, typename Comparator = std::less<T>> struct Mqueue {
+template<typename T, typename Comparator = std::less<T>>
+struct Mqueue {
 	Comparator comp;
 	Mstack<T, Comparator> one, two;
 	void swap_stack() {
