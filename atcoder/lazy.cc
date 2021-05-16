@@ -1,4 +1,4 @@
-// // https://github.com/atcoder/ac-library
+// https://github.com/atcoder/ac-library
 
 #ifndef ATCODER_INTERNAL_BITOP_HPP
 #define ATCODER_INTERNAL_BITOP_HPP 1
