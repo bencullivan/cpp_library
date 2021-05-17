@@ -77,8 +77,8 @@ public:
 		r += size;
 
 		for (int i = log; i >= 1; i--) {
-			if (((l >> i) << i) != l) push(l >> i);
-			if (((r >> i) << i) != r) push((r - 1) >> i);
+			if (l & 1) push(l >> i);
+			if (r & 1) push((r - 1) >> i);
 		}
 
 		S sml = e(), smr = e();
@@ -109,8 +109,8 @@ public:
 		r += size;
 
 		for (int i = log; i >= 1; i--) {
-			if (((l >> i) << i) != l) push(l >> i);
-			if (((r >> i) << i) != r) push((r - 1) >> i);
+			if (l & 1) push(l >> i);
+			if (r & 1) push((r - 1) >> i);
 		}
 
 		{
@@ -126,8 +126,8 @@ public:
 		}
 
 		for (int i = 1; i <= log; i++) {
-			if (((l >> i) << i) != l) update(l >> i);
-			if (((r >> i) << i) != r) update((r - 1) >> i);
+			if (l & 1) update(l >> i);
+			if (r & 1) update((r - 1) >> i);
 		}
 	}
 
@@ -211,27 +211,15 @@ private:
 #endif  // ATCODER_LAZYSEGTREE_HPP
 
 struct S { // segment
-	// store size of segment for sum queries
 };
-
-struct F { // update
+struct F { // lazy update
 };
-
-S op(S l, S r) { // the unite operation for two segments
+S op(S l, S r) { // the combine operation for two segments
 }
-
-S e() { // the identity segment
-	return S();
-}
-
 S mapping(F l, S r) { // the update operation for a segment
 }
-
-F composition(F l, F r) { // composition of two updates (l is applied after r)
+F composition(F l, F r) { // composition of two lazy updates (l is applied after r)
 }
-
-F id() { // the identity update
-	return F();
-}
-
+S e() { return S(); } // the identity segment
+F id() { return F(); } // the identity update
 using Lazy = atcoder::lazy_segtree<S, op, e, F, mapping, composition, id>;

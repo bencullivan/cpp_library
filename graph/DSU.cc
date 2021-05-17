@@ -1,3 +1,6 @@
+#ifndef LIBRARY_DSU
+#define LIBRARY_DSU 1
+
 // Disjoint Set Union
 // Time: (amortized) O(alpha(N)) (alpha(N) will not exceed 4)
 struct DSU {
@@ -14,3 +17,5 @@ struct DSU {
 		return true;
 	}
 }; // DSU
+
+#endif // LIBRARY_DSU

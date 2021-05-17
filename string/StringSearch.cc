@@ -1,10 +1,11 @@
 // Provides various operations for searching within strings.
-// Source: https://cp-algorithms.com/string/prefix-function.html (lps, kmp, occs, unique)
+// Source: https://cp-algorithms.com/string/prefix-function.html (lps, kmp, occs, unique, manacher)
 struct StringSearch {
 	vector<int> pi;
 	vector<int> zarray;
 	vector<int> locs; // the locations of the target pattern from kmp or z
 	vector<int> occs; // the number of occurrences of each prefix
+	vector<int> d1, d2; // number of odd and even palindromes centered at position i
 
 	// Computes for each index, i, the length of the longest string that is 
 	// both a prefix and a suffix of s[0...i]
@@ -101,5 +102,33 @@ struct StringSearch {
 		z(q);
 		locs.clear();
 		for (int i = t.size() + 1; i < (int) (q.size() - t.size()) + 1; i++) if (zarray[i] == (int) t.size()) locs.push_back(i - t.size() - 1);
+	}
+
+	// finds all sub palindromes of a string
+	// Time: O(N)
+	void manacher(string& s) {
+		d1.resize(n), d2.resize(n);
+		for (int i = 0, l = 0, r = -1; i < n; i++) {
+			int k = (i > r) ? 1 : min(d1[l + r - i], r - i + 1);
+			while (0 <= i - k && i + k < n && s[i - k] == s[i + k]) {
+				k++;
+			}
+			d1[i] = k--;
+			if (i + k > r) {
+				l = i - k;
+				r = i + k;
+			}
+		}
+		for (int i = 0, l = 0, r = -1; i < n; i++) {
+			int k = (i > r) ? 0 : min(d2[l + r - i + 1], r - i + 1);
+			while (0 <= i - k - 1 && i + k < n && s[i - k - 1] == s[i + k]) {
+				k++;
+			}
+			d2[i] = k--;
+			if (i + k > r) {
+				l = i - k - 1;
+				r = i + k ;
+			}
+		}		
 	}
 }; // StringSearch

@@ -1,5 +1,5 @@
-#ifndef WTFFT
-#define WTFFT
+#ifndef MINT
+#define MINT 1
 
 // https://github.com/ecnerwala/cp-book
 template<int _MOD> struct Modnum {
@@ -39,6 +39,8 @@ template<int _MOD> struct Modnum {
 
 // using mint = Modnum<1000000007>;
 // using mint = Modnum<998244353>;
+
+#endif // MINT
 
 // Fast Fourier Transform mod an arbitrary integer.
 // Sources:

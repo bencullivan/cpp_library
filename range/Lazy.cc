@@ -1,4 +1,4 @@
-// Lazy Segtree inspired by the implementation from the AtCoder library (except this one is recursive lol)
+// Lazy Segtree inspired by the implementation from the AtCoder Library (except this one is recursive lol)
 // Range updates and queries in O(log(n))
 template <typename S, S (*op)(S, S), S (*e)(), typename F, S (*mapping)(F, S), F (*composition)(F, F), F (*id)()>
 struct LazySegtree {
@@ -66,6 +66,6 @@ S mapping(F l, S r) { // the update operation for a segment
 }
 F composition(F l, F r) { // composition of two lazy updates (l is applied after r)
 }
-S e() { return S(); }
-F id() { return F(); }
+S e() { return S(); } // the identity segment
+F id() { return F(); } // the identity update
 using Lazy = LazySegtree<S, op, e, F, mapping, composition, id>;

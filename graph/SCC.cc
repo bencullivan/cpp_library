@@ -71,7 +71,6 @@ struct SCC {
 #define ATCODER_INTERNAL_CSR_HPP 1
 
 namespace atcoder {
-namespace internal {
 
 template <class E> struct csr {
 	std::vector<int> start;
@@ -91,8 +90,6 @@ template <class E> struct csr {
 	}
 };
 
-}  // namespace internal
-
 }  // namespace atcoder
 
 #endif  // ATCODER_INTERNAL_CSR_HPP
@@ -101,7 +98,6 @@ template <class E> struct csr {
 #define ATCODER_INTERNAL_SCC_HPP 1
 
 namespace atcoder {
-namespace internal {
 
 // Reference:
 // R. Tarjan,
@@ -175,11 +171,7 @@ private:
 	std::vector<std::pair<int, edge>> edges;
 };
 
-}  // namespace internal
-
 }  // namespace atcoder
-
-using atcoder::internal::scc_graph;
 
 #endif  // ATCODER_INTERNAL_SCC_HPP
 
@@ -216,7 +208,7 @@ public:
 private:
 	int _n;
 	std::vector<bool> _answer;
-	internal::scc_graph scc;
+	scc_graph scc;
 };
 
 }  // namespace atcoder

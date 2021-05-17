@@ -142,12 +142,7 @@ template <class S, S (*op)(S, S), S (*e)()> struct segtree {
 
 struct S { // segment
 };
-
 S op(S l, S r) { // update operation for two segments
 }
-
-S e() { // the identity segment
-	return S();
-}
-
+S e() { return S(); } // the identity segment
 using Segtree = atcoder::segtree<S, op, e>;

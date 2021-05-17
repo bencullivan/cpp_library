@@ -1,3 +1,6 @@
+#ifndef LIBRARY_DINIC
+#define LIBRARY_DINIC 1
+
 /**
  * Max flow using Dinic's algorithm.
  * Time: O(E*V^2)
@@ -113,3 +116,5 @@ struct Dinic {
 		}
 	}
 }; // Dinic
+
+#endif // LIBRARY_DINIC
