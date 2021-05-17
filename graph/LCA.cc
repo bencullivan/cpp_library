@@ -28,6 +28,7 @@ struct LCA {
 	vector<int> first_euler, euler;
 	vector<int> depth;
 	RMQ<int> rmq;
+	LCA() {}
 	LCA(int root, const vector<vector<int>>& tr) : first_euler(tr.size()) {
 		euler.reserve(2 * tr.size()), depth.reserve(2 * tr.size());
 		dfs(root, -1, 0, tr);
