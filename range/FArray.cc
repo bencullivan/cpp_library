@@ -1,5 +1,6 @@
 /*
 	Finds the index of the first occurence of a value greater-equal/less-equal to a target value.
+	Honestly just use the atcoder segtree for this lol
 	0-indexed.
 	Time:
 		- build_FArray: O(N)

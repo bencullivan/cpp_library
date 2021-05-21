@@ -1,5 +1,8 @@
 // Provides various operations for searching within strings.
-// Source: https://cp-algorithms.com/string/prefix-function.html (lps, kmp, occs, unique, manacher)
+// Sources:
+// - https://cp-algorithms.com/string/prefix-function.html (lps, kmp, occs, unique)
+// - https://cp-algorithms.com/string/z-function.html
+// - https://cp-algorithms.com/string/manacher.html
 struct StringSearch {
 	vector<int> pi;
 	vector<int> zarray;

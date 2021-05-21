@@ -254,6 +254,7 @@ struct HLD_LCA {
 	vector<int> first_euler, euler;
 	vector<int> depth;
 	HLD_RMQ<int> rmq;
+	HLD_LCA() {}
 	HLD_LCA(int root, const vector<vector<int>>& tr) : first_euler(tr.size()) {
 		euler.reserve(2 * tr.size()), depth.reserve(2 * tr.size());
 		dfs(root, -1, 0, tr);

@@ -1,69 +1,32 @@
 // https://github.com/ecnerwala/cp-book
-template<int _MOD>
+template<int _MOD> 
 struct Modnum {
 	static constexpr int MOD = _MOD;
 	int v;
 	Modnum() : v(0) {}
 	Modnum(ll _v) : v(int(_v % MOD)) { if (v < 0) v += MOD; }
 	explicit operator int() const { return v; }
-	friend std::ostream& operator << (std::ostream& out, const Modnum& n) { return out << int(n); }
-	friend std::istream& operator >> (std::istream& in, Modnum& n) { ll v_; in >> v_; n = Modnum(v_); return in; }
+	friend istream& operator >> (istream& in, Modnum& n) { ll v_; in >> v_; n = Modnum(v_); return in; }
+	friend ostream& operator << (ostream& out, const Modnum& n) { return out << int(n); }
 	friend bool operator == (const Modnum& a, const Modnum& b) { return a.v == b.v; }
 	friend bool operator != (const Modnum& a, const Modnum& b) { return a.v != b.v; }
 	friend bool operator < (const Modnum& a, const Modnum& b) { return a.v < b.v; }
 	friend bool operator > (const Modnum& a, const Modnum& b) { return a.v > b.v; }
 	friend bool operator <= (const Modnum& a, const Modnum& b) { return a.v <= b.v; }
 	friend bool operator >= (const Modnum& a, const Modnum& b) { return a.v >= b.v; }
-	static int _minv(int a, int m) {
-		a %= m;
-		assert(a);
-		return a == 1 ? 1 : int(m - ll(_minv(m, a)) * ll(m) / a);
-	}
-	Modnum inv() const {
-		Modnum res;
-		res.v = _minv(v, MOD);
-		return res;
-	}
+	static int _minv(int a, int m) { a %= m; assert(a); return a == 1 ? 1 : int(m - ll(_minv(m, a)) * ll(m) / a); }
+	Modnum inv() const { Modnum res; res.v = _minv(v, MOD); return res; }
 	friend Modnum inv(const Modnum& m) { return m.inv(); }
-	Modnum neg() const {
-		Modnum res;
-		res.v = v ? MOD-v : 0;
-		return res;
-	}
+	Modnum neg() const { Modnum res; res.v = v ? MOD-v : 0; return res; }
 	friend Modnum neg(const Modnum& m) { return m.neg(); }
-	Modnum operator- () const {
-		return neg();
-	}
-	Modnum operator+ () const {
-		return Modnum(*this);
-	}
-	Modnum& operator ++ () {
-		v++;
-		if (v == MOD) v = 0;
-		return *this;
-	}
-	Modnum& operator -- () {
-		if (v == 0) v = MOD;
-		v--;
-		return *this;
-	}
-	Modnum& operator += (const Modnum& o) {
-		v -= MOD-o.v;
-		v = (v < 0) ? v + MOD : v;
-		return *this;
-	}
-	Modnum& operator -= (const Modnum& o) {
-		v -= o.v;
-		v = (v < 0) ? v + MOD : v;
-		return *this;
-	}
-	Modnum& operator *= (const Modnum& o) {
-		v = int((ll)v * (ll)o.v % MOD);
-		return *this;
-	}
-	Modnum& operator /= (const Modnum& o) {
-		return *this *= o.inv();
-	}
+	Modnum operator- () const { return neg(); }
+	Modnum operator+ () const { return Modnum(*this); }
+	Modnum& operator ++ () { v++; if (v == MOD) v = 0; return *this; }
+	Modnum& operator -- () { if (v == 0) v = MOD; v--; return *this; }
+	Modnum& operator += (const Modnum& o) { v -= MOD-o.v; v = (v < 0) ? v + MOD : v; return *this; }
+	Modnum& operator -= (const Modnum& o) { v -= o.v; v = (v < 0) ? v + MOD : v; return *this; }
+	Modnum& operator *= (const Modnum& o) { v = int((ll)v * (ll)o.v % MOD); return *this; }
+	Modnum& operator /= (const Modnum& o) { return *this *= o.inv(); }
 	friend Modnum operator ++ (Modnum& a, int) { Modnum r = a; ++a; return r; }
 	friend Modnum operator -- (Modnum& a, int) { Modnum r = a; --a; return r; }
 	friend Modnum operator + (const Modnum& a, const Modnum& b) { return Modnum(a) += b; }
@@ -75,42 +38,22 @@ struct Modnum {
 using mint = Modnum<1000000007>;
 // using mint = Modnum<998244353>;
 
-// 1D Prefix sums and point updates.
+// 1D Prefix sums and point updates in O(log(N)).
 // 1-indexed.
-// Time:
-// 	- upd: O(log(N))
-// 	- get: O(log(N))
-template<typename T>
+template<typename T> 
 struct Fenwick {
 	vector<T> data;
 	int len;
-
 	Fenwick(int _len) : data(_len+1), len(_len + 1) {}
-
-	Fenwick(vector<T>& input) : data(input.size() + 1), len((int) input.size() + 1) {
-		for (int i = 1; i < len; i++) {
-			upd(i, input[i - 1]);
-		}
+	void add(int idx, T val) { 
+		for (int i = idx; i < len; i += i & -i) data[i] += val;
 	}
-
-	// adds val to the element at index idx
-	void upd(int idx, T val) {
-		for (int i = idx; i < len; i += i & -i) {
-			data[i] += val;
-		}
-	}
-
-	// returns the sum of elements in the range [1, idx]
-	T get(int idx) {
+	T get(int idx) { // [1, idx]
 		T res = 0;
-		for (int i = idx; i > 0; i -= i & -i) {
-			res += data[i];
-		}
+		for (int i = idx; i > 0; i -= i & -i) res += data[i];
 		return res;
 	}
-
-	// returns the sum of the elements in the range [left, right]
-	T get(int left, int right) {
+	T get(int left, int right) { // [left, right]
 		return get(right) - get(left - 1);
 	}
 }; // Fenwick
@@ -158,11 +101,11 @@ struct MutablePolyHash {
 		poly_hash_mint old1 = pow1[i] * poly_hash_mint((ll)oldch);
 		poly_hash_mint new1 = pow1[i] * poly_hash_mint((ll)newch);
 		old1 = mod - old1;
-		pref1.upd(i + 1, old1 + new1);
+		pref1.add(i + 1, old1 + new1);
 		ull old2 = pow2[i] * oldch;
 		ull new2 = pow2[i] * newch;
 		old2 = -old2;
-		pref2.upd(i + 1, old2 + new2);
+		pref2.add(i + 1, old2 + new2);
 	}
 
 	// Polynomial hash of subsequence [pos, pos+len)

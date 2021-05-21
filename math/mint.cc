@@ -1,8 +1,6 @@
-#ifndef MINT
-#define MINT 1
-
 // https://github.com/ecnerwala/cp-book
-template<int _MOD> struct Modnum {
+template<int _MOD> 
+struct Modnum {
 	static constexpr int MOD = _MOD;
 	int v;
 	Modnum() : v(0) {}
@@ -39,5 +37,3 @@ template<int _MOD> struct Modnum {
 
 using mint = Modnum<1000000007>;
 // using mint = Modnum<998244353>;
-
-#endif // MINT

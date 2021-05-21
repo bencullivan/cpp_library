@@ -2,7 +2,7 @@
  * Kosaraju's Algorithm
  * Finds all strongly connected components of a directed graph with N vertices and M edges.
  * Time: O(N+M)
- * Source: CS31 Lecture Notes - Deeparnab Chakrabarty
+ * Source: CS31 Lecture Notes - Deeparnab Chakrabarty, folklore
  */
 struct SCC {
 	vector<vector<int>> G; // the directed input graph

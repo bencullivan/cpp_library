@@ -177,6 +177,7 @@ struct HLD_LCA {
 	vector<int> first_euler, euler;
 	vector<int> depth;
 	HLD_RMQ<int> rmq;
+	HLD_LCA() {}
 	HLD_LCA(int root, const vector<vector<int>>& tr) : first_euler(tr.size()) {
 		euler.reserve(2 * tr.size()), depth.reserve(2 * tr.size());
 		dfs(root, -1, 0, tr);
@@ -259,3 +260,4 @@ S_HLD op_hld(S_HLD l, S_HLD r) { // the combine operation for two segments
 S_HLD e_hld() { return S_HLD(); } // the identity segment
 template<bool VALS_EDGES> using HLD = 
 	HeavyLightDecomposition<VALS_EDGES, S_HLD, op_hld, e_hld>;
+	
