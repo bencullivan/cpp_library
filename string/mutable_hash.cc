@@ -91,8 +91,8 @@ struct MutablePolyHash {
 		}
 		for (int i = 0; i < n; ++i) {
 			assert(base > s[i]);
-			pref1.upd(i + 1, pow1[i] * poly_hash_mint((ll)s[i]));
-			pref2.upd(i + 1, pow2[i] * s[i]);
+			pref1.add(i + 1, pow1[i] * poly_hash_mint((ll)s[i]));
+			pref2.add(i + 1, pow2[i] * s[i]);
 		}
 	}
 
