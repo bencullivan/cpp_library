@@ -1,20 +1,15 @@
 // This code is included in all the files that I compile with g++ to enable easy debugging.
 // The bash compilation function that I use:
 // function com() {
-//     g++-10 -arch x86_64 -std=gnu++17 -O2 -Wall -include /Users/bencullivan/documents/CppLibrary/competition_templates/debug.h $1".cc" && ./a.out
+//     g++-10 -arch x86_64 -std=gnu++17 -O2 -Wall -include /Users/bencullivan/documents/CppLibrary/templates/debug.h $1".cc" && ./a.out
 // }
 // ex:
 // com normal
-
-//#ifdef LOCAL
-#ifndef LOL_DEBUG
-#define LOL_DEBUG
 
 #include <iostream>
 #include <type_traits>
 #include <utility>
 #include <string>
-#include <assert.h>
 
 #ifndef _WIN32
 #define RESET   "\033[0m"
@@ -59,67 +54,34 @@ void debug_helper(Head H, Tail... T) {
 
 #define dbg(...) std::cout << MAGENTA << __LINE__ << " [" << #__VA_ARGS__ << "]: " << GREEN, debug_helper(__VA_ARGS__)
 
-// 1d array
-#define dba1(_arr,_d1) { \
-	std::cout << MAGENTA << __LINE__ << " [" << #_arr << "]:" << GREEN << "\n{"; \
-	for (long long _i = 0; _i < _d1; _i++) { \
-		std::cout << _arr[_i]; \
-		if (_i < _d1-1) std::cout << ", "; \
-	} \
-	std::cout << "}" << RESET << endl; }
+// debugging arrays of variable size
 
-// 2d array
-#define dba2(_arr,_d1,_d2) { \
-	std::cout << MAGENTA << __LINE__ << " [" << #_arr << "]:" << GREEN << "\n{"; \
-	for (long long _i = 0; _i < _d1; _i++) { \
-		std::cout << "\n{"; \
-		for (long long _j = 0; _j < _d2; _j++) { \
-			std::cout << _arr[_i][_j]; \
-			if (_j < _d2-1) std::cout << ", "; \
-		} \
-		std::cout << "},"; \
-	} \
-	std::cout << "}" << RESET << std::endl; }
+int debug_arr_dims[10], debug_max_dim;
 
-// 3d array
-#define dba3(_arr,_d1,_d2,_d3) { \
-	std::cout << MAGENTA << __LINE__ << " [" << #_arr << "]:" << GREEN << "\n{"; \
-	for (long long _i = 0; _i < _d1; _i++) { \
-		std::cout << "\n{"; \
-		for (long long _j = 0; _j < _d2; _j++) { \
-			std::cout << "{"; \
-			for (long long _k = 0; _k < _d3; _k++) { \
-				std::cout << _arr[_i][_j][_k]; \
-				if (_k < _d3-1) std::cout << ", "; \
-			} \
-			std::cout << "}"; \
-			if (_j < _d2-1) std::cout << ", "; \
-		} \
-		std::cout << "},"; \
-	} \
-	std::cout << "}" << RESET << std::endl; }
+void debug_fill_arr_dims() {}
 
-// 4d array
-#define dba4(_arr,_d1,_d2,_d3,_d4) { \
-	std::cout << MAGENTA << __LINE__ << " [" << #_arr << "]:" << GREEN << "\n{"; \
-	for (long long _i = 0; _i < _d1; _i++) { \
-		std::cout << "\n{"; \
-		for (long long _j = 0; _j < _d2; _j++) { \
-			std::cout << "\n{"; \
-			for (long long _k = 0; _k < _d3; _k++) { \
-				std::cout << "{"; \
-				for (long long _l = 0; _l < _d4; _l++) { \
-					std::cout << _arr[_i][_j][_k][_l]; \
-					if (_l < _d4-1) std::cout << ", "; \
-				} \
-				std::cout << "}"; \
-				if (_k < _d3-1) std::cout << ", "; \
-			} \
-			std::cout << "},"; \
-		} \
-		std::cout << "},"; \
-	} \
-	std::cout << "}" << RESET << std::endl; }
+template<typename Head, typename... Tail>
+void debug_fill_arr_dims(Head H, Tail... T) {
+	debug_arr_dims[debug_max_dim++] = H;
+	debug_fill_arr_dims(T...);
+}
 
-#endif // LOL_DEBUG
-//#endif // LOCAL
+template<typename T>
+void debug_arr(T elt, int d) {
+	std::cout << elt;
+}
+
+template<typename T>
+void debug_arr(T* arr, int d) {
+	std::cout << "\n{";
+	std::string sep;
+	for (int i = 0; i < debug_arr_dims[d]; i++) {
+		std::cout << sep;
+		sep = ", ";
+		debug_arr(arr[i], d + 1);
+	}
+	std::cout << '}';
+	if (d == 0) std::cout << RESET << std::endl;
+}
+
+#define dba(arr,...) std::cout << MAGENTA << __LINE__ << " [" << #arr << "]: " << GREEN, debug_max_dim = 0, debug_fill_arr_dims(__VA_ARGS__), debug_arr(arr, 0)

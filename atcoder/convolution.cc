@@ -1,4 +1,5 @@
 // https://github.com/atcoder/ac-library
+
 #ifndef ATCODER_INTERNAL_BITOP_HPP
 #define ATCODER_INTERNAL_BITOP_HPP 1
 
@@ -10,13 +11,13 @@ namespace internal {
 // @return minimum non-negative `x` s.t. `n <= 2**x`
 int ceil_pow2(int n) {
 	int x = 0;
-	while ((1U << x) < (ui)(n)) x++;
+	while ((1U << x) < (unsigned)(n)) x++;
 	return x;
 }
 
 // @param n `1 <= n`
 // @return minimum non-negative `x` s.t. `(n & (1 << x)) != 0`
-int bsf(ui n) {
+int bsf(unsigned n) {
 	return __builtin_ctz(n);
 }
 
@@ -45,19 +46,19 @@ constexpr ll safe_mod(ll x, ll m) {
 // Reference: https://en.wikipedia.org/wiki/Barrett_reduction
 // NOTE: reconsider after Ice Lake
 struct barrett {
-	ui _m;
+	unsigned _m;
 	ull im;
 
 	// @param m `1 <= m < 2^31`
-	explicit barrett(ui m) : _m(m), im((ull)(-1) / m + 1) {}
+	explicit barrett(unsigned m) : _m(m), im((ull)(-1) / m + 1) {}
 
 	// @return m
-	ui umod() const { return _m; }
+	unsigned umod() const { return _m; }
 
 	// @param a `0 <= a < m`
 	// @param b `0 <= b < m`
 	// @return `a * b % m`
-	ui mul(ui a, ui b) const {
+	unsigned mul(unsigned a, unsigned b) const {
 		// [1] m = 1
 		// a = b = im = 0, so okay
 
@@ -71,7 +72,7 @@ struct barrett {
 		ull z = a;
 		z *= b;
 		ull x = (ull)(((unsigned __int128)(z)*im) >> 64);
-		ui v = (ui)(z - x * _m);
+		unsigned v = (unsigned)(z - x * _m);
 		if (_m <= v) v += _m;
 		return v;
 	}
@@ -82,7 +83,7 @@ struct barrett {
 // @return `(x ** n) % m`
 constexpr ll pow_mod_constexpr(ll x, ll n, int m) {
 	if (m == 1) return 0;
-	ui _m = (ui)(m);
+	unsigned _m = (unsigned)(m);
 	ull r = 1;
 	ull y = safe_mod(x, m);
 	while (n) {
@@ -281,14 +282,14 @@ public:
 	static_modint(T v) {
 		ll x = (ll)(v % (ll)(umod()));
 		if (x < 0) x += umod();
-		_v = (ui)(x);
+		_v = (unsigned)(x);
 	}
 	template <class T, internal::is_unsigned_int_t<T>* = nullptr>
 	static_modint(T v) {
-		_v = (ui)(v % umod());
+		_v = (unsigned)(v % umod());
 	}
 
-	ui val() const { return _v; }
+	unsigned val() const { return _v; }
 
 	mint& operator++() {
 		_v++;
@@ -324,7 +325,7 @@ public:
 	mint& operator*=(const mint& rhs) {
 		ull z = _v;
 		z *= rhs._v;
-		_v = (ui)(z % umod());
+		_v = (unsigned)(z % umod());
 		return *this;
 	}
 	mint& operator/=(const mint& rhs) { return *this = *this * rhs.inv(); }
@@ -373,8 +374,8 @@ public:
 	}
 
 private:
-	ui _v;
-	static constexpr ui umod() { return m; }
+	unsigned _v;
+	static constexpr unsigned umod() { return m; }
 	static constexpr bool prime = internal::is_prime<m>;
 };
 
@@ -398,14 +399,14 @@ public:
 	dynamic_modint(T v) {
 		ll x = (ll)(v % (ll)(mod()));
 		if (x < 0) x += mod();
-		_v = (ui)(x);
+		_v = (unsigned)(x);
 	}
 	template <class T, internal::is_unsigned_int_t<T>* = nullptr>
 	dynamic_modint(T v) {
-		_v = (ui)(v % mod());
+		_v = (unsigned)(v % mod());
 	}
 
-	ui val() const { return _v; }
+	unsigned val() const { return _v; }
 
 	mint& operator++() {
 		_v++;
@@ -483,9 +484,9 @@ public:
 	}
 
 private:
-	ui _v;
+	unsigned _v;
 	static internal::barrett bt;
-	static ui umod() { return bt.umod(); }
+	static unsigned umod() { return bt.umod(); }
 };
 template <int id> internal::barrett dynamic_modint<id>::bt(998244353);
 
@@ -551,7 +552,7 @@ void butterfly(std::vector<mint>& a) {
 				a[i + offset] = l + r;
 				a[i + offset + p] = l - r;
 			}
-			now *= sum_e[bsf(~(ui)(s))];
+			now *= sum_e[bsf(~(unsigned)(s))];
 		}
 	}
 }
@@ -596,7 +597,7 @@ void butterfly_inv(std::vector<mint>& a) {
 					(ull)(mint::mod() + l.val() - r.val()) *
 					inow.val();
 			}
-			inow *= sum_ie[bsf(~(ui)(s))];
+			inow *= sum_ie[bsf(~(unsigned)(s))];
 		}
 	}
 }
@@ -657,7 +658,7 @@ std::vector<mint> convolution(const std::vector<mint>& a, const std::vector<mint
 	return internal::convolution_fft(a, b);
 }
 
-template <ui mod = 998244353, class T, std::enable_if_t<internal::is_integral<T>::value>* = nullptr>
+template <unsigned mod = 998244353, class T, std::enable_if_t<internal::is_integral<T>::value>* = nullptr>
 std::vector<T> convolution(const std::vector<T>& a, const std::vector<T>& b) {
 	int n = int(a.size()), m = int(b.size());
 	if (!n || !m) return {};

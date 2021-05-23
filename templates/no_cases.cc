@@ -1,11 +1,11 @@
 #include <bits/stdc++.h>
 
-typedef unsigned ui;
-typedef unsigned long long ull;
 typedef long long ll;
+typedef unsigned long long ull;
 using namespace std;
 
 void solve() {
+	
 }
 
 signed main() {

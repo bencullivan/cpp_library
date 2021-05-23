@@ -11,13 +11,13 @@ namespace internal {
 // @return minimum non-negative `x` s.t. `n <= 2**x`
 int ceil_pow2(int n) {
 	int x = 0;
-	while ((1U << x) < (ui)(n)) x++;
+	while ((1U << x) < (unsigned)(n)) x++;
 	return x;
 }
 
 // @param n `1 <= n`
 // @return minimum non-negative `x` s.t. `(n & (1 << x)) != 0`
-int bsf(ui n) {
+int bsf(unsigned n) {
 	return __builtin_ctz(n);
 }
 
