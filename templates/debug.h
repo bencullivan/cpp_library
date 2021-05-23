@@ -1,7 +1,7 @@
 // This code is included in all the files that I compile with g++ to enable easy debugging.
 // The bash compilation function that I use:
 // function com() {
-//     g++-10 -arch x86_64 -std=gnu++17 -O2 -Wall -include /Users/bencullivan/documents/CppLibrary/templates/debug.h $1".cc" && ./a.out
+//     g++-10 -arch x86_64 -std=gnu++17 -O2 -Wall -D LOCAL=1 -D LOL_DEBUG=1 -include /Users/bencullivan/documents/CppLibrary/templates/debug.h $1".cc" && ./a.out
 // }
 // ex:
 // com normal
