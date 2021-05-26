@@ -14,7 +14,7 @@ void solve()
 signed main()
 {
   ios_base::sync_with_stdio(false);
-  cin.tie(nullptr);
+  cin.tie(NULL);
   int tt = 1;
   //cin >> tt;
   for (int i = 1; i <= tt; i++) {
