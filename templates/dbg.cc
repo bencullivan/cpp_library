@@ -1,17 +1,6 @@
-#include <bits/stdc++.h>
 #define GREEN "\033[32m"
 #define MAGENTA "\033[35m"
 #define RESET "\033[0m"
-using namespace std;
-typedef long long ll;
-typedef unsigned long long ull;
-typedef pair<int, int> pii;
-typedef pair<ll, ll> pll;
-#define pb push_back
-#define fi first
-#define se second
-#define all(x) begin(x),end(x)
-#define sz(x) (int)(x).size()
 #ifdef LOL_DEBUG
 #define tcT template<typename T
 tcT,typename U> ostream& operator<<(ostream& os,const pair<T,U>& p) {return os<<"("<<p.first<<", "<<p.second<<")";}
@@ -32,17 +21,3 @@ tcT> void debug_arr(T* arr,int d)
 #define dba(arr,...)
 #endif
 const char df = '\n';
-
-void solve() {
-}
-
-signed main() {
-  ios_base::sync_with_stdio(false);
-  cin.tie(nullptr);
-  int tt = 1;
-  cin >> tt;
-  for (int i = 1; i <= tt; i++) {
-    solve();
-  }
-  return 0;
-}

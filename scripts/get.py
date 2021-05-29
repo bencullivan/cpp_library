@@ -9,6 +9,7 @@ if not os.path.isfile(data_structure_path):
 	print(f'{sys.argv[2]}/{sys.argv[3]}.cc does not exist.')
 	exit(0)
 
+buf = None
 with open(os.path.join(folder_path, sys.argv[4] + '.cc'), 'r') as destination_file:
 	buf = destination_file.readlines()
 
