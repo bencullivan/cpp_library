@@ -45,8 +45,11 @@
   printf(GREEN); \
   printf("{"); \
   for (int _x = 0; _x < (n); _x++) { \
-  printf(get_format_specifier(arr[_x]), arr[_x]); \
-  if (_x < (n) - 1) { printf(", "); } } \
+    printf(get_format_specifier(arr[_x]), arr[_x]); \
+    if (_x < (n) - 1) { \
+      printf(", "); \
+    } \
+  } \
   printf("}\n"); \
   printf(RESET); \
   fflush(stdout); }
@@ -59,13 +62,19 @@
   printf(GREEN); \
   printf("{\n"); \
   for (int _d = 0; _d < (n1); _d++) { \
-  printf("{"); \
-  for (int _x = 0; _x < (n2); _x++) { \
-  printf(get_format_specifier(arr[_d][_x]), arr[_d][_x]); \
-  if (_x < (n2) - 1) { printf(", "); } } \
-  printf("}"); \
-  if (_d < (n1) - 1) { printf(","); } \
-  printf("\n"); } \
+    printf("{"); \
+    for (int _x = 0; _x < (n2); _x++) { \
+      printf(get_format_specifier(arr[_d][_x]), arr[_d][_x]); \
+      if (_x < (n2) - 1) { \
+        printf(", "); \
+      } \
+    } \
+    printf("}"); \
+    if (_d < (n1) - 1) { \
+      printf(","); \
+    } \
+    printf("\n"); \
+  } \
   printf("}\n"); \
   printf(RESET); \
   fflush(stdout); }
