@@ -1,7 +1,4 @@
-#define GREEN "\033[32m"
-#define MAGENTA "\033[35m"
-#define RESET "\033[0m"
-#ifdef LOL_DEBUG
+#ifdef BCDBG
 #define tcT template<typename T
 tcT,typename U> ostream& operator<<(ostream& os,const pair<T,U>& p) {return os<<"("<<p.first<<", "<<p.second<<")";}
 tcT,typename U=typename enable_if<!is_same<T,string>::value,typename T::value_type>::type> ostream& operator<<(ostream &os,const T &v)

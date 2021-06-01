@@ -1,11 +1,3 @@
-// This code is included in all the files that I compile with g++ to enable easy debugging.
-// The bash compilation function that I use:
-// function com() {
-//     g++-10 -arch x86_64 -std=gnu++17 -O2 -Wall -D LOCAL=1 -D LOL_DEBUG=1 -include /Users/bencullivan/documents/CppLibrary/templates/debug.h $1".cc" && ./a.out
-// }
-// ex:
-// com normal
-
 #include <iostream>
 #include <type_traits>
 #include <utility>
@@ -67,8 +59,8 @@ void debug_fill_arr_dims(Head H, Tail... T) {
 }
 
 template<typename T>
-void debug_arr(T elt, int d) {
-  std::cout << elt;
+void debug_arr(T x, int d) {
+  std::cout << x;
 }
 
 template<typename T>

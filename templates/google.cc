@@ -2,17 +2,10 @@
 #define GREEN "\033[32m"
 #define MAGENTA "\033[35m"
 #define RESET "\033[0m"
-using namespace std;
-typedef long long ll;
-typedef unsigned long long ull;
-typedef pair<int, int> pii;
-typedef pair<ll, ll> pll;
-#define pb push_back
-#define fi first
-#define se second
 #define all(x) begin(x),end(x)
 #define sz(x) (int)(x).size()
-#ifdef LOL_DEBUG
+using namespace std;
+#ifdef BCDBG
 #define tcT template<typename T
 tcT,typename U> ostream& operator<<(ostream& os,const pair<T,U>& p) {return os<<"("<<p.first<<", "<<p.second<<")";}
 tcT,typename U=typename enable_if<!is_same<T,string>::value,typename T::value_type>::type> ostream& operator<<(ostream &os,const T &v)
@@ -31,12 +24,16 @@ tcT> void debug_arr(T* arr,int d)
 #define dbg(...)
 #define dba(arr,...)
 #endif
+typedef long long ll;
+typedef unsigned long long ull;
 const char df = '\n';
 
-void solve() {
+void solve()
+{
 }
 
-signed main() {
+signed main()
+{
   ios_base::sync_with_stdio(false);
   cin.tie(nullptr);
   int tt = 1;
