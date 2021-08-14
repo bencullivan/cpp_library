@@ -1,3 +1,4 @@
+using ull = unsigned long long;
 // Rolling String Hashing
 // Time:
 // 	- Build: O(N)

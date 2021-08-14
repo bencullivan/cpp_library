@@ -1,9 +1,9 @@
 import sys
 import os
 
-base_dir = '/Users/bencullivan/documents/CppLibrary'
-num_spaces = 2
-to_tabs = False
+base_dir = '/Users/benjamincullivan/documents/CppLibrary'
+num_spaces = 4
+to_tabs = True
 
 def spaces_to_tabs(file_path):
 	buf = None
@@ -35,7 +35,7 @@ for path in os.listdir(base_dir):
 		continue
 	for file in os.listdir(actual_path):
 		ext = os.path.splitext(file)[1]
-		if ext != '.cc' and ext != '.cpp' and ext != '.h' and ext != '.hpp':
+		if ext != '.cc' and ext != '.cpp' and ext != '.h' and ext != '.hpp' and ext != '.c' and ext != '.sh':
 			continue
 		if to_tabs:
 			spaces_to_tabs(os.path.join(actual_path, file))

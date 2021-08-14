@@ -1,4 +1,5 @@
 vector<string> split(const string& s) {
+#define isspace(x) ((x) == ' ')
   int a = 0, b = 0, n = s.size();
   vector<string> r;
   while (b < n) {
@@ -8,4 +9,7 @@ vector<string> split(const string& s) {
     a = b;
   }
   return r;
+#ifdef isspace
+#undef isspace
+#endif
 }

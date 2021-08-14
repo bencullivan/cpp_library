@@ -2,8 +2,8 @@ import sys
 import os
 
 folder_path = sys.argv[1]
-data_structure_path = f'/Users/bencullivan/documents/CppLibrary/{sys.argv[2]}/{sys.argv[3]}.cc'
-target_line = 'const char df ='
+data_structure_path = f'/Users/benjamincullivan/documents/CppLibrary/{sys.argv[2]}/{sys.argv[3]}.cc'
+target_line = '#define df '
 
 if not os.path.isfile(data_structure_path):
 	print(f'{sys.argv[2]}/{sys.argv[3]}.cc does not exist.')

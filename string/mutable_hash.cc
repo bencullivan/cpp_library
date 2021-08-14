@@ -1,3 +1,4 @@
+using ull = unsigned long long;
 // https://github.com/ecnerwala/cp-book
 template<int _MOD> 
 struct Modnum {

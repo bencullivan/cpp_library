@@ -3,7 +3,9 @@ template<typename T, bool use_min = true>
 struct RMQ {
   vector<T> vals;
   vector<vector<int>> table;
-  int select_index(int a, int b) { return (use_min ? vals[a] < vals[b] : vals[a] > vals[b]) ? a : b; }
+  int select_index(int a, int b) {
+    return (use_min ? vals[a] < vals[b] : vals[a] > vals[b]) ? a : b;
+  }
   RMQ() {}
   RMQ(const vector<T>& _vals) { build(_vals); }
   void build(const vector<T>& _vals) {
@@ -28,22 +30,29 @@ struct LCA {
   vector<int> first_euler, euler;
   vector<int> depth;
   RMQ<int> rmq;
+  int id;
   LCA() {}
   LCA(int root, const vector<vector<int>>& tr) : first_euler(tr.size()) {
-    euler.reserve(2 * tr.size()), depth.reserve(2 * tr.size());
+    euler.resize(2 * tr.size()), depth.resize(2 * tr.size());
+    id = 0;
     dfs(root, -1, 0, tr);
     rmq.build(depth);
     depth.clear();
   }
   void dfs(int u, int v, int d, const vector<vector<int>>& tr) {
-    first_euler[u] = euler.size();
-    euler.push_back(u), depth.push_back(d);
+    first_euler[u] = id;
+    euler[id] = u;
+    depth[id] = d;
+    id++;
     for (int x:tr[u]) if (x != v) {
       dfs(x, u, d + 1, tr);
-      euler.push_back(u), depth.push_back(d);
+      euler[id] = u;
+      depth[id] = d;
+      id++;
     }
   }
   int get_lca(int u, int v) { 
-    return euler[rmq.get_index(min(first_euler[u], first_euler[v]), max(first_euler[u], first_euler[v]) + 1)]; 
+    return euler[rmq.get_index(min(first_euler[u], first_euler[v]), 
+        max(first_euler[u], first_euler[v]) + 1)]; 
   }
 }; // LCA

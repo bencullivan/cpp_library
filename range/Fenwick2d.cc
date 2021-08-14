@@ -10,15 +10,19 @@ template<typename T> struct Fenwick2d {
   Fenwick2d(int _N, int _M) : N(_N), M(_M), data(_N + 1, vector<T>(_M + 1)) {}
   // adds value to the element at (x, y)
   void upd(int a, int b, T value) {
-    for (int i = a; i <= N; i += i & -i) for (int j = b; j <= M; j += j & -j) data[i][j] += value;
+    for (int i = a; i <= N; i += i & -i) 
+      for (int j = b; j <= M; j += j & -j) data[i][j] += value;
   }
-  // gets the sum of the rectangle with top left corner (1, 1) and bottom right corner (a, b)
+  // gets the sum of the rectangle with top left corner (1, 1) 
+  // and bottom right corner (a, b)
   T get(int a, int b) {
     T sum = 0;
-    for (int i = a; i > 0; i -= i & -i) for (int j = b; j > 0; j -= j & -j) sum += data[i][j];
+    for (int i = a; i > 0; i -= i & -i) 
+      for (int j = b; j > 0; j -= j & -j) sum += data[i][j];
     return sum;
   }
-  // gets the sum of the rectangle with top left corner (a, b) and bottom right corner (c, d)
+  // gets the sum of the rectangle with top left corner (a, b) 
+  // and bottom right corner (c, d)
   T get(int a, int b, int c, int d) {
     return get(c, d) - get(c, b - 1) - get(a - 1, d) + get(a - 1, b - 1);
   }

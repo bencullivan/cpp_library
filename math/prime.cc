@@ -1,3 +1,4 @@
+using ull = unsigned long long;
 /**
 * Author: chilli, Ramchandra Apte, Noam527, Simon Lindholm
 * Date: 2019-04-24
@@ -17,7 +18,7 @@
 ull modmul(ull a, ull b, ull M) {
   //ll ret = a * b - M * ull(1.L / M * a * b);
   //return ret + M * (ret < 0) - M * (ret >= (ll)M);
-  return (__uint128_t)a * b % M;
+  return (__int128)a * b % M;
 }
 ull modpow(ull b, ull e, ull mod) {
   ull ans = 1;
@@ -112,12 +113,12 @@ vector<ll> spf;
 vector<bool> is_prime;
 
 /*
-  The sieve of Eratosthenes.
-  Generates every prime number less than or equal to N.
-  Almost twice as fast as spf_sieve.
-  Time: O(N*log(log(N)))
-  Source: https://cp-algorithms.com/algebra/sieve-of-eratosthenes.html
-*/
+ * The sieve of Eratosthenes.
+ * Generates every prime number less than or equal to N.
+ * Almost twice as fast as spf_sieve.
+ * Time: O(N*log(log(N)))
+ * Source: https://cp-algorithms.com/algebra/sieve-of-eratosthenes.html
+ */
 void sieve(ll N) {
   primes.clear();
   is_prime = vector<bool>(N + 1, true);
@@ -131,10 +132,26 @@ void sieve(ll N) {
 }
 
 /*
-  Generates all prime numbers in the range [L, R] (inclusive)
-  Time: O((R-L+1)*log(log(R)) + sqrt(R)*log(log(sqrt(R))))
-  Source: https://cp-algorithms.com/algebra/sieve-of-eratosthenes.html
-*/
+ * Generates all prime numbers <= N.
+ * Time: O(N)
+ */
+void linear_sieve(ll N) {
+  primes.clear();
+  is_prime = vector<bool>(N + 1);
+  for (ll i = 2; i <= N; i++) {
+    if (is_prime[i]) primes.push_back(i);
+    for (ll j = 1; j < (ll) primes.size() && i * primes[j] <= N; j++) {
+      is_prime[i * primes[j]] = false;
+      if (i % primes[j] == 0) break;
+    }
+  }
+}
+
+/*
+ * Generates all prime numbers in the range [L, R] (inclusive)
+ * Time: O((R-L+1)*log(log(R)) + sqrt(R)*log(log(sqrt(R))))
+ * Source: https://cp-algorithms.com/algebra/sieve-of-eratosthenes.html
+ */
 void range(ll L, ll R) {
   ll root = sqrt(R);
   sieve(root);
