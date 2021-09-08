@@ -164,4 +164,4 @@ S op(S l, S r) { // update operation for two segments
 
 S e() { return S(); } // the identity segment
 
-using Segtree = atcoder::segtree<S, op, e>;
+using segtree = atcoder::segtree<S, op, e>;

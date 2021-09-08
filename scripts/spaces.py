@@ -1,9 +1,9 @@
 import sys
 import os
 
-base_dir = '/Users/benjamincullivan/documents/CppLibrary'
+base_dir = '/Users/benjamincullivan/documents/cpp_library'
 num_spaces = 4
-to_tabs = True
+to_tabs = False
 
 def spaces_to_tabs(file_path):
 	buf = None

@@ -245,4 +245,4 @@ S e() { return S(); } // the identity segment
 
 F id() { return F(); } // the identity update
 
-using Lazy = atcoder::lazy_segtree<S, op, e, F, mapping, composition, id>;
+using lazy_segtree = atcoder::lazy_segtree<S, op, e, F, mapping, composition, id>;

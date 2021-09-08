@@ -2,7 +2,7 @@ import sys
 import os
 
 folder_path = sys.argv[1]
-data_structure_path = f'/Users/benjamincullivan/documents/CppLibrary/{sys.argv[2]}/{sys.argv[3]}.cc'
+data_structure_path = f'/Users/benjamincullivan/documents/cpp_library/{sys.argv[2]}/{sys.argv[3]}.cc'
 target_line = '#define df '
 
 if not os.path.isfile(data_structure_path):
