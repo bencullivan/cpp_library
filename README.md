@@ -1,3 +1,3 @@
 # cpp_library
 
-Copy-pasteable C++ code for common data structures and algorithms.
+Copy-pasteable C++ code for data structures and algorithms.
