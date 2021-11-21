@@ -3,7 +3,7 @@ import os
 
 folder_path = sys.argv[1]
 data_structure_path = f'/Users/benjamincullivan/documents/cpp_library/{sys.argv[2]}/{sys.argv[3]}.cc'
-target_line = '#define df '
+target_line = '#define all('
 
 if not os.path.isfile(data_structure_path):
 	print(f'{sys.argv[2]}/{sys.argv[3]}.cc does not exist.')

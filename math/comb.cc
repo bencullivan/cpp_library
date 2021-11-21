@@ -1,105 +1,107 @@
+// source: https://github.com/ecnerwala/cp-book/blob/master/src/modnum.hpp
+
 template <typename T> T mod_inv_in_range(T a, T m) {
-    // assert(0 <= a && a < m);
-    T x = a, y = m;
-    T vx = 1, vy = 0;
-    while (x) {
-        T k = y / x;
-        y %= x;
-        vy -= k * vx;
-        std::swap(x, y);
-        std::swap(vx, vy);
-    }
-    assert(y == 1);
-    return vy < 0 ? m + vy : vy;
+	// assert(0 <= a && a < m);
+	T x = a, y = m;
+	T vx = 1, vy = 0;
+	while (x) {
+		T k = y / x;
+		y %= x;
+		vy -= k * vx;
+		std::swap(x, y);
+		std::swap(vx, vy);
+	}
+	assert(y == 1);
+	return vy < 0 ? m + vy : vy;
 }
 
 template <typename T> T mod_inv(T a, T m) {
-    a %= m;
-    a = a < 0 ? a + m : a;
-    return mod_inv_in_range(a, m);
+	a %= m;
+	a = a < 0 ? a + m : a;
+	return mod_inv_in_range(a, m);
 }
 
 template <int MOD_> struct modnum {
-    static constexpr int MOD = MOD_;
-    static_assert(MOD_ > 0, "MOD must be positive");
+	static constexpr int MOD = MOD_;
+	static_assert(MOD_ > 0, "MOD must be positive");
 
 //private:
-    //using ll = long long;
+	//using ll = long long;
 
-    int v;
+	int v;
 
 //public:
 
-    modnum() : v(0) {}
-    modnum(long long v_) : v(int(v_ % MOD)) { if (v < 0) v += MOD; }
-    explicit operator int() const { return v; }
-    friend std::ostream& operator << (std::ostream& out, const modnum& n) { return out << int(n); }
-    friend std::istream& operator >> (std::istream& in, modnum& n) { long long v_; in >> v_; n = modnum(v_); return in; }
+	modnum() : v(0) {}
+	modnum(long long v_) : v(int(v_ % MOD)) { if (v < 0) v += MOD; }
+	explicit operator int() const { return v; }
+	friend std::ostream& operator << (std::ostream& out, const modnum& n) { return out << int(n); }
+	friend std::istream& operator >> (std::istream& in, modnum& n) { long long v_; in >> v_; n = modnum(v_); return in; }
 
 
-    friend bool operator == (const modnum& a, const modnum& b) { return a.v == b.v; }
-    friend bool operator != (const modnum& a, const modnum& b) { return a.v != b.v; }
+	friend bool operator == (const modnum& a, const modnum& b) { return a.v == b.v; }
+	friend bool operator != (const modnum& a, const modnum& b) { return a.v != b.v; }
 
-    modnum inv() const {
-        modnum res;
-        res.v = mod_inv_in_range(v, MOD);
-        return res;
-    }
-    friend modnum inv(const modnum& m) { return m.inv(); }
-    modnum neg() const {
-        modnum res;
-        res.v = v ? MOD-v : 0;
-        return res;
-    }
-    friend modnum neg(const modnum& m) { return m.neg(); }
+	modnum inv() const {
+		modnum res;
+		res.v = mod_inv_in_range(v, MOD);
+		return res;
+	}
+	friend modnum inv(const modnum& m) { return m.inv(); }
+	modnum neg() const {
+		modnum res;
+		res.v = v ? MOD-v : 0;
+		return res;
+	}
+	friend modnum neg(const modnum& m) { return m.neg(); }
 
-    modnum operator- () const {
-        return neg();
-    }
-    modnum operator+ () const {
-        return modnum(*this);
-    }
+	modnum operator- () const {
+		return neg();
+	}
+	modnum operator+ () const {
+		return modnum(*this);
+	}
 
-    modnum& operator ++ () {
-        v ++;
-        if (v == MOD) v = 0;
-        return *this;
-    }
-    modnum& operator -- () {
-        if (v == 0) v = MOD;
-        v --;
-        return *this;
-    }
-    modnum& operator += (const modnum& o) {
-        v -= MOD-o.v;
-        v = (v < 0) ? v + MOD : v;
-        return *this;
-    }
-    modnum& operator -= (const modnum& o) {
-        v -= o.v;
-        v = (v < 0) ? v + MOD : v;
-        return *this;
-    }
-    modnum& operator *= (const modnum& o) {
-        //v = int(ll(v) * ll(o.v) % MOD);
-        v = (int)((long long)v * (long long)o.v % MOD);
-        return *this;
-    }
-    modnum& operator /= (const modnum& o) {
-        return *this *= o.inv();
-    }
+	modnum& operator ++ () {
+		v ++;
+		if (v == MOD) v = 0;
+		return *this;
+	}
+	modnum& operator -- () {
+		if (v == 0) v = MOD;
+		v --;
+		return *this;
+	}
+	modnum& operator += (const modnum& o) {
+		v -= MOD-o.v;
+		v = (v < 0) ? v + MOD : v;
+		return *this;
+	}
+	modnum& operator -= (const modnum& o) {
+		v -= o.v;
+		v = (v < 0) ? v + MOD : v;
+		return *this;
+	}
+	modnum& operator *= (const modnum& o) {
+		//v = int(ll(v) * ll(o.v) % MOD);
+		v = (int)((long long)v * (long long)o.v % MOD);
+		return *this;
+	}
+	modnum& operator /= (const modnum& o) {
+		return *this *= o.inv();
+	}
 
-    friend modnum operator ++ (modnum& a, int) { modnum r = a; ++a; return r; }
-    friend modnum operator -- (modnum& a, int) { modnum r = a; --a; return r; }
-    friend modnum operator + (const modnum& a, const modnum& b) { return modnum(a) += b; }
-    friend modnum operator - (const modnum& a, const modnum& b) { return modnum(a) -= b; }
-    friend modnum operator * (const modnum& a, const modnum& b) { return modnum(a) *= b; }
-    friend modnum operator / (const modnum& a, const modnum& b) { return modnum(a) /= b; }
+	friend modnum operator ++ (modnum& a, int) { modnum r = a; ++a; return r; }
+	friend modnum operator -- (modnum& a, int) { modnum r = a; --a; return r; }
+	friend modnum operator + (const modnum& a, const modnum& b) { return modnum(a) += b; }
+	friend modnum operator - (const modnum& a, const modnum& b) { return modnum(a) -= b; }
+	friend modnum operator * (const modnum& a, const modnum& b) { return modnum(a) *= b; }
+	friend modnum operator / (const modnum& a, const modnum& b) { return modnum(a) /= b; }
 };
 
 template <typename T> T modnum_pow(T a, long long b) {
-    assert(b >= 0);
-    T r = 1; while (b) { if (b & 1) r *= a; b >>= 1; a *= a; } return r;
+	assert(b >= 0);
+	T r = 1; while (b) { if (b & 1) r *= a; b >>= 1; a *= a; } return r;
 }
 
 using mint = modnum<1000000007>;
@@ -109,28 +111,28 @@ vector<mint> facts, ifacts;
 
 // all factorials up to and including n, mod m
 void gen_facts(int n) {
-    if (!facts.empty()) return;
-    facts.resize(n + 1);
-    facts[0] = 1;
-    for (int i = 1; i <= n; i++) facts[i] = facts[i - 1] * i;
-    ifacts.resize(n + 1);
-    ifacts[n] = facts[n].inv();
-    for (int i = n; i > 0; i--) ifacts[i - 1] = ifacts[i] * i;
+	if (!facts.empty()) return;
+	facts.resize(n + 1);
+	facts[0] = 1;
+	for (int i = 1; i <= n; i++) facts[i] = facts[i - 1] * i;
+	ifacts.resize(n + 1);
+	ifacts[n] = facts[n].inv();
+	for (int i = n; i > 0; i--) ifacts[i - 1] = ifacts[i] * i;
 }
 
 // n permute k, mod m
 mint perm(int n, int k) {
-    if (n >= (int)facts.size()) throw runtime_error("call gen_facts before calling perm");
-    assert(n >= k);
-    return facts[n] * ifacts[n - k];
+	//if (n >= (int)facts.size()) throw runtime_error("call gen_facts before calling perm");
+	//assert(n >= k);
+	return facts[n] * ifacts[n - k];
 }
 
 // n choose k, mod m
 mint choose(int n, int k) {
-    return perm(n, k) * ifacts[k];
+	return perm(n, k) * ifacts[k];
 }
 
 // nth catalan number, mod m
 mint catalan(int n) {
-    return choose(2 * n, n) - choose(2 * n, n + 1);
+	return choose(2 * n, n) - choose(2 * n, n + 1);
 }

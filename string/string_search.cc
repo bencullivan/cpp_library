@@ -1,137 +1,91 @@
-// Provides various operations for searching within strings.
+// Various functions for searching within strings.
 // Sources:
-// - https://cp-algorithms.com/string/prefix-function.html (lps, kmp, occs, unique)
-// - https://cp-algorithms.com/string/z-function.html
-// - https://cp-algorithms.com/string/manacher.html
-struct string_search {
-    vector<int> pi;
-    vector<int> zarray;
-    vector<int> locs; // the locations of the target pattern from kmp or z
-    vector<int> occs; // the number of occurrences of each prefix
-    vector<int> d1, d2; // number of odd and even palindromes centered at position i
+// - https://cp-algorithms.com/string/prefix-function.html
+// - https://github.com/atcoder/ac-library/blob/master/atcoder/string.hpp
+// - https://github.com/kth-competitive-programming/kactl/blob/main/content/strings/Manacher.h
 
-    // Computes for each index, i, the length of the longest string that is 
-    // both a prefix and a suffix of s[0...i]
-    // Time: O(N)
-    void lps(string& s) {
-        pi.resize(s.size());
-        pi[0] = 0;
-        for (int i = 1; i < (int) s.size(); i++) {
-            // finds the lps at position i
-            // consider the example abadfacabadfab and suppose we are at the final position
-            // the j value would be 6 because abadfa == abadfa, however we cannot extend it because c != b
-            // since we know that we can extend, we can restrict our search to the first 6 characters of the string
-            // this is because we know that they are the same as the last 6 characters of the string ending at index i - 1
-            // thus, we move to pi[j - 1]
-            int j = pi[i - 1];
-            while (j > 0 && s[i] != s[j]) j = pi[j - 1];
-            if (s[i] == s[j]) j++; // if we have found a match, increment
-            pi[i] = j;
-        }
-    }
+// Computes for each index, i, the length of the longest substring that is 
+// both a prefix and a suffix of s[0...i]
+// Time: O(n)
+template <typename T>
+vector<int> lps_function(const T& s, int n) {
+	vector<int> pi(n);
+	for (int i = 1; i < n; i++) {
+		// finds the lps at position i
+		// consider the example abadfacabadfab and suppose we are at the final position
+		// the j value would be 6 because abadfa == abadfa, however we cannot extend it because c != b
+		// since we know that we can extend, we can restrict our search to the first 6 characters of the string
+		// this is because we know that they are the same as the last 6 characters of the string ending at index i - 1
+		// thus, we move to pi[j - 1]
+		int j = pi[i - 1];
+		while (j > 0 && s[i] != s[j]) j = pi[j - 1];
+		if (s[i] == s[j]) j++; // if we have found a match, increment
+		pi[i] = j;
+	}
+	return pi;
+}
 
-    // KMP algorithm to find all the locations of string t in string s
-    // Time: O(N+M)
-    void kmp(string& s, string& t, const string& separator) {
-        // make sure that separator does not occur in either string
-        string q = t + separator + s;
-        lps(q);
-        locs.clear();
-        for (int i = 2 * t.size(); i < (int) q.size(); i++) if (pi[i] == (int) t.size()) locs.push_back(i - 2 * t.size());
-    }
+// Counts the number of occurrences of each prefix of s
+// Time: O(n)
+template <typename T>
+vector<int> prefix_count(const T& s, int n) {
+	vector<int> pi = lps_function(s);
+	vector<int> occs(n + 1);
+	for (int i = 0; i < n; i++) occs[pi[i]]++;
+	for (int i = n - 1; i >= 0; i--) occs[pi[i - 1]] += occs[i];
+	for (int i = 0; i <= n; i++) occs[i]++;
+	return occs;
+}
 
-    // Counts the number of occurrences of each prefix of s
-    // Time: O(N)
-    void get_occs(string& s) {
-        if (pi.size() != s.size()) lps(s);
-        bool must_fill = !occs.empty();
-        occs.resize(s.size() + 1);
-        if (must_fill) fill(occs.begin(), occs.end(), 0);
-        for (int i = 0; i < (int) s.size(); i++) occs[pi[i]]++;
-        for (int i = s.size() - 1; i >= 0; i--) occs[pi[i - 1]] += occs[i];
-        for (int i = 0; i <= (int) s.size(); i++) occs[i]++;
-    }
+// Reference:
+// D. Gusfield,
+// Algorithms on Strings, Trees, and Sequences: Computer Science and
+// Computational Biology
+template <class T> std::vector<int> z_algorithm(const std::vector<T>& s) {
+	int n = int(s.size());
+	if (n == 0) return {};
+	std::vector<int> z(n);
+	z[0] = 0;
+	for (int i = 1, j = 0; i < n; i++) {
+		int& k = z[i];
+		k = (j + z[j] <= i) ? 0 : std::min(j + z[j] - i, z[i - j]);
+		while (i + k < n && s[k] == s[i + k]) k++;
+		if (j + z[j] < i + z[i]) j = i;
+	}
+	z[0] = n;
+	return z;
+}
 
-    // Counts the number of unique substrings that appear in s
-    // Time: O(N^2)
-    long long count_unique(string& s) {
-        long long ct = 0;
-        string t;
-        for (int i = 0; i < (int) s.size(); i++) {
-            t = s[i] + t;
-            lps(t);
-            ct += i + 1 - *max_element(pi.begin(), pi.end());
-        }
-        return ct;
-    }
+std::vector<int> z_algorithm(const std::string& s) {
+	int n = int(s.size());
+	std::vector<int> s2(n);
+	for (int i = 0; i < n; i++) {
+		s2[i] = s[i];
+	}
+	return z_algorithm(s2);
+}
 
-    // Generates the array used in the z algorithm
-    // zarray[i] is the length of the longest substring beginning from s[i] that is also a prefix of s
-    void z(string& s) {
-        int left = -1;
-        int right = -1;
-        zarray.resize(s.size());
-        zarray[0] = 0;
-        for (int i = 1; i < (int) s.size(); i++) {
-            if (i > right) { // we are outside the current window
-                if (s[i] != s[0]) { // there is no prefix starting at position i
-                    zarray[i] = 0;
-                    continue;
-                }
-                // there is a prefix starting at position i
-                left = right = i;
-                // expand the current window while it remains a prefix of s
-                while (right < (int) s.size() - 1 && s[right + 1] == s[right + 1 - left]) right++;
-                zarray[i] = right - left + 1;
-            }
-            else {
-                // we know that we are in the current window, so the substrings s[i-left...] and s[i...] 
-                // are equal for at least right-i+1 more characters
-                if (zarray[i - left] < right - i + 1) zarray[i] = zarray[i - left]; // we remain inside the current window
-                else { // we must expand the current window while it remains a prefix of s
-                    left = i;
-                    while (right < (int) s.size() - 1 && s[right + 1] == s[right + 1 - left]) right++;
-                    zarray[i] = right - i + 1;
-                }
-            }
-        }
-    }
+/**
+ * Author: User adamant on CodeForces
+ * Source: http://codeforces.com/blog/entry/12143
+ * Description: For each position in a string, computes p[0][i] = half length of
+ *  longest even palindrome around pos i, p[1][i] = longest odd (half rounded down).
+ * Time: O(N)
+ * Status: Stress-tested
+ */
+// #pragma once
 
-    // Z algorithm to find all occurrences of t in s
-    // Time: O(N+M)
-    void z_search(string& s, string& t, const string& separator) {
-        // make sure that separator does not occur in either string
-        string q = t + separator + s;
-        z(q);
-        locs.clear();
-        for (int i = t.size() + 1; i < (int) (q.size() - t.size()) + 1; i++) if (zarray[i] == (int) t.size()) locs.push_back(i - t.size() - 1);
-    }
-
-    // finds all sub palindromes of a string
-    // Time: O(N)
-    void manacher(string& s) {
-        d1.resize(n), d2.resize(n);
-        for (int i = 0, l = 0, r = -1; i < n; i++) {
-            int k = (i > r) ? 1 : min(d1[l + r - i], r - i + 1);
-            while (0 <= i - k && i + k < n && s[i - k] == s[i + k]) {
-                k++;
-            }
-            d1[i] = k--;
-            if (i + k > r) {
-                l = i - k;
-                r = i + k;
-            }
-        }
-        for (int i = 0, l = 0, r = -1; i < n; i++) {
-            int k = (i > r) ? 0 : min(d2[l + r - i + 1], r - i + 1);
-            while (0 <= i - k - 1 && i + k < n && s[i - k - 1] == s[i + k]) {
-                k++;
-            }
-            d2[i] = k--;
-            if (i + k > r) {
-                l = i - k - 1;
-                r = i + k ;
-            }
-        }		
-    }
-}; //string_search 
+template <typename T>
+array<vector<int>, 2> manacher(const T& s) {
+	int n = sz(s);
+	array<vector<int>,2> p = {vector<int>(n+1), vector<int>(n)};
+	for (int z = 0; z < 2; z++) for (int i=0,l=0,r=0; i < n; i++) {
+		int t = r-i+!z;
+		if (i<r) p[z][i] = min(t, p[z][l+t]);
+		int L = i-p[z][i], R = i+p[z][i]-!z;
+		while (L>=1 && R+1<n && s[L-1] == s[R+1])
+			p[z][i]++, L--, R++;
+		if (R>r) l=L, r=R;
+	}
+	return p;
+}

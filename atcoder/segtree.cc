@@ -1,3 +1,5 @@
+// source: https://github.com/atcoder/ac-library/blob/master/atcoder/internal_bit.hpp
+
 #ifndef ATCODER_INTERNAL_BITOP_HPP
 #define ATCODER_INTERNAL_BITOP_HPP 1
 
@@ -43,8 +45,16 @@ int bsf(unsigned int n) {
 
 #endif  // ATCODER_INTERNAL_BITOP_HPP
 
+// source: https://github.com/atcoder/ac-library/blob/master/atcoder/segtree.hpp
+
 #ifndef ATCODER_SEGTREE_HPP
 #define ATCODER_SEGTREE_HPP 1
+
+// #include <algorithm>
+// #include <cassert>
+// #include <vector>
+
+// #include "atcoder/internal_bit"
 
 namespace atcoder {
 
@@ -156,12 +166,13 @@ template <class S, S (*op)(S, S), S (*e)()> struct segtree {
 
 #endif  // ATCODER_SEGTREE_HPP
 
+// -----------------------------------------------------------------------
+
 struct S { // segment
 };
-
 S op(S l, S r) { // update operation for two segments
 }
-
-S e() { return S(); } // the identity segment
-
+S e() { // the identity segment
+	return S();
+}
 using segtree = atcoder::segtree<S, op, e>;

@@ -1,5 +1,13 @@
+// source: https://github.com/atcoder/ac-library/blob/master/atcoder/string.hpp
+
 #ifndef ATCODER_STRING_HPP
 #define ATCODER_STRING_HPP 1
+
+// #include <algorithm>
+// #include <cassert>
+// #include <numeric>
+// #include <string>
+// #include <vector>
 
 namespace atcoder {
 

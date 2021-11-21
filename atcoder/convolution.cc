@@ -1,3 +1,5 @@
+// source: https://github.com/atcoder/ac-library/blob/master/atcoder/internal_bit.hpp
+
 #ifndef ATCODER_INTERNAL_BITOP_HPP
 #define ATCODER_INTERNAL_BITOP_HPP 1
 
@@ -43,8 +45,12 @@ int bsf(unsigned int n) {
 
 #endif  // ATCODER_INTERNAL_BITOP_HPP
 
+// source: https://github.com/atcoder/ac-library/blob/master/atcoder/internal_math.hpp
+
 #ifndef ATCODER_INTERNAL_MATH_HPP
 #define ATCODER_INTERNAL_MATH_HPP 1
+
+// #include <utility>
 
 #ifdef _MSC_VER
 #include <intrin.h>
@@ -255,8 +261,14 @@ unsigned long long floor_sum_unsigned(unsigned long long n,
 
 #endif  // ATCODER_INTERNAL_MATH_HPP
 
+// source: https://github.com/atcoder/ac-library/blob/master/atcoder/internal_type_traits.hpp
+
 #ifndef ATCODER_INTERNAL_TYPE_TRAITS_HPP
 #define ATCODER_INTERNAL_TYPE_TRAITS_HPP 1
+
+// #include <cassert>
+// #include <numeric>
+// #include <type_traits>
 
 namespace atcoder {
 
@@ -351,12 +363,21 @@ template <class T> using to_unsigned_t = typename to_unsigned<T>::type;
 
 #endif  // ATCODER_INTERNAL_TYPE_TRAITS_HPP
 
+// source: https://github.com/atcoder/ac-library/blob/master/atcoder/modint.hpp
+
 #ifndef ATCODER_MODINT_HPP
 #define ATCODER_MODINT_HPP 1
 
-#ifdef _MSC_VER
-#include <intrin.h>
-#endif
+// #include <cassert>
+// #include <numeric>
+// #include <type_traits>
+
+// #ifdef _MSC_VER
+// #include <intrin.h>
+// #endif
+
+// #include "atcoder/internal_math"
+// #include "atcoder/internal_type_traits"
 
 namespace atcoder {
 
@@ -620,8 +641,19 @@ using is_dynamic_modint_t = std::enable_if_t<is_dynamic_modint<T>::value>;
 
 #endif  // ATCODER_MODINT_HPP
 
+// source: https://github.com/atcoder/ac-library/blob/master/atcoder/convolution.hpp
+
 #ifndef ATCODER_CONVOLUTION_HPP
 #define ATCODER_CONVOLUTION_HPP 1
+
+// #include <algorithm>
+// #include <array>
+// #include <cassert>
+// #include <type_traits>
+// #include <vector>
+
+// #include "atcoder/internal_bit"
+// #include "atcoder/modint"
 
 namespace atcoder {
 

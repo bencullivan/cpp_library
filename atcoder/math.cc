@@ -1,5 +1,9 @@
+// source: https://github.com/atcoder/ac-library/blob/master/atcoder/internal_math.hpp
+
 #ifndef ATCODER_INTERNAL_MATH_HPP
 #define ATCODER_INTERNAL_MATH_HPP 1
+
+// #include <utility>
 
 #ifdef _MSC_VER
 #include <intrin.h>
@@ -210,8 +214,17 @@ unsigned long long floor_sum_unsigned(unsigned long long n,
 
 #endif  // ATCODER_INTERNAL_MATH_HPP
 
+// source: https://github.com/atcoder/ac-library/blob/master/atcoder/math.hpp
+
 #ifndef ATCODER_MATH_HPP
 #define ATCODER_MATH_HPP 1
+
+// #include <algorithm>
+// #include <cassert>
+// #include <tuple>
+// #include <vector>
+
+// #include "atcoder/internal_math"
 
 namespace atcoder {
 

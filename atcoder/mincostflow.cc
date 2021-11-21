@@ -1,5 +1,11 @@
+// source: https://github.com/atcoder/ac-library/blob/master/atcoder/internal_csr.hpp
+
 #ifndef ATCODER_INTERNAL_CSR_HPP
 #define ATCODER_INTERNAL_CSR_HPP 1
+
+// #include <algorithm>
+// #include <utility>
+// #include <vector>
 
 namespace atcoder {
 namespace internal {
@@ -28,8 +34,12 @@ template <class E> struct csr {
 
 #endif  // ATCODER_INTERNAL_CSR_HPP
 
+// source: https://github.com/atcoder/ac-library/blob/master/atcoder/internal_queue.hpp
+
 #ifndef ATCODER_INTERNAL_QUEUE_HPP
 #define ATCODER_INTERNAL_QUEUE_HPP 1
+
+// #include <vector>
 
 namespace atcoder {
 
@@ -56,8 +66,19 @@ template <class T> struct simple_queue {
 
 #endif  // ATCODER_INTERNAL_QUEUE_HPP
 
+// source: https://github.com/atcoder/ac-library/blob/master/atcoder/mincostflow.hpp
+
 #ifndef ATCODER_MINCOSTFLOW_HPP
 #define ATCODER_MINCOSTFLOW_HPP 1
+
+// #include <algorithm>
+// #include <cassert>
+// #include <limits>
+// #include <queue>
+// #include <vector>
+
+// #include "atcoder/internal_csr"
+// #include "atcoder/internal_queue"
 
 namespace atcoder {
 

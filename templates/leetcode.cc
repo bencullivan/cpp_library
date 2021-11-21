@@ -1,4 +1,6 @@
+#ifdef BCDBG
 #include <bits/stdc++.h>
+#endif
 using namespace std;
 using ll = long long;
 using pii = pair<int,int>;
@@ -18,16 +20,11 @@ using vpl = vector<pll>;
 #define all(v) v.begin(),v.end()
 const int MX = 2e5+5;
 
-void solve() {
-}
 
+
+#ifdef BCDBG
 int main() {
-	ios_base::sync_with_stdio(0), cin.tie(0);
-	int tt;
-	cin >> tt;
-	for (int i = 1; i <= tt; i++) {
-		cout << "Case #" << i << ": ";
-		solve();
-	}
-	return 0;
+	Solution sol;
+	sol.solve();
 }
+#endif

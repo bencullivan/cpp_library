@@ -1,5 +1,11 @@
+// source: https://github.com/atcoder/ac-library/blob/master/atcoder/dsu.hpp
+
 #ifndef ATCODER_DSU_HPP
 #define ATCODER_DSU_HPP 1
+
+// #include <algorithm>
+// #include <cassert>
+// #include <vector>
 
 namespace atcoder {
 

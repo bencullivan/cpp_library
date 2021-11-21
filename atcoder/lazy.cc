@@ -1,3 +1,5 @@
+// source: https://github.com/atcoder/ac-library/blob/master/atcoder/internal_bit.hpp
+
 #ifndef ATCODER_INTERNAL_BITOP_HPP
 #define ATCODER_INTERNAL_BITOP_HPP 1
 
@@ -43,8 +45,17 @@ int bsf(unsigned int n) {
 
 #endif  // ATCODER_INTERNAL_BITOP_HPP
 
+// source: https://github.com/atcoder/ac-library/blob/master/atcoder/lazysegtree.hpp
+
 #ifndef ATCODER_LAZYSEGTREE_HPP
 #define ATCODER_LAZYSEGTREE_HPP 1
+
+// #include <algorithm>
+// #include <cassert>
+// #include <iostream>
+// #include <vector>
+
+// #include "atcoder/internal_bit"
 
 namespace atcoder {
 
@@ -226,23 +237,22 @@ struct lazy_segtree {
 
 #endif  // ATCODER_LAZYSEGTREE_HPP
 
+// -----------------------------------------------------------------------
+
 struct S { // segment
 };
-
 struct F { // lazy update
 };
-
 S op(S l, S r) { // the combine operation for two segments
 }
-
 S mapping(F l, S r) { // the update operation for a segment
 }
-
 F composition(F l, F r) { // composition of two lazy updates (l is applied after r)
 }
-
-S e() { return S(); } // the identity segment
-
-F id() { return F(); } // the identity update
-
+S e() { // the identity segment
+	return S();
+}
+F id() { // the identity update
+	return F();
+}
 using lazy_segtree = atcoder::lazy_segtree<S, op, e, F, mapping, composition, id>;

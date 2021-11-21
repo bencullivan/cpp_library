@@ -1,5 +1,9 @@
+// source: https://github.com/atcoder/ac-library/blob/master/atcoder/internal_queue.hpp
+
 #ifndef ATCODER_INTERNAL_QUEUE_HPP
 #define ATCODER_INTERNAL_QUEUE_HPP 1
+
+// #include <vector>
 
 namespace atcoder {
 
@@ -26,8 +30,18 @@ template <class T> struct simple_queue {
 
 #endif  // ATCODER_INTERNAL_QUEUE_HPP
 
+// https://github.com/atcoder/ac-library/blob/master/atcoder/maxflow.hpp
+
 #ifndef ATCODER_MAXFLOW_HPP
 #define ATCODER_MAXFLOW_HPP 1
+
+// #include <algorithm>
+// #include <cassert>
+// #include <limits>
+// #include <queue>
+// #include <vector>
+
+// #include "atcoder/internal_queue"
 
 namespace atcoder {
 
