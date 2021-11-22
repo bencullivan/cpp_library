@@ -30,7 +30,7 @@ template <class T> struct simple_queue {
 
 #endif  // ATCODER_INTERNAL_QUEUE_HPP
 
-// https://github.com/atcoder/ac-library/blob/master/atcoder/maxflow.hpp
+// source: https://github.com/atcoder/ac-library/blob/master/atcoder/maxflow.hpp
 
 #ifndef ATCODER_MAXFLOW_HPP
 #define ATCODER_MAXFLOW_HPP 1
