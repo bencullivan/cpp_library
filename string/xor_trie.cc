@@ -1,9 +1,9 @@
 struct xor_trie {
-	vector<array<int, 2>> tr, ct;
+	std::vector<std::array<int, 2>> tr, ct;
 	int lg;
 
 	xor_trie() : xor_trie(30) {}
-	xor_trie(int _lg) : tr(1, array<int, 2>{0, 0}), ct(1, array<int, 2>{0, 0}), lg(_lg-1) {}
+	xor_trie(int _lg) : tr(1, std::array<int, 2>{0, 0}), ct(1, std::array<int, 2>{0, 0}), lg(_lg-1) {}
 
 	void insert(long long x) {
 		int j = 0;

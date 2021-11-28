@@ -1,6 +1,6 @@
 template<typename T>
 struct Fenwick {
-	vector<T> data;
+	std::vector<T> data;
 	int len;
 	Fenwick(int _len) : data(_len+1), len(_len+1) {}
 	void add(int idx, T val) { 

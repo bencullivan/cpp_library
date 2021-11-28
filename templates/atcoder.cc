@@ -1,4 +1,5 @@
 #include <bits/stdc++.h>
+#include <atcoder/all>
 using namespace std;
 using ll = long long;
 using pii = pair<int,int>;
@@ -11,8 +12,6 @@ using vb = vector<bool>;
 using vvb = vector<vb>;
 using vpi = vector<pii>;
 using vpl = vector<pll>;
-mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
-#define rep(i,a,b) for (int i = a; i < (b); i++)
 #define fi first
 #define se second
 #define pb push_back
@@ -27,7 +26,6 @@ void solve() {
 int main() {
 	ios_base::sync_with_stdio(0), cin.tie(0);
 	int tt = 1;
-	cin >> tt;
 	while (tt--) solve();
 	return 0;
 }

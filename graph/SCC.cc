@@ -5,12 +5,12 @@
 * Source: CS31 Lecture Notes - Deeparnab Chakrabarty, folklore
 */
 struct SCC {
-	vector<vector<int>> G; // the directed input graph
-	vector<vector<int>> G_rev; // the reversed graph
-	vector<vector<int>> G_scc; // the DAG of sccs
-	vector<vector<int>> sccs; // the sccs
-	vector<int> order; // for topological sort
-	vector<int> which_scc; // which_scc[i] is the number of the scc that vertex i belongs to
+	std::vector<std::vector<int>> G; // the directed input graph
+	std::vector<std::vector<int>> G_rev; // the reversed graph
+	std::vector<std::vector<int>> G_scc; // the DAG of sccs
+	std::vector<std::vector<int>> sccs; // the sccs
+	std::vector<int> order; // for topological sort
+	std::vector<int> which_scc; // which_scc[i] is the number of the scc that vertex i belongs to
 
 	SCC(int _n) : G(_n), G_rev(_n), which_scc(_n) {}
 
@@ -32,7 +32,7 @@ struct SCC {
 	}
 
 	// builds a single scc
-	void dfs(int current_vertex, vector<int>& current_scc, vector<int>& neighbors) {
+	void dfs(int current_vertex, std::vector<int>& current_scc, std::vector<int>& neighbors) {
 		current_scc.push_back(current_vertex);
 		which_scc[current_vertex] = sccs.size();
 		for (int neighbor:G_rev[current_vertex]) {
@@ -49,16 +49,16 @@ struct SCC {
 	// builds G_scc and sccs in topological order of sccs
 	void get_sccs() {
 		order.clear();
-		fill(which_scc.begin(), which_scc.end(), -1);
+		std::fill(which_scc.begin(), which_scc.end(), -1);
 		for (int i = 0; i < (int) G.size(); i++) {
 			order_vertices(i);
 		}
 		assert(order.size() == G.size());
-		fill(which_scc.begin(), which_scc.end(), -1);
+		std::fill(which_scc.begin(), which_scc.end(), -1);
 		for (int i = G.size()-1; i >= 0; i--) {
 			if (which_scc[order[i]] == -1) {
-				vector<int> current_scc;
-				vector<int> neighbors;
+				std::vector<int> current_scc;
+				std::vector<int> neighbors;
 				dfs(order[i], current_scc, neighbors);
 				sccs.push_back(current_scc);
 				G_scc.push_back(neighbors);

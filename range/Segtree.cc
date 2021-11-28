@@ -7,12 +7,12 @@
 // Source: https://cp-algorithms.com/data_structures/segment_tree.html
 struct segtree {
 	struct node;
-	vector<node> data;
+	std::vector<node> data;
 	int len;
 
 	segtree(int _len) : data(4 * _len), len(_len) {}
 
-	segtree(vector<node>& input) : data(4 * input.size()), len(input.size()) {
+	segtree(std::vector<node>& input) : data(4 * input.size()), len(input.size()) {
 		build_Segtree(1, 0, len - 1, input);
 	}
 

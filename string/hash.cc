@@ -6,23 +6,21 @@
 
 // Generate random base in (before, after) open interval:
 int gen_base(const int before, const int after) {
-	mt19937 mt_rand(chrono::high_resolution_clock::now().time_since_epoch().count());
-	int base = uniform_int_distribution<int>(before+1, after)(mt_rand);
+	std::mt19937 mt_rand(std::chrono::high_resolution_clock::now().time_since_epoch().count());
+	int base = std::uniform_int_distribution<int>(before+1, after)(mt_rand);
 	return base % 2 == 0 ? base-1 : base;
 }
 
-using ull = unsigned long long;
-
 struct PolyHash {
-	static const int mod = (int)1e9+123; // prime mod of polynomial hashing
-	static vector<int> pow1;             // powers of base modulo mod
-	static vector<ull> pow2;             // powers of base modulo 2^64
-	static int base;                     // base (point of hashing)
+	static const int mod = (int)1e9+123;         // prime mod of polynomial hashing
+	static std::vector<int> pow1;                // powers of base modulo mod
+	static std::vector<unsigned long long> pow2; // powers of base modulo 2^64
+	static int base;                             // base (point of hashing)
 
-	vector<int> pref1; // Hash on prefix modulo mod
-	vector<ull> pref2; // Hash on prefix modulo 2^64
+	std::vector<int> pref1;                // Hash on prefix modulo mod
+	std::vector<unsigned long long> pref2; // Hash on prefix modulo 2^64
 
-	PolyHash(string& s) : pref1(s.size()+1u, 0), pref2(s.size()+1u, 0) {
+	PolyHash(std::string& s) : pref1(s.size()+1u, 0), pref2(s.size()+1u, 0) {
 		assert(base < mod);
 		int n = s.size();
 		while ((int)pow1.size() <= n) {
@@ -38,15 +36,15 @@ struct PolyHash {
 
 	// Polynomial hash of subsequence [pos, pos+len)
 	// If mx_pow != 0, value automatically multiply on base in needed power. Finally base ^ mx_pow 
-	pair<int, ull> get(int pos, int len, int mx_pow = 0) {
+	pair<int, unsigned long long> get(int pos, int len, int mx_pow = 0) {
 		int hash1 = pref1[pos+len] - pref1[pos];
-		ull hash2 = pref2[pos+len] - pref2[pos];
+		unsigned long long hash2 = pref2[pos+len] - pref2[pos];
 		if (hash1 < 0) hash1 += mod;
 		if (mx_pow != 0) {
 			hash1 = (long long)hash1 * pow1[mx_pow-(pos+len-1)] % mod;
 			hash2 *= pow2[mx_pow-(pos+len-1)];
 		}
-		return make_pair(hash1, hash2);
+		return std::make_pair(hash1, hash2);
 	}
 }; // PolyHash
 
@@ -54,8 +52,8 @@ struct PolyHash {
 // Method: finds the location of the first differing character between the two strings and then compares that character
 //         if there are no differing characters it compares based on substring length
 // Time: O(log(substr_len))
-bool comp_hash(string& one, PolyHash& one_hash, int one_start, int one_substr_len, 
-				string& two, PolyHash& two_hash, int two_start, int two_substr_len, int mx_pow) {
+bool comp_hash(std::string& one, PolyHash& one_hash, int one_start, int one_substr_len, 
+               std::string& two, PolyHash& two_hash, int two_start, int two_substr_len, int mx_pow) {
 	int loc = -1; // the location at which the substrings differ
 	int low = 1, high = min(one_substr_len, two_substr_len);
 	while (low <= high) {
@@ -67,8 +65,8 @@ bool comp_hash(string& one, PolyHash& one_hash, int one_start, int one_substr_le
 	return one[one_start + loc - 1] < two[two_start + loc - 1];
 }
 
-vector<int> PolyHash::pow1{1};
-vector<ull> PolyHash::pow2{1};
+std::vector<int> PolyHash::pow1{1};
+std::vector<unsigned long long> PolyHash::pow2{1};
 int PolyHash::base((int)1e9+7);
 //DO: 
 //mx_pow = maximum length of the strings being hashed

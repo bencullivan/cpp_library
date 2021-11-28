@@ -1,8 +1,3 @@
-// source: https://www.toptal.com/algorithms/aho-corasick-algorithm
-// (translated from C#)
-
-
-
 /**
 * Aho Corasick
 * Finds occurrences of dictionary words in a text.

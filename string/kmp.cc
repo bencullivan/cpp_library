@@ -1,4 +1,3 @@
-// modified
 /**
  * Author: Johan Sannemo
  * Date: 2016-12-15

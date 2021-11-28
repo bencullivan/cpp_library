@@ -6,8 +6,8 @@
 // 	- https://www.geeksforgeeks.org/two-dimensional-binary-indexed-tree-or-fenwick-tree/
 template<typename T> struct Fenwick2d {
 	int N, M;
-	vector<vector<T>> data;
-	Fenwick2d(int _N, int _M) : N(_N), M(_M), data(_N + 1, vector<T>(_M + 1)) {}
+	std::vector<std::vector<T>> data;
+	Fenwick2d(int _N, int _M) : N(_N), M(_M), data(_N + 1, std::vector<T>(_M + 1)) {}
 	// adds value to the element at (x, y)
 	void upd(int a, int b, T value) {
 		for (int i = a; i <= N; i += i & -i) 
