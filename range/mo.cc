@@ -1,4 +1,4 @@
-// mo's algorithm
+// Mo's algorithm
 // source: Competitive Programmer’s Handbook
 int block_size;
 struct mo {
