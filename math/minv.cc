@@ -4,10 +4,10 @@
 * Time: O(log(min(a,b))
 * Source: https://cp-algorithms.com/algebra/extended-euclid-algorithm.html
 */
-ll _extended_euclidean(ll a, ll b, ll& x, ll& y) {
+long long ext_gcd(long long a, long long b, long long& x, long long& y) {
 	x = 1, y = 0;
-	ll x1 = 0, y1 = 1;
-	ll q, t;
+	long long x1 = 0, y1 = 1;
+	long long q, t;
 	while (b > 0) {
 		q = a / b;
 		t = x - q * x1;
@@ -29,9 +29,9 @@ ll _extended_euclidean(ll a, ll b, ll& x, ll& y) {
 * Only exists if a and m are coprime
 * Time: O(log(min(a,m)))
 */
-ll mod_inv(ll a, ll m, bool prime = true) {
+long long minv(long long a, long long m, bool prime = true) {
 	if (prime) return mpow(a, m - 2);
-	ll x, y;
-	_extended_euclidean(a, m, x, y);
+	long long x, y;
+	ext_gcd(a, m, x, y);
 	return (x % m + m) % m;
 }
