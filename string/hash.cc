@@ -6,8 +6,8 @@
 
 // Generate random base in (before, after) open interval:
 int gen_base(const int before, const int after) {
-	std::mt19937 mt_rand(std::chrono::high_resolution_clock::now().time_since_epoch().count());
-	int base = std::uniform_int_distribution<int>(before+1, after)(mt_rand);
+	std::mt19937 hash_rand(std::chrono::high_resolution_clock::now().time_since_epoch().count());
+	int base = std::uniform_int_distribution<int>(before+1, after)(hash_rand);
 	return base % 2 == 0 ? base-1 : base;
 }
 
@@ -24,8 +24,10 @@ struct PolyHash {
 		assert(base < mod);
 		int n = s.size();
 		while ((int)pow1.size() <= n) {
-			pow1.push_back((long long)pow1.back() * base % mod);
-			pow2.push_back(pow2.back() * base);
+			int npow1 = pow1.back() * (long long)base % mod;
+			pow1.push_back(npow1);
+			unsigned long long npow2 = pow2.back() * (unsigned long long)base;
+			pow2.push_back(npow2);
 		}
 		for (int i = 0; i < n; ++i) {
 			assert(base > s[i]);
@@ -36,7 +38,7 @@ struct PolyHash {
 
 	// Polynomial hash of subsequence [pos, pos+len)
 	// If mx_pow != 0, value automatically multiply on base in needed power. Finally base ^ mx_pow 
-	pair<int, unsigned long long> get(int pos, int len, int mx_pow = 0) {
+	std::pair<int, unsigned long long> get(int pos, int len, int mx_pow = 0) {
 		int hash1 = pref1[pos+len] - pref1[pos];
 		unsigned long long hash2 = pref2[pos+len] - pref2[pos];
 		if (hash1 < 0) hash1 += mod;
@@ -67,7 +69,7 @@ bool comp_hash(std::string& one, PolyHash& one_hash, int one_start, int one_subs
 
 std::vector<int> PolyHash::pow1{1};
 std::vector<unsigned long long> PolyHash::pow2{1};
-int PolyHash::base((int)1e9+7);
+int PolyHash::base = (int)1e9+7;
 //DO: 
 //mx_pow = maximum length of the strings being hashed
 //PolyHash::base = gen_base(256, PolyHash::mod);

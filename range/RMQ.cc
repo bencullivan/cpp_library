@@ -3,9 +3,7 @@ template<typename T, typename CompT = std::less<T>> struct RMQ {
 	CompT comp;
 	std::vector<T> vals;
 	std::vector<std::vector<int>> table;
-	int select_index(int a, int b) {
-		return comp(vals[a], vals[b]) ? a : b;
-	}
+	int select_index(int a, int b) { return comp(vals[a], vals[b]) ? a : b; }
 	RMQ() {}
 	RMQ(const std::vector<T>& _vals) { build(_vals); }
 	void build(const std::vector<T>& _vals) {

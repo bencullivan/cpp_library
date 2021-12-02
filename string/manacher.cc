@@ -10,8 +10,7 @@
  */
 // #pragma once
 
-template <typename T> // modified for template instead of string
-array<vi, 2> manacher(const T& s) {
+template<typename T> array<vi, 2> manacher(const T& s) {
 	int n = sz(s);
 	array<vi,2> p = {vi(n+1), vi(n)};
 	rep(z,0,2) for (int i=0,l=0,r=0; i < n; i++) {

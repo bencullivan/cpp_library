@@ -3,14 +3,9 @@ using namespace std;
 using ll = long long;
 using pii = pair<int,int>;
 using pll = pair<ll,ll>;
-using vi = vector<int>;
-using vvi = vector<vi>;
-using vl = vector<ll>;
-using vvl = vector<vl>;
-using vb = vector<bool>;
-using vvb = vector<vb>;
-using vpi = vector<pii>;
-using vpl = vector<pll>;
+using vpi = vector<pii>; using vpl = vector<pll>;
+using vb = vector<bool>; using vi = vector<int>; using vl = vector<ll>;
+using vvb = vector<vb>;  using vvi = vector<vi>; using vvl = vector<vl>;
 mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 #define rep(i,a,b) for (int i = a; i < (b); i++)
 #define fi first
@@ -19,7 +14,6 @@ mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
 #define mp make_pair
 #define sz(v) (int)v.size()
 #define all(v) v.begin(),v.end()
-const int MX = 2e5+5;
 
 void solve() {
 }
