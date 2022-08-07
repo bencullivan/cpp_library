@@ -37,8 +37,8 @@ using vpl = vector<pll>;
 using vs = vector<string>;
 template<typename T> using minpq = priority_queue<T, vector<T>, greater<T>>;
 #define each(i, a) for (auto& i : a)
-#define rep(i, n) for (int i = 0; i < (int)(n); i++)
-#define rep1(i, n) for (int i = 1; i <= (int)(n); i++)
+#define rep(i, n) for (int i = 0; i < (n); i++)
+#define rep1(i, n) for (int i = 1; i <= (n); i++)
 #define sz(v) int(v.size())
 #define mp make_pair
 #define pb push_back
