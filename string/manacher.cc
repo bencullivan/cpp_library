@@ -1,15 +1,12 @@
-// source: https://github.com/kth-competitive-programming/kactl/blob/main/content/strings/Manacher.h
-
+// https://github.com/kth-competitive-programming/kactl/blob/main/content/strings/Manacher.h
 /**
- * Author: User adamant on CodeForces
- * Source: http://codeforces.com/blog/entry/12143
- * Description: For each position in a string, computes p[0][i] = half length of
- *  longest even palindrome around pos i, p[1][i] = longest odd (half rounded down).
- * Time: O(N)
- * Status: Stress-tested
- */
-// #pragma once
-
+* Author: User adamant on CodeForces
+* Source: http://codeforces.com/blog/entry/12143
+* Description: For each position in a string, computes p[0][i] = half length of
+*  longest even palindrome around pos i, p[1][i] = longest odd (half rounded down).
+* Time: O(N)
+* Status: Stress-tested
+*/
 template<typename T> array<vi, 2> manacher(const T& s) {
 	int n = sz(s);
 	array<vi,2> p = {vi(n+1), vi(n)};

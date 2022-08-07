@@ -16,13 +16,14 @@ struct AhoCorasick {
 		int sl = 0;     // the suffix link to the node whose path is the longest path that is a suffix of the current path
 		int el = 0;     // the link to the leaf node of the longest word that can be made from a suffix of the current path
 		int id = -1;    // if a word ends at this node its id, else -1
-		Node(int _par, int _pch) : par(_par), pch(_pch) { memset(ch, -1, alpha * sizeof(int)); }
+		Node(int _par, int _pch) : par(_par), pch(_pch) { std::memset(ch, -1, alpha * sizeof(int)); }
 	};
-	vector<Node> data; // the trie
-	vector<int> lengths;  // the lengths of the words in the dictionary
-	vector<vector<int>> duplicates; // use if duplicates are allowed
+	std::vector<Node> data; // the trie
+	std::vector<int> lengths;  // the lengths of the words in the dictionary
+	std::vector<std::vector<int>> duplicates; // use if duplicates are allowed
+	bool built = false;
 	AhoCorasick() : data(1, Node(0, 0)) {}
-	void insert(string& s, int idx) {
+	void insert(std::string& s, int idx) {
 		int cur = 0;
 		for (int i = 0; i < (int)s.size(); i++) {
 			int c = s[i] - base_ch;
@@ -39,7 +40,7 @@ struct AhoCorasick {
 	}
 	// call after inserting all words into the trie
 	void build() {
-		queue<int> q;
+		std::queue<int> q;
 		q.push(0);
 		while (q.size() && data[q.front()].par == 0) { // process the root and its children
 			int cur = q.front(); q.pop();
@@ -56,12 +57,20 @@ struct AhoCorasick {
 			else data[cur].el = data[data[cur].sl].el; // there is no word that ends at the current node so its end word link is the end word link of its suffix link node
 			for (int i = 0; i < alpha; i++) if (data[cur].ch[i] != -1) q.push(data[cur].ch[i]); // bfs on all children
 		}
+		built = true;
 	}
+	/*
+	id: the index of the found word in the input
+	i: the index of the start of the occurrence in the string we are processing
+	*/
 	void process_op(int id, int i) { // MUST BE O(1)
 		// CHANGE
 	}
 	// process a text to find where dictionary words occur in it
-	void process(string &t) {
+	void process(std::string &t) {
+		if (!built) {
+			throw std::runtime_error("must build trie before processing");
+		}
 		int cur = 0; // we begin at the root
 		for (int i = 0; i < (int)t.size(); i++) {
 			int c = t[i]-base_ch;

@@ -55,7 +55,6 @@ struct lazy_segtree {
 		return get(1, 0, len - 1, l, r);
 	}
 }; //lazy_segtree 
-
 struct S { // segment
 };
 struct F { // lazy update

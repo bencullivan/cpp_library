@@ -41,7 +41,6 @@ std::vector<int> eulerian_path_undirected_graph(std::vector<std::vector<int>>& g
 	}
 	return res;
 }
-
 // finds an eulerian path in a directed graph in O(n)
 // each adjacency list is rotated one index to the left
 std::vector<int> eulerian_path_directed_graph(std::vector<std::vector<int>>& graph) {

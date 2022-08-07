@@ -1,10 +1,11 @@
-#ifndef KACTL
-#define KACTL
-
+using vi = vector<int>;
+using pii = pair<int,int>;
+#ifndef rep
 #define rep(i, a, b) for(int i=a;i<(b);++i)
+#endif
+#ifndef all
 #define all(x) begin(x), end(x)
+#endif
+#ifndef sz
 #define sz(x) (int)(x).size()
-typedef pair<int, int> pii;
-typedef vector<int> vi;
-
-#endif // KACTL
+#endif

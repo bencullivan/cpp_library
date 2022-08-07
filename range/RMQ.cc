@@ -16,7 +16,7 @@ template<typename T, typename CompT = std::less<T>> struct RMQ {
 				table[k][j] = select_index(table[k - 1][j], table[k - 1][j + pw]);
 		}
 	}
-	T get_index(int a, int b) { // gets the minimum of the range [a, b)
+	int get_index(int a, int b) { // gets the minimum of the range [a, b)
 		int dep = 31 - __builtin_clz(b - a);
 		return select_index(table[dep][a], table[dep][b - (1 << dep)]);
 	}

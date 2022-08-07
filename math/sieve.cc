@@ -1,9 +1,7 @@
-std::vector<int> primes;
-std::vector<int> spf;
-
-// Sieve of Eratosthenes
+vector<int> primes;
+vector<int> spf;
 // https://cp-algorithms.com/algebra/sieve-of-eratosthenes.html
-void sieve(int N) {
+void sieve(long long N) {
 	primes.clear();
 	spf.assign(N+1, -1);
 	for (long long i = 2; i <= N; i++) {
@@ -16,10 +14,10 @@ void sieve(int N) {
 		}
 	}
 }
-std::vector<std::pair<int, int>> get_pfs(int x) {
+vector<pair<int, int>> get_pfs(int x) {
 	int cur = spf[x];
 	int ct = 0;
-	std::vector<std::pair<int, int>> pfs;
+	vector<pair<int, int>> pfs;
 	while (x > 1) {
 		if (cur != spf[x]) {
 			pfs.emplace_back(cur, ct);

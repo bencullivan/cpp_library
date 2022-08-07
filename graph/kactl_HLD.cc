@@ -1,16 +1,12 @@
 #ifndef KACTL
 #define KACTL
-
 #define rep(i, a, b) for(int i = a; i < (b); ++i)
 // #define all(x) begin(x), end(x)
 // #define sz(x) (int)(x).size()
 // typedef std::pair<int, int> pii;
 // typedef std::vector<int> vi;
-
 #endif // KACTL
-
 // source: https://github.com/kth-competitive-programming/kactl/blob/main/content/graph/HLD.h
-
 /**
 * Author: Simon Lindholm
 * Date: 2015-09-12
@@ -21,7 +17,6 @@
 * Status: tested
 */
 // #pragma once
-
 // Either globally or in a single class:
 static char buf[450 << 20];
 void* operator new(size_t s) {
@@ -30,7 +25,6 @@ void* operator new(size_t s) {
 	return (void*)&buf[i -= s];
 }
 void operator delete(void*) {}
-
 /**
 * Author: Simon Lindholm
 * Date: 2016-10-08
@@ -44,9 +38,7 @@ void operator delete(void*) {}
 * Status: stress-tested a bit
 */
 // #pragma once
-
 // #include "../various/BumpAllocator.h"
-
 const int inf = 1e9;
 struct Node {
 	Node *l = 0, *r = 0;
@@ -97,7 +89,6 @@ struct Node {
 			l->add(lo,hi,madd), r->add(lo,hi,madd), madd = 0;
 	}
 };
-
 /**
 * Author: Benjamin Qi, Oleksandr Kulkov, chilli
 * Date: 2020-01-12
@@ -114,9 +105,7 @@ struct Node {
 * Status: stress-tested against old HLD
 */
 // #pragma once
-
 // #include "../data-structures/LazySegmentTree.h"
-
 template <bool VALS_EDGES> struct HLD {
 	int N, tim = 0;
 	vector<vi> adj;

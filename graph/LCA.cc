@@ -24,7 +24,6 @@ struct RMQ {
 	}
 	T get_val(int a, int b) { return vals[get_index(a, b)]; }
 }; // RMQ
-
 // Build in O(N*log(N)). Query in O(1).
 struct LCA {
 	vector<int> first_euler, euler;

@@ -1,13 +1,12 @@
 // kactl 2d geometry
 // source: https://github.com/kth-competitive-programming/kactl/tree/main/content/geometry
-
 /**
 * Author: Ulf Lundstrom
 * Date: 2009-02-26
 * License: CC0
 * Source: My head with inspiration from tinyKACTL
 * Description: Class to handle points in the plane.
-* 	T can be e.g. double or long long. (Avoid int.)
+*     T can be e.g. double or long long. (Avoid int.)
 * Status: Works fine, used a lot
 */
 template <class T> int sgn(T x) { return (x > 0) - (x < 0); }
@@ -40,7 +39,6 @@ struct Point {
 	friend ostream& operator<<(ostream& os, P p) {
 		return os << p.x << " " << p.y; }
 };
-
 /**
 * Author: Simon Lindholm
 * Date: 2019-04-17
@@ -68,7 +66,6 @@ pair<P, P> closest(vector<P> v) {
 	return ret.second;
 }
 #undef P
-
 /**
 * Author: Ulf Lundstrom
 * Date: 2009-03-21
@@ -85,7 +82,6 @@ template<class P>
 double lineDist(const P& a, const P& b, const P& p) {
 	return (double)(b-a).cross(p-a)/(b-a).dist();
 }
-
 /**
 * Author: Victor Lecomte, chilli
 * Date: 2019-05-05
@@ -97,9 +93,9 @@ double lineDist(const P& a, const P& b, const P& p) {
 * The wrong position will be returned if P is Point<ll> and the intersection point does not have integer coordinates.
 * Products of three coordinates are used in intermediate steps so watch out for overflow if using int or ll.
 * Usage:
-* 	auto res = lineInter(s1,e1,s2,e2);
-* 	if (res.first == 1)
-* 		cout << "intersection point at " << res.second << endl;
+*     auto res = lineInter(s1,e1,s2,e2);
+*     if (res.first == 1)
+*         cout << "intersection point at " << res.second << endl;
 * Status: stress-tested, and tested through half-plane tests
 */
 template<class P>
@@ -110,7 +106,6 @@ pair<int, P> lineInter(P s1, P e1, P s2, P e2) {
 	auto p = s2.cross(e1, e2), q = s2.cross(e2, s1);
 	return {1, (s1 * p + e1 * q) / d};
 }
-
 /**
 * Author: Victor Lecomte, chilli
 * Date: 2019-10-29
@@ -128,7 +123,6 @@ P lineProj(P a, P b, P p, bool refl=false) {
 	P v = b - a;
 	return p - v.perp()*(1+refl)*v.cross(p-a)/v.dist2();
 }
-
 /**
 * Author: Simon Lindholm
 * Date: 2015-09-01
@@ -148,8 +142,6 @@ bool circleInter(P a, P b, double r1, double r2, pair<P, P>& out) {
 	return true;
 }
 #undef P
-
-
 /**
 * Author: Victor Lecomte, chilli
 * Date: 2019-10-29
@@ -170,7 +162,6 @@ vector<P> circleLine(P c, double r, P a, P b) {
 	return {p - h, p + h};
 }
 #undef P
-
 /**
 * Author: chilli, Takanori MAEHARA
 * Date: 2019-10-31
@@ -202,7 +193,6 @@ double circlePoly(P c, double r, vector<P> ps) {
 }
 #undef arg
 #undef P
-
 /**
 * Author: Ulf Lundstrom
 * Date: 2009-04-11
@@ -222,7 +212,6 @@ P ccCenter(const P& A, const P& B, const P& C) {
 	return A + (b*c.dist2()-c*b.dist2()).perp()/b.cross(c)/2;
 }
 #undef P
-
 /**
 * Author: Andrew He, chilli
 * Date: 2019-05-07
@@ -251,7 +240,6 @@ pair<P, double> mec(vector<P> ps) {
 	return {o, r};
 }
 #undef P
-
 /**
 * Author: Ulf Lundstrom
 * Date: 2009-03-21
@@ -260,8 +248,8 @@ pair<P, double> mec(vector<P> ps) {
 * Description:
 * Returns the shortest distance between point p and the line segment from point s to e.
 * Usage: 
-* 	Point<double> a, b(2,2), p(1,1);
-* 	bool onSegment = segDist(a,b,p) < 1e-10;
+*     Point<double> a, b(2,2), p(1,1);
+*     bool onSegment = segDist(a,b,p) < 1e-10;
 * Status: tested
 */
 #define P Point<double>
@@ -271,7 +259,6 @@ double segDist(P& s, P& e, P& p) {
 	return ((p-s)*d-(e-s)*t).dist()/d;
 }
 #undef P
-
 /**
 * Author: Victor Lecomte, chilli
 * Date: 2019-04-26
@@ -284,7 +271,6 @@ double segDist(P& s, P& e, P& p) {
 template<class P> bool onSegment(P s, P e, P p) {
 	return p.cross(s, e) == 0 && (s - p).dot(e - p) <= 0;
 }
-
 /**
 * Author: Victor Lecomte, chilli
 * Date: 2019-04-27
@@ -315,7 +301,6 @@ template<class P> vector<P> segInter(P a, P b, P c, P d) {
 	if (onSegment(a, b, d)) s.insert(d);
 	return {all(s)};
 }
-
 /**
 * Author: Ulf Lundstrom
 * Date: 2009-03-21
@@ -326,7 +311,7 @@ template<class P> vector<P> segInter(P a, P b, P c, P d) {
 * P is supposed to be Point<T> where T is e.g. double or long long. 
 * It uses products in intermediate steps so watch out for overflow if using int or long long.
 * Usage:
-* 	bool left = sideOf(p1,p2,q)==1;
+*     bool left = sideOf(p1,p2,q)==1;
 * Status: tested
 */
 template<class P>
@@ -337,7 +322,6 @@ int sideOf(const P& s, const P& e, const P& p, double eps) {
 	double l = (e-s).dist()*eps;
 	return (a > l) - (a < -l);
 }
-
 /**
 * Author: black_horse2014, chilli
 * Date: 2019-10-29
@@ -383,7 +367,6 @@ double polyUnion(vector<vector<P>>& poly) {
 	return ret / 2;
 }
 #undef P
-
 /**
 * Author: Ulf Lundstrom
 * Date: 2009-03-21
@@ -391,8 +374,8 @@ double polyUnion(vector<vector<P>>& poly) {
 * Source:
 * Description: Returns a vector with the vertices of a polygon with everything to the left of the line going from s to e cut away.
 * Usage:
-* 	vector<P> p = ...;
-* 	p = polygonCut(p, P(0,0), P(1,0));
+*     vector<P> p = ...;
+*     p = polygonCut(p, P(0,0), P(1,0));
 * Status: tested but not extensively
 */
 #define P Point<double>
@@ -409,7 +392,6 @@ vector<P> polygonCut(const vector<P>& poly, P s, P e) {
 	return res;
 }
 #undef P
-
 /**
 * Author: Ulf Lundstrom
 * Date: 2009-04-08
@@ -429,7 +411,6 @@ P polygonCenter(const vector<P>& v) {
 	return res / A / 3;
 }
 #undef P
-
 /**
 * Author: Ulf Lundstrom
 * Date: 2009-03-21
@@ -445,7 +426,6 @@ T polygonArea2(vector<Point<T>>& v) {
 	rep(i,0,sz(v)-1) a += v[i].cross(v[i+1]);
 	return a;
 }
-
 /**
 * Author: Victor Lecomte, chilli
 * Date: 2019-04-26
@@ -471,7 +451,6 @@ bool inPolygon(vector<P> &p, P a, bool strict = true) {
 	}
 	return cnt;
 }
-
 /**
 * Author: Stjepan Glavina, chilli
 * Date: 2019-05-05
@@ -497,7 +476,6 @@ vector<P> convexHull(vector<P> pts) {
 	return {h.begin(), h.begin() + t - (t == 2 && h[0] == h[1])};
 }
 #undef P
-
 /**
 * Author: chilli
 * Date: 2019-05-17
@@ -524,7 +502,6 @@ bool inHull(const vector<P>& l, P p, bool strict = true) {
 	return sgn(l[a].cross(l[b], p)) < r;
 }
 #undef P
-
 /**
 * Author: Oleksandr Bacherikov, chilli
 * Date: 2019-05-05
@@ -547,7 +524,6 @@ array<P, 2> hullDiameter(vector<P> S) {
 	return res.second;
 }
 #undef P
-
 /**
 * Author: Oleksandr Bacherikov, chilli
 * Date: 2019-05-07

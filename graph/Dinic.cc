@@ -15,10 +15,8 @@ struct Dinic {
 	int sink;
 	long long mf = 0; // the value of the max s-t flow
 	const long long MAX_CAP = 5e18; // the maximum edge capacity
-
 	// constructs a redisual network with no edges
 	Dinic(int _n) : adj(_n), level(_n), ptr(_n) {}
-
 	// adds the edge with the given capacity and the reverse edge to the residual network
 	inline void add_edge(int u, int v, long long c) {
 		to.push_back(v);
@@ -28,7 +26,6 @@ struct Dinic {
 		cap.push_back(0);
 		adj[v].push_back(cap.size() - 1);
 	}
-
 	// finds the level of each reachable vertex, beginning from the source
 	// returns whether the sink is reachable from the source
 	bool bfs() {
@@ -47,7 +44,6 @@ struct Dinic {
 		}
 		return level[sink] != -1;
 	}
-
 	// attempts to push 'push_flow' units of flow from vertex u toward the sink i.e. up a level
 	// returns the number of units that were pushed
 	long long dfs(int u, long long push_flow) {
@@ -67,7 +63,6 @@ struct Dinic {
 		}
 		return 0;
 	}
-
 	// finds the max s-t flow
 	long long max_flow(int s, int t) {
 		source = s;
@@ -85,7 +80,6 @@ struct Dinic {
 		}
 		return mf;
 	}
-
 	// finds the min s-t cut
 	void min_cut() {
 		bfs();

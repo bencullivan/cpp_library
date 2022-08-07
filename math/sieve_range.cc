@@ -1,5 +1,5 @@
-std::vector<long long> primes;
-std::vector<bool> is_prime;
+vector<long long> primes;
+vector<bool> is_prime;
 /*
 	The sieve of Eratosthenes.
 	Generates every prime number less than or equal to N.

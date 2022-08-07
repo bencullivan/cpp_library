@@ -22,7 +22,6 @@ long long ext_gcd(long long a, long long b, long long& x, long long& y) {
 	}
 	return a;
 }
- 
 /**
 * Modular inverse of a, mod m
 * If m is prime, this is equivalent to mpow(a,m-2)

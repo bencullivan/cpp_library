@@ -27,7 +27,6 @@ ull modpow(ull b, ull e, ull mod) {
 		if (e & 1) ans = modmul(ans, b, mod);
 	return ans;
 }
-
 /**
 * Author: chilli, c1729, Simon Lindholm
 * Date: 2019-03-28
@@ -50,7 +49,6 @@ bool miller_rabin(ull n) {
 	}
 	return 1;
 }
-
 /**
 * Author: chilli, SJTU, pajenegod
 * Date: 2020-03-04

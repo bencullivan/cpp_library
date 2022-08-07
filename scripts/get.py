@@ -1,29 +1,28 @@
 import sys
 import os
 
+
 folder_path = sys.argv[1]
-data_structure_path = f'/Users/benjamincullivan/documents/cpp_library/{sys.argv[2]}/{sys.argv[3]}.cc'
-target_line = '#define all('
+data_structure_path = f'{os.environ["cpp_library_path"]}/{sys.argv[2]}/{sys.argv[3]}.cc'
 
 if not os.path.isfile(data_structure_path):
 	print(f'{sys.argv[2]}/{sys.argv[3]}.cc does not exist.')
 	exit(0)
 
-buf = None
 with open(os.path.join(folder_path, sys.argv[4] + '.cc'), 'r') as destination_file:
 	buf = destination_file.readlines()
 
-no_df = True
-for line in buf:
-	if line.find(target_line) != -1:
-		no_df = False
+target_line = ''
+targs = ['// end of template', 'using ll = long long;', 'using ll=long long', 'using namespace std;']
+for targ in targs:
+	has_line = False
+	for line in buf:
+		if line.find(targ) != -1:
+			has_line = True
+			break
+	if has_line:
+		target_line = targ
 		break
-
-if no_df:
-	target_line = 'using namespace std;'
-
-if sys.argv[3] == 'kactl':
-	target_line = '#include <bits/stdc++.h>'
 
 with open(os.path.join(folder_path, sys.argv[4] + '.cc'), 'w') as destination_file:
 	for line in buf:

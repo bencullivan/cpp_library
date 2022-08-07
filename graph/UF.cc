@@ -1,17 +1,14 @@
-// source: https://github.com/kth-competitive-programming/kactl/blob/main/content/data-structures/UnionFind.h
-
+// https://github.com/kth-competitive-programming/kactl/blob/main/content/data-structures/UnionFind.h
 /**
- * Author: Lukas Polacek
- * Date: 2009-10-26
- * License: CC0
- * Source: folklore
- * Description: Disjoint-set data structure.
- * Time: $O(\alpha(N))$
- */
-// #pragma once
-
+* Author: Lukas Polacek
+* Date: 2009-10-26
+* License: CC0
+* Source: folklore
+* Description: Disjoint-set data structure.
+* Time: $O(\alpha(N))$
+*/
 struct UF {
-	vi e;
+	std::vector<int> e;
 	UF(int n) : e(n, -1) {}
 	bool sameSet(int a, int b) { return find(a) == find(b); }
 	int size(int x) { return -e[find(x)]; }
@@ -19,7 +16,7 @@ struct UF {
 	bool join(int a, int b) {
 		a = find(a), b = find(b);
 		if (a == b) return false;
-		if (e[a] > e[b]) swap(a, b);
+		if (e[a] > e[b]) std::swap(a, b);
 		e[a] += e[b]; e[b] = a;
 		return true;
 	}

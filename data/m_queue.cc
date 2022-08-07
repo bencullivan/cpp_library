@@ -1,5 +1,4 @@
 // source: https://cp-algorithms.com/data_structures/stack_queue_modification.html
-
 template<typename T, typename Comparator = std::less<T>>
 struct m_stack {
 	Comparator comp;
@@ -14,7 +13,6 @@ struct m_stack {
 	size_t size() { return data.size(); }
 	bool empty() { return data.empty(); }
 }; // m_stack 
-
 template<typename T, typename Comparator = std::less<T>>
 struct m_queue {
 	Comparator comp;

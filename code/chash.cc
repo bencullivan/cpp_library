@@ -11,9 +11,7 @@ template<typename T> struct chash {
 	static unsigned hash_combine(unsigned a, unsigned b) { return a * 31 + b; }
 	T operator()(T x) const { return hash_f(x) ^ RANDOM; }
 };
-
 template <typename K, typename V, typename Hash = chash<K>>
 using hmap = __gnu_pbds::gp_hash_table<K, V, Hash>;
-
 template <typename K, typename Hash = chash<K>>
 using hset = hmap<K, __gnu_pbds::null_type, Hash>;

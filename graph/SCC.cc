@@ -11,14 +11,11 @@ struct SCC {
 	std::vector<std::vector<int>> sccs; // the sccs
 	std::vector<int> order; // for topological sort
 	std::vector<int> which_scc; // which_scc[i] is the number of the scc that vertex i belongs to
-
 	SCC(int _n) : G(_n), G_rev(_n), which_scc(_n) {}
-
 	inline void add_edge(int u, int v) {
 		G[u].push_back(v);
 		G_rev[v].push_back(u);
 	}
-
 	// orders the vertices in increasing order of lasts
 	void order_vertices(int current_vertex) {
 		if (which_scc[current_vertex] != -1) {
@@ -30,7 +27,6 @@ struct SCC {
 		}
 		order.push_back(current_vertex);
 	}
-
 	// builds a single scc
 	void dfs(int current_vertex, std::vector<int>& current_scc, std::vector<int>& neighbors) {
 		current_scc.push_back(current_vertex);
@@ -44,7 +40,6 @@ struct SCC {
 			}
 		}
 	}
-
 	// builds the DAG of sccs as well as labels each vertex with the scc it belongs to
 	// builds G_scc and sccs in topological order of sccs
 	void get_sccs() {

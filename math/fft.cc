@@ -3,7 +3,6 @@
 //  - http://neerc.ifmo.ru/trains/toulouse/2017/fft.pdf
 //  - http://neerc.ifmo.ru/trains/toulouse/2017/fft2.pdf
 //  - various fft implementations on codeforces
-
 // double is significantly faster than long double
 // fast init only performs O(log(n)) cos and sin evaluations
 // only change if extra high precision is needed
@@ -15,7 +14,6 @@ constexpr int FFT_N = (1 << LG2); // the max length of a polynomial (1048576)
 const db PI = acos(db(-1));
 int rev[FFT_N];
 cplx rts[FFT_N];
-
 void fft_init(int n, int lg2) {
 	for (int i = 1; i < n; i++) rev[i] = (rev[i >> 1] >> 1) + ((i & 1) << (lg2 - 1));
 	for (int i = 0; i < (n >> 1); i++) {
@@ -24,7 +22,6 @@ void fft_init(int n, int lg2) {
 	}
 	for (int i = (n >> 1) - 1; i > 0; i--) rts[i] = rts[i << 1];
 }
-
 void fft_fast_init(int n, int lg2) {
 	for (int i = 1; i < n; i++) rev[i] = (rev[i >> 1] >> 1) + ((i & 1) << (lg2 - 1));
 	rts[1] = cplx(1, 0);
@@ -37,7 +34,6 @@ void fft_fast_init(int n, int lg2) {
 		}
 	}
 }
-
 void fft(vector<cplx>& a, int n) {
 	for (int i = 0; i < n; i++) if (i < rev[i]) swap(a[i], a[rev[i]]);
 	for (int k = 1; k < n; k <<= 1) for (int i = 0; i < n; i += (k << 1)) for (int j = 0; j < k; j++) {
@@ -46,14 +42,12 @@ void fft(vector<cplx>& a, int n) {
 		a[i + j] = a[i + j] + z;
 	}
 }
-
 void fft_inv(vector<cplx>& a, int n) {
 	reverse(a.begin() + 1, a.end());
 	fft(a, n);
 	db ndb = n;
 	for (int i = 0; i < n; i++) a[i] = a[i] / ndb;
 }
-
 template<typename fft_mint>
 vector<fft_mint> multiply(const vector<fft_mint>& a, const vector<fft_mint>& b, bool use_FFT_N = false) {
 	static constexpr db point5 = 0.5;

@@ -1,21 +1,18 @@
 // 1D Range Queries and Point Updates.
 // 0-indexed.
 // Time: 
-// 	- build_Segtree: O(N)
-// 	- upd: O(log(N))
-// 	- get: O(log(N))
+//     - build_Segtree: O(N)
+//     - upd: O(log(N))
+//     - get: O(log(N))
 // Source: https://cp-algorithms.com/data_structures/segment_tree.html
 struct segtree {
 	struct node;
 	std::vector<node> data;
 	int len;
-
 	segtree(int _len) : data(4 * _len), len(_len) {}
-
 	segtree(std::vector<node>& input) : data(4 * input.size()), len(input.size()) {
 		build_Segtree(1, 0, len - 1, input);
 	}
-
 	// builds the segtree using the nodes in the input array
 	void build_Segtree(int i, int tl, int tr, vector<node>& input) {
 		if (tl == tr) {
@@ -29,7 +26,6 @@ struct segtree {
 		// set the value of this node by combining the values of its children
 		data[i] = combine(data[i * 2], data[i * 2 + 1]);
 	}
-
 	// sets the element at index x to v
 	void upd(int i, int tl, int tr, int x, const node& v) {
 		if (tl == x && tr == x) {
@@ -43,12 +39,10 @@ struct segtree {
 		// update the current node
 		data[i] = combine(data[i * 2], data[i * 2 + 1]);
 	}
-
 	// sets the element at index x to v
 	void upd(int x, const node& v) {
 		upd(1, 0, len - 1, x, v);
 	}
-
 	// queries the segment [l, r]
 	node get(int i, int tl, int tr, int l, int r) {
 		if (tr < l || tl > r) return node(); // we are out of range, return the default value
@@ -57,12 +51,10 @@ struct segtree {
 		int tm = (tl + tr) / 2;
 		return combine(get(i * 2, tl, tm, l, r), get(i * 2 + 1, tm + 1, tr, l, r));
 	}
-
 	// queries the segment [l, r]
 	node get(int l, int r) {
 		return get(1, 0, len - 1, l, r);
 	}
-
 // --------------------------------------
 	// CHANGE
 	struct node {
@@ -73,5 +65,4 @@ struct segtree {
 	}
 // --------------------------------------
 }; //segtree 
-
 using node = segtree::node;

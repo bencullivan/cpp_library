@@ -1,9 +1,9 @@
 // 2D Fenwick tree for rectangular sum queries and point updates on a 2D matrix in O(log(N*M))
 // 1-indexed.
 // Sources:
-// 	- https://cp-algorithms.com/data_structures/fenwick.html
-// 	- https://www.topcoder.com/community/competitive-programming/tutorials/binary-indexed-trees/
-// 	- https://www.geeksforgeeks.org/two-dimensional-binary-indexed-tree-or-fenwick-tree/
+//     - https://cp-algorithms.com/data_structures/fenwick.html
+//     - https://www.topcoder.com/community/competitive-programming/tutorials/binary-indexed-trees/
+//     - https://www.geeksforgeeks.org/two-dimensional-binary-indexed-tree-or-fenwick-tree/
 template<typename T> struct Fenwick2d {
 	int N, M;
 	std::vector<std::vector<T>> data;

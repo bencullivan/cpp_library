@@ -1,12 +1,8 @@
 // https://github.com/atcoder/ac-library
-
 #ifndef ATCODER_INTERNAL_BITOP_HPP
 #define ATCODER_INTERNAL_BITOP_HPP 1
-
 namespace atcoder {
-
 namespace internal {
-
 // @param n `0 <= n`
 // @return minimum non-negative `x` s.t. `n <= 2**x`
 int ceil_pow2(int n) {
@@ -14,24 +10,17 @@ int ceil_pow2(int n) {
 	while ((1U << x) < (unsigned)(n)) x++;
 	return x;
 }
-
 // @param n `1 <= n`
 // @return minimum non-negative `x` s.t. `(n & (1 << x)) != 0`
 int bsf(unsigned n) {
 	return __builtin_ctz(n);
 }
-
 }  // namespace internal
-
 }  // namespace atcoder
-
 #endif  // ATCODER_INTERNAL_BITOP_HPP
-
 #ifndef ATCODER_SEGTREE_HPP
 #define ATCODER_SEGTREE_HPP 1
-
 namespace atcoder {
-
 template <class S, S (*op)(S, S), S (*e)()> struct segtree {
 	public:
 		segtree() : segtree(0) {}
@@ -45,25 +34,21 @@ template <class S, S (*op)(S, S), S (*e)()> struct segtree {
 						update(i);
 				}
 		}
-
 		void set(int p, S x) {
 				assert(0 <= p && p < _n);
 				p += size;
 				d[p] = x;
 				for (int i = 1; i <= log; i++) update(p >> i);
 		}
-
 		S get(int p) const {
 				assert(0 <= p && p < _n);
 				return d[p + size];
 		}
-
 		S prod(int l, int r) const {
 				assert(0 <= l && l <= r && r <= _n);
 				S sml = e(), smr = e();
 				l += size;
 				r += size;
-
 				while (l < r) {
 						if (l & 1) sml = op(sml, d[l++]);
 						if (r & 1) smr = op(d[--r], smr);
@@ -72,9 +57,7 @@ template <class S, S (*op)(S, S), S (*e)()> struct segtree {
 				}
 				return op(sml, smr);
 		}
-
 		S all_prod() const { return d[1]; }
-
 		template <bool (*f)(S)> int max_right(int l) const {
 				return max_right(l, [](S x) { return f(x); });
 		}
@@ -101,7 +84,6 @@ template <class S, S (*op)(S, S), S (*e)()> struct segtree {
 				} while ((l & -l) != l);
 				return _n;
 		}
-
 		template <bool (*f)(S)> int min_left(int r) const {
 				return min_left(r, [](S x) { return f(x); });
 		}
@@ -128,25 +110,19 @@ template <class S, S (*op)(S, S), S (*e)()> struct segtree {
 				} while ((r & -r) != r);
 				return 0;
 		}
-
 	private:
 		int _n, size, log;
 		std::vector<S> d;
-
 		void update(int k) { d[k] = op(d[2 * k], d[2 * k + 1]); }
 };
-
 }  // namespace atcoder
-
 #endif  // ATCODER_SEGTREE_HPP
-
 // struct S { // segment
 // };
 // S op(S l, S r) { // update operation for two segments
 // }
 // S e() { return S(); } // the identity segment
 // using Segtree = atcoder::segtree<S, op, e>;
-
 // Build in O(N*log(N)). Query in O(1). Sources: kactl, Neal Wu.
 template<typename T>
 struct HLD_RMQ {
@@ -171,7 +147,6 @@ struct HLD_RMQ {
 	}
 	T get_val(int a, int b) { return vals[get_index(a, b)]; }
 }; //HLD_RMQ 
-
 // Build in O(N*log(N)). Query in O(1).
 struct HLD_LCA {
 	vector<int> first_euler, euler;
@@ -195,7 +170,6 @@ struct HLD_LCA {
 		return euler[rmq.get_index(min(first_euler[u], first_euler[v]), max(first_euler[u], first_euler[v]) + 1)]; 
 	}
 }; //HLD_LCA 
-
 template<bool VALS_EDGES, typename S, S (*op)(S, S), S (*e)()>
 struct HeavyLightDecomposition {
 	vector<int> par, heavy, head, pos;
@@ -219,7 +193,7 @@ struct HeavyLightDecomposition {
 			assert(idx == (int)tr.size());
 			vector<S> ordered_vals(vals.size());
 			for (int i = 0; i < (int)vals.size(); i++) ordered_vals[pos[i]] = vals[i];
-			st = atcoder::lazy_segtree<S, op, e>(ordered_vals);
+			st = atcoder::segtree<S, op, e>(ordered_vals);
 		}
 	int assign_heavy(int u, const vector<vector<int>>& tr) {
 		int size = 1, max_x_size = 0;
@@ -252,12 +226,10 @@ struct HeavyLightDecomposition {
 		return op(get_vertical(u, top, VALS_EDGES), get_vertical(v, top, 1));
 	}
 }; // HeavyLightDecomposition
-
 struct S_HLD { // segment
 };
 S_HLD op_hld(S_HLD l, S_HLD r) { // the combine operation for two segments
 }
-S_HLD e_hld() { return S_HLD(); } // the identity segment
+S_HLD e_hld() { return 0; } // the identity segment
 template<bool VALS_EDGES> using HLD = 
 	HeavyLightDecomposition<VALS_EDGES, S_HLD, op_hld, e_hld>;
-	
