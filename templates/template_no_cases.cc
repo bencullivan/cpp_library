@@ -4,8 +4,6 @@
 #define dba(...) 0
 #endif
 // https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0200r0.html
-namespace std {
-
 template<class Fun>
 class y_combinator_result {
     Fun fun_;
@@ -18,13 +16,10 @@ public:
         return fun_(std::ref(*this), std::forward<Args>(args)...);
     }
 };
-
 template<class Fun>
 decltype(auto) y_combinator(Fun &&fun) {
     return y_combinator_result<std::decay_t<Fun>>(std::forward<Fun>(fun));
 }
-
-} // namespace std
 #define yc y_combinator
 using namespace std;
 using ll = long long;
