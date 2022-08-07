@@ -56,7 +56,7 @@ signed main() {
 	ios_base::sync_with_stdio(0),cin.tie(0);
 	int T;
 	cin >> T;
-	for (int i = 1; i <= T; i++) {
+	for rep1(i, T) {
 		cout << "Case #" << i << ": ";
 		solve(i);
 	}

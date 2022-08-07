@@ -57,7 +57,7 @@ signed main() {
 	cin.tie(0);
 	int T;
 	cin >> T;
-	while (T--) {
+	rep(i, T) {
 		solve();
 	}
 	return 0;
