@@ -1,4 +1,4 @@
-export cpp_library_cc_flags="-O2 -Wall -D NOT_ONLINE_JUDGE=1 -D LOCAL=1 -D BCDBG=1 -include $cpp_library_path/templates/dbg.h -I$ac_library_path"
+export cpp_library_cc_flags="-O2 -Wall -D NOT_ONLINE_JUDGE=1 -D LOCAL=1 -D BCDBG=1 -include $cpp_library_path/debug/dbg.h -I$ac_library_path"
 function com_version() {
 	g++-11 -std=gnu++$2 $cpp_library_cc_flags $1".cc"
 }
