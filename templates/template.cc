@@ -6,18 +6,18 @@
 // https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0200r0.html
 template<class Fun>
 class y_combinator_result {
-	Fun fun_;
+    Fun fun_;
 public:
-	template<class T>
-	explicit y_combinator_result(T &&fun): fun_(std::forward<T>(fun)) {}
-	template<class ...Args>
-	decltype(auto) operator()(Args &&...args) {
-		return fun_(std::ref(*this), std::forward<Args>(args)...);
-	}
+    template<class T>
+    explicit y_combinator_result(T &&fun): fun_(std::forward<T>(fun)) {}
+    template<class ...Args>
+    decltype(auto) operator()(Args &&...args) {
+        return fun_(std::ref(*this), std::forward<Args>(args)...);
+    }
 };
 template<class Fun>
 decltype(auto) y_combinator(Fun &&fun) {
-	return y_combinator_result<std::decay_t<Fun>>(std::forward<Fun>(fun));
+    return y_combinator_result<std::decay_t<Fun>>(std::forward<Fun>(fun));
 }
 #define yc y_combinator
 using namespace std;
@@ -51,12 +51,12 @@ template<typename T> using minpq = priority_queue<T, vector<T>, greater<T>>;
 void solve() {
 }
 signed main() {
-	ios_base::sync_with_stdio(0);
-	cin.tie(0);
-	int T;
-	cin >> T;
-	rep(i, T) {
-		solve();
-	}
-	return 0;
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+    int T;
+    cin >> T;
+    rep(i, T) {
+        solve();
+    }
+    return 0;
 }
