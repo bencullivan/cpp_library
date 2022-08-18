@@ -1,20 +1,18 @@
 /**
-* Circular Doubly Linked List with a Sentinel
-* Time:
-*      - insert: O(1)
-*      - erase: O(1)
-*      - find: O(N)
-* source: me
-*/
-template<typename T>
-struct LNode {
+ * Circular Doubly Linked List with a Sentinel
+ * Time:
+ *      - insert: O(1)
+ *      - erase: O(1)
+ *      - find: O(N)
+ * source: me
+ */
+template <typename T> struct LNode {
     T data;
     LNode *prev, *next;
     LNode() : prev(nullptr), next(nullptr) {}
     LNode(T _data) : data(_data), prev(nullptr), next(nullptr) {}
 };
-template<typename T>
-struct DLL {
+template <typename T> struct DLL {
     LNode<T> *sentinel;
     int len = 0;
     DLL() {
@@ -36,7 +34,7 @@ struct DLL {
         before->prev = new_node;
         len++;
     }
-    void insert_before(LNode<T> *before, const T& data) {
+    void insert_before(LNode<T> *before, const T &data) {
         insert_before(before, new LNode<T>(data));
     }
     // inserts the new node after the specified node
@@ -47,7 +45,7 @@ struct DLL {
         after->next = new_node;
         len++;
     }
-    void insert_after(LNode<T> *after, const T& data) {
+    void insert_after(LNode<T> *after, const T &data) {
         insert_after(after, new LNode<T>(data));
     }
     // removes the node from the list
@@ -60,8 +58,8 @@ struct DLL {
     }
     // returns a pointer to a node containing the specified value
     // or nullptr if the specified value is not in the list
-    LNode<T>* find(const T& val) {
-        LNode<T>* cur = sentinel->next;
+    LNode<T> *find(const T &val) {
+        LNode<T> *cur = sentinel->next;
         while (cur != sentinel) {
             if (cur->data == val) {
                 return cur;
@@ -70,7 +68,5 @@ struct DLL {
         }
         return nullptr;
     }
-    int size() {
-        return len;
-    }
+    int size() { return len; }
 }; // DLL

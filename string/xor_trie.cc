@@ -2,11 +2,13 @@ struct xor_trie {
     std::vector<std::array<int, 2>> tr, ct;
     int lg;
     xor_trie() : xor_trie(30) {}
-    xor_trie(int _lg) : tr(1, std::array<int, 2>{0, 0}), ct(1, std::array<int, 2>{0, 0}), lg(_lg-1) {}
+    xor_trie(int _lg)
+        : tr(1, std::array<int, 2>{0, 0}), ct(1, std::array<int, 2>{0, 0}),
+          lg(_lg - 1) {}
     void insert(long long x) {
         int j = 0;
         for (int i = lg; i >= 0; i--) {
-            int b = x>>i&1;
+            int b = x >> i & 1;
             if (tr[j][b] == 0) {
                 tr[j][b] = tr.size();
                 tr.push_back({0, 0});
@@ -19,7 +21,7 @@ struct xor_trie {
     void erase(long long x) {
         int j = 0;
         for (int i = lg; i >= 0; i--) {
-            int b = x>>i&1;
+            int b = x >> i & 1;
             int nj = tr[j][b];
             if (--ct[j][b] == 0) {
                 tr[j][b] = 0;
@@ -32,10 +34,10 @@ struct xor_trie {
         int j = 0;
         long long mx = 0;
         for (int i = lg; i >= 0; i--) {
-            int b = x>>i&1;
-            if (tr[j][b^1]) {
-                mx |= 1LL<<i;
-                j = tr[j][b^1];
+            int b = x >> i & 1;
+            if (tr[j][b ^ 1]) {
+                mx |= 1LL << i;
+                j = tr[j][b ^ 1];
             } else {
                 j = tr[j][b];
             }
@@ -47,12 +49,12 @@ struct xor_trie {
         int j = 0;
         long long mn = 0;
         for (int i = lg; i >= 0; i--) {
-            int b = x>>i&1;
+            int b = x >> i & 1;
             if (tr[j][b]) {
                 j = tr[j][b];
             } else {
-                mn |= 1LL<<i;
-                j = tr[j][b^1];
+                mn |= 1LL << i;
+                j = tr[j][b ^ 1];
             }
         }
         return mn;
@@ -62,8 +64,9 @@ struct xor_trie {
         int j = 0;
         int c = 0;
         for (int i = lg; i >= 0 && (i == lg || j > 0); i--) {
-            int b = (low>>i&1)^(x>>i&1);
-            if (low>>i&1) c += ct[j][b^1];
+            int b = (low >> i & 1) ^ (x >> i & 1);
+            if (low >> i & 1)
+                c += ct[j][b ^ 1];
             j = tr[j][b];
         }
         return c;
@@ -73,8 +76,9 @@ struct xor_trie {
         int j = 0;
         int c = 0;
         for (int i = lg; i >= 0 && (i == lg || j > 0); i--) {
-            int b = (high>>i&1)^(x>>i&1);
-            if ((high>>i&1) == 0) c += ct[j][b^1];
+            int b = (high >> i & 1) ^ (x >> i & 1);
+            if ((high >> i & 1) == 0)
+                c += ct[j][b ^ 1];
             j = tr[j][b];
         }
         return c;
