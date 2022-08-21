@@ -11,6 +11,8 @@ void mat_mult(std::vector<std::vector<T>> &mat1,
     int common = mat2.size();
     for (int i = 0; i < res_rows; i++)
         std::fill(store[i].begin(), store[i].end(), 0); // ensure 0 is default
+    
+    // cache efficient
     for (int i = 0; i < res_rows; i++) {
         for (int k = 0; k < common; k++) {
             T r = mat1[i][k];
@@ -19,9 +21,11 @@ void mat_mult(std::vector<std::vector<T>> &mat1,
             }
         }
     }
-    // for (int i = 0; i < res_rows; i++) for (int j = 0; j < res_cols; j++) for
-    // (int k = 0; k < common; k++)
-    //     store[i][j] += mat1[i][k] * mat2[k][j];
+
+    // logical, but cache inefficient
+    /*for (int i = 0; i < res_rows; i++) for (int j = 0; j < res_cols; j++) for
+    (int k = 0; k < common; k++)
+        store[i][j] += mat1[i][k] * mat2[k][j];*/
 }
 /*
     Raises an NxN matrix to the b power.

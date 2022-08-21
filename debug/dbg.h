@@ -1,7 +1,7 @@
 #ifndef LOCAL_DBG
 #define LOCAL_DBG 1
 
-#include "./colors.h"
+#include "colors.h"
 #include <iostream>
 #include <string>
 #include <type_traits>

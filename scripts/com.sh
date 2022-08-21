@@ -3,6 +3,10 @@ function com_version() {
     g++-11 -std=gnu++$2 $cpp_library_cc_flags $1".cc"
 }
 function com() {
+    com_version $1 20
+    ./a.out
+}
+function com17() {
     com_version $1 17
     ./a.out
 }
