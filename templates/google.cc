@@ -17,12 +17,10 @@ using vpi = vector<pii>;
 using vpl = vector<pll>;
 using vs = vector<string>;
 template <typename T> using minpq = priority_queue<T, vector<T>, greater<T>>;
-template <typename T, typename U> bool ckmin(T &t, const U &u) {
-    return u < t ? t = u, true : false;
-}
-template <typename T, typename U> bool ckmax(T &t, const U &u) {
-    return u > t ? t = u, true : false;
-}
+template <typename T, typename U> bool ckmin(T &t, const U &u) { return u < t ? t = u, true : false; }
+template <typename T, typename U> bool ckmax(T &t, const U &u) { return u > t ? t = u, true : false; }
+int ni() { int i; cin >> i; return i; }
+ll nl() { ll l; cin >> l; return l; }
 #define each(i, a) for (auto &i : a)
 #define rep(i, n) for (int i = 0; i < (n); i++)
 #define rep1(i, n) for (int i = 1; i <= (n); i++)
