@@ -1,5 +1,31 @@
 // https://github.com/ecnerwala/cp-book/blob/master/src/modnum.hpp
 
+template <typename T> T mod_inv_in_range(T a, T m) {
+	// assert(0 <= a && a < m);
+	T x = a, y = m;
+	T vx = 1, vy = 0;
+	while (x) {
+		T k = y / x;
+		y %= x;
+		vy -= k * vx;
+		std::swap(x, y);
+		std::swap(vx, vy);
+	}
+	assert(y == 1);
+	return vy < 0 ? m + vy : vy;
+}
+
+template <typename T> T mod_inv(T a, T m) {
+	a %= m;
+	a = a < 0 ? a + m : a;
+	return mod_inv_in_range(a, m);
+}
+
+template <typename T> T pow(T a, long long b) {
+	assert(b >= 0);
+	T r = 1; while (b) { if (b & 1) r *= a; b >>= 1; a *= a; } return r;
+}
+
 template <typename tag> struct dynamic_modnum {
 private:
 #if __cpp_inline_variables >= 201606
@@ -126,4 +152,4 @@ public:
 	friend dynamic_modnum operator / (const dynamic_modnum& a, const dynamic_modnum& b) { return dynamic_modnum(a) /= b; }
 };
 
-using mint = dynamic_modnum<-1>;
+using mint = dynamic_modnum<int>;

@@ -2,6 +2,7 @@
 #define LOCAL_DBG 1
 
 #include <cassert>
+#include <cstddef>
 #include <iostream>
 #include <string>
 #include <type_traits>
@@ -36,25 +37,27 @@ template <typename T, typename... U> void print_vars(T t, U... u) {
     std::cerr << t << (sizeof...(u) ? ", " : ""), print_vars(u...);
 }
 
-inline void fill_dimensions(std::vector<int> &dimensions) {}
+inline void fill_dimensions(std::vector<std::size_t> &dimensions) {}
 
 template <typename T, typename... U>
-void fill_dimensions(std::vector<int> &dimensions, T t, U... u) {
+void fill_dimensions(std::vector<std::size_t> &dimensions, T t, U... u) {
     assert(0 <= t);
     dimensions.push_back(t);
     fill_dimensions(dimensions, u...);
 }
 
 template <typename T>
-void print_array(T x, int d, const std::vector<int> &dimensions) {
+void print_array(T x, std::size_t d,
+                 const std::vector<std::size_t> &dimensions) {
     std::cerr << x;
 }
 
 template <typename T>
-void print_array(T *a, int d, const std::vector<int> &dimensions) {
+void print_array(T *a, std::size_t d,
+                 const std::vector<std::size_t> &dimensions) {
     std::cerr << "\n{";
     std::string sep = "";
-    for (int i = 0; i < dimensions[d]; i++) {
+    for (std::size_t i = 0; i < dimensions[d]; i++) {
         std::cerr << sep;
         sep = ", ";
         print_array(a[i], d + 1, dimensions);
@@ -66,13 +69,13 @@ void print_array(T *a, int d, const std::vector<int> &dimensions) {
 }
 
 template <typename T>
-void print_array(const std::vector<T> &a, int d,
-                 const std::vector<int> &dimensions) {
+void print_array(const std::vector<T> &a, std::size_t d,
+                 const std::vector<std::size_t> &dimensions) {
     std::cerr << "\n{";
     std::string sep = "";
-    for (int i = 0; i < dimensions[d]; i++) {
+    for (std::size_t i = 0; i < dimensions[d]; i++) {
         std::cerr << sep, sep = ", ";
-        if (d == int(dimensions.size()) - 1) {
+        if (d + 1 == dimensions.size()) {
             std::cerr << a[i];
         } else {
             print_array(a[i], d + 1, dimensions);
@@ -97,7 +100,7 @@ void print_array(const std::vector<T> &a, int d,
 #define dba(a, ...)                                                            \
     do {                                                                       \
         std::cerr << MAGENTA << __LINE__ << " [" << #a << "]: " << GREEN;      \
-        std::vector<int> dimensions;                                           \
+        std::vector<std::size_t> dimensions;                                   \
         debug::fill_dimensions(dimensions, __VA_ARGS__);                       \
         debug::print_array(a, 0, dimensions);                                  \
         std::cerr << RESET << std::flush;                                      \
