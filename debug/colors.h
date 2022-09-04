@@ -1,5 +1,5 @@
+// source: https://stackoverflow.com/questions/9158150/colored-output-in-c/9158263
 // the following are UBUNTU/LINUX and MacOS terminal color codes
-// Source: https://stackoverflow.com/questions/9158150/colored-output-in-c/9158263
 #define RESET   "\033[0m"
 #define BLACK   "\033[30m"
 #define RED     "\033[31m"

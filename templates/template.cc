@@ -1,5 +1,7 @@
 #include <bits/stdc++.h>
-#ifndef NOT_ONLINE_JUDGE
+#ifdef NOT_ONLINE_JUDGE
+#include <debug.h>
+#else
 #define dbg(...) 0
 #define dba(...) 0
 #endif
@@ -19,6 +21,7 @@ using vs = vector<string>;
 template <typename T> using minpq = priority_queue<T, vector<T>, greater<T>>;
 template <typename T, typename U> bool ckmin(T &t, const U &u) { return u < t ? t = u, true : false; }
 template <typename T, typename U> bool ckmax(T &t, const U &u) { return u > t ? t = u, true : false; }
+template <typename T> istream& operator>>(istream& is, vector<T>& v) { for (T& i : v) is >> i; return is; }
 int ni() { int i; cin >> i; return i; }
 ll nl() { ll l; cin >> l; return l; }
 #define each(i, a) for (auto &i : a)
@@ -28,8 +31,6 @@ ll nl() { ll l; cin >> l; return l; }
 #define mp make_pair
 #define pb push_back
 #define mb emplace_back
-#define lb lower_bound
-#define ub upper_bound
 #define fi first
 #define se second
 #define all(v) v.begin(), v.end()
