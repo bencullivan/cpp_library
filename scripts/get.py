@@ -26,10 +26,10 @@ for targ in targs:
 
 with open(os.path.join(folder_path, sys.argv[4] + '.cc'), 'w') as destination_file:
     for line in buf:
+        destination_file.write(line)
         if line.find(target_line) != -1:
-            line += '\n'
+            destination_file.write('\n')
             with open(data_structure_path, 'r') as source_file:
                 for source_line in source_file:
-                    line += source_line
-            line += '\n'
-        destination_file.write(line)
+                    destination_file.write(source_line)
+            destination_file.write('\n')
