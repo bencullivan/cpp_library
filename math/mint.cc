@@ -102,3 +102,25 @@ template <typename T> T pow(T a, long long b) {
 
 using mint = modnum<1000000007>;
 // using mint = modnum<998244353>;
+
+std::vector<mint> facts, ifacts;
+
+// all factorials up to and including n, mod m
+void gen_facts(int n) {
+    facts.resize(n + 1);
+    facts[0] = 1;
+    for (int i = 1; i <= n; i++) facts[i] = facts[i - 1] * i;
+    ifacts.resize(n + 1);
+    ifacts[n] = facts[n].inv();
+    for (int i = n; i > 0; i--) ifacts[i - 1] = ifacts[i] * i;
+}
+
+// n permute k
+mint perm(int n, int k) {
+    //if (n >= (int)facts.size()) throw runtime_error("call gen_facts before calling perm");
+    //assert(n >= k);
+    return facts[n] * ifacts[n - k];
+}
+
+// n choose k
+mint choose(int n, int k) { return perm(n, k) * ifacts[k]; }
