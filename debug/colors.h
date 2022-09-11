@@ -7,8 +7,21 @@
 #define GREEN 10
 #define MAGENTA 13
 #define WHITE 15
-HANDLE _debug_color_hErr;
-#define set_color(color_code) _debug_color_hErr = GetStdHandle(STD_ERROR_HANDLE), SetConsoleTextAttribute(_debug_color_hErr, color_code)
+namespace DebugColors
+{
+    bool _debug_color_handle_set = false;
+    HANDLE _debug_color_hErr;
+}
+#define set_color(color_code)                                                \
+    do                                                                       \
+    {                                                                        \
+        if (!DebugColors::_debug_color_handle_set)                           \
+        {                                                                    \
+            DebugColors::_debug_color_hErr = GetStdHandle(STD_ERROR_HANDLE); \
+            DebugColors::_debug_color_handle_set = true;                     \
+        }                                                                    \
+        SetConsoleTextAttribute(DebugColors::_debug_color_hErr, color_code); \
+    } while (0)
 #define reset_color set_color(WHITE)
 
 #else
