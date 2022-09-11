@@ -5,7 +5,7 @@ struct xor_trie {
     xor_trie(int _lg)
         : tr(1, std::array<int, 2>{0, 0}), ct(1, std::array<int, 2>{0, 0}),
           lg(_lg - 1) {}
-    void insert(long long x) {
+    void insert(int64_t x) {
         int j = 0;
         for (int i = lg; i >= 0; i--) {
             int b = x >> i & 1;
@@ -18,7 +18,7 @@ struct xor_trie {
             j = tr[j][b];
         }
     }
-    void erase(long long x) {
+    void erase(int64_t x) {
         int j = 0;
         for (int i = lg; i >= 0; i--) {
             int b = x >> i & 1;
@@ -30,9 +30,9 @@ struct xor_trie {
         }
     }
     // returns the max xor of x with any of the numbers in the trie
-    long long get_max(long long x) {
+    int64_t get_max(int64_t x) {
         int j = 0;
-        long long mx = 0;
+        int64_t mx = 0;
         for (int i = lg; i >= 0; i--) {
             int b = x >> i & 1;
             if (tr[j][b ^ 1]) {
@@ -45,9 +45,9 @@ struct xor_trie {
         return mx;
     }
     // returns the min xor of x with any of the numbers in the trie
-    long long get_min(long long x) {
+    int64_t get_min(int64_t x) {
         int j = 0;
-        long long mn = 0;
+        int64_t mn = 0;
         for (int i = lg; i >= 0; i--) {
             int b = x >> i & 1;
             if (tr[j][b]) {
@@ -60,7 +60,7 @@ struct xor_trie {
         return mn;
     }
     // returns the number of y in the trie such that x^y < low
-    long long count_less(long long x, long long low) {
+    int64_t count_less(int64_t x, int64_t low) {
         int j = 0;
         int c = 0;
         for (int i = lg; i >= 0 && (i == lg || j > 0); i--) {
@@ -72,7 +72,7 @@ struct xor_trie {
         return c;
     }
     // returns the number of y in the trie such that x^y > high
-    long long count_greater(long long x, long long high) {
+    int64_t count_greater(int64_t x, int64_t high) {
         int j = 0;
         int c = 0;
         for (int i = lg; i >= 0 && (i == lg || j > 0); i--) {
