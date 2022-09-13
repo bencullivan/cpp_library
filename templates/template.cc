@@ -1,4 +1,8 @@
 #include <bits/stdc++.h>
+#ifndef LOCAL
+#define dbg(...) 0
+#define dba(...) 0
+#endif
 using namespace std;
 
 void solve_one() {

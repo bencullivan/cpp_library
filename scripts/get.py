@@ -33,3 +33,4 @@ with open(os.path.join(folder_path, sys.argv[4] + '.cc'), 'w') as destination_fi
                 for source_line in source_file:
                     destination_file.write(source_line)
             destination_file.write('\n')
+
