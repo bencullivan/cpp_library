@@ -1,9 +1,7 @@
 #include <bits/stdc++.h>
-#ifndef LOCAL
-#define dbg(...) 0
-#define dba(...) 0
-#endif
+#define sz(v) int64_t(v.size())
 using namespace std;
+using ll=long long;
 
 void solve_one() {
 }

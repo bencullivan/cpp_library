@@ -1,12 +1,12 @@
 export cpp_library_cc_flags="-O2 -Wall -D LOCAL=1 -D BCDBG=1 -I$cpp_library_path/debug -I$ac_library_path -include $cpp_library_path/debug/debug.h"
 function com_version() {
-    g++-11 -std=gnu++$2 $cpp_library_cc_flags $1".cc"
+    g++ -std=gnu++$2 $cpp_library_cc_flags $1".cc"
 }
+#function com() {
+    #com_version $1 20
+    #./a.out
+#}
 function com() {
-    com_version $1 20
-    ./a.out
-}
-function com17() {
     com_version $1 17
     ./a.out
 }

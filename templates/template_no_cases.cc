@@ -1,10 +1,7 @@
 #include <bits/stdc++.h>
-#ifndef LOCAL
-#define dbg(...) 0
-#define dba(...) 0
-#endif
 using namespace std;
+using ll=long long;
 
-int main() {
-    ios_base::sync_with_stdio(0), cin.tie(0);
+signed main() {
+  ios_base::sync_with_stdio(0), cin.tie(0);
 }
