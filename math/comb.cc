@@ -99,3 +99,18 @@ template <typename T> T pow(T a, long long b) {
 	assert(b >= 0);
 	T r = 1; while (b) { if (b & 1) r *= a; b >>= 1; a *= a; } return r;
 }
+
+using mint = modnum<1000000007>;
+// using mint = modnum<998244353>;
+
+const int MXF = 1;
+mint facts[MXF+1], ifacts[MXF+1];
+void gen_facts() {
+  facts[0] = 1;
+  for (int i = 1; i <= MXF; i++) facts[i] = facts[i-1]*i;
+  ifacts[MXF] = facts[MXF].inv();
+  for (int i = MXF; i > 0; i--) ifacts[i-1] = ifacts[i]*i;
+}
+mint choose(int n, int k) {
+  return facts[n]*ifacts[n-k]*ifacts[k];
+}
