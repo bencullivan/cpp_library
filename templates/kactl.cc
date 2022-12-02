@@ -1,3 +1,5 @@
+#ifndef KACTL
+#define KACTL 1
 using vi = vector<int>;
 using pii = pair<int,int>;
 #ifndef rep
@@ -9,3 +11,4 @@ using pii = pair<int,int>;
 #ifndef sz
 #define sz(x) (int)(x).size()
 #endif
+#endif // KACTL
