@@ -18,6 +18,7 @@ std::ostream &operator<<(std::ostream &os, const std::pair<T, U> &p) {
   return os << "(" << p.first << ", " << p.second << ")";
 }
 
+// this container overload and the pair overload above it were taken from neal wu's codeforces submissions
 template <typename T, typename U = typename std::enable_if<
                           !std::is_same<T, std::string>::value,
                           typename T::value_type>::type>
