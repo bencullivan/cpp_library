@@ -4,11 +4,11 @@
     Time: O(log(n))
 */
 long long legendre(long long n, long long p) {
-    long long dsum = 0;
-    long long m = n;
-    while (m > 0) {
-        dsum += m%p;
-        m /= p;
-    }
-    return (n-dsum)/(p-1);
+  long long dsum = 0;
+  long long m = n;
+  while (m > 0) {
+    dsum += m % p;
+    m /= p;
+  }
+  return (n - dsum) / (p - 1);
 }

@@ -106,9 +106,9 @@ void print_array(const std::vector<T> &a, std::size_t d,
     set_color(MAGENTA);                                                        \
     std::cerr << __LINE__ << " [" << #a << "]: ";                              \
     set_color(GREEN);                                                          \
-    std::vector<std::size_t> _dms;                                       \
-    debug::fill_dimensions(_dms, __VA_ARGS__);                           \
-    debug::print_array(a, 0, _dms);                                      \
+    std::vector<std::size_t> _dms;                                             \
+    debug::fill_dimensions(_dms, __VA_ARGS__);                                 \
+    debug::print_array(a, 0, _dms);                                            \
     reset_color;                                                               \
     std::cerr << std::flush;                                                   \
   } while (0)

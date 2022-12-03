@@ -18,7 +18,7 @@ std::ostream& operator<<(std::ostream& os, i128 i) {
         i /= 10;
     }
     while (r > 0) {
-        os << int(r % 10);
+        os << static_cast<signed>(r % 10);
         r /= 10;
     }
     return os;
