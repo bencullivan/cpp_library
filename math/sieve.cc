@@ -1,6 +1,7 @@
 std::vector<int> primes;
 std::vector<int> spf;
-// https://cp-algorithms.com/algebra/sieve-of-eratosthenes.html
+
+// source: https://cp-algorithms.com/algebra/sieve-of-eratosthenes.html
 void sieve(long long N) {
   assert(spf.empty());
   primes.reserve(N);
@@ -17,6 +18,7 @@ void sieve(long long N) {
     }
   }
 }
+
 std::vector<std::pair<int, int>> get_pfs(int x) {
   int cur = spf[x];
   int ct = 0;

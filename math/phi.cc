@@ -8,17 +8,19 @@
  * Time: O(sqrt(N))
  * Source: https://cp-algorithms.com/algebra/phi-function.html
  */
-ll phi(ll a) {
-  ll r = a;
-  for (ll i = 2; i * i <= a; i++) {
+long long phi(long long a) {
+  long long r = a;
+  for (long long i = 2; i * i <= a; i++) {
     if (a % i == 0) {
-      while (a % i == 0)
+      while (a % i == 0) {
         a /= i;
+      }
       r -= r / i;
     }
   }
-  if (a > 1)
+  if (a > 1) {
     r -= r / a;
+  }
   return r;
 }
 /**
@@ -26,13 +28,14 @@ ll phi(ll a) {
  * Time: O(n*log(log(n)))
  * Source: https://cp-algorithms.com/algebra/phi-function.html
  */
-vector<ll> all_phi(ll n) {
-  vector<ll> ph(n + 1);
-  for (ll i = 0; i <= n; i++)
+vector<int> all_phi(int n) {
+  vector<int> ph(n + 1);
+  for (int i = 0; i <= n; i++) {
     ph[i] = i;
-  for (ll i = 2; i <= n; i++) {
+  }
+  for (int i = 2; i <= n; i++) {
     if (ph[i] == i) {
-      for (ll j = i; j <= n; j += i) {
+      for (int j = i; j <= n; j += i) {
         ph[j] -= ph[j] / i;
       }
     }

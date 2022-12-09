@@ -1,5 +1,4 @@
 // source: https://github.com/ecnerwala/cp-book/blob/master/src/modnum.hpp
-
 template <typename T> T mod_inv_in_range(T a, T m) {
 	// assert(0 <= a && a < m);
 	T x = a, y = m;
@@ -115,6 +114,6 @@ void gen_facts(int MXF) {
 }
 
 mint C(int n, int k) {
-  assert(n >= 0 && k >= 0 && k <= n);
+  //assert(n >= 0 && k >= 0 && k <= n);
   return facts[n] * ifacts[n - k] * ifacts[k];
 }

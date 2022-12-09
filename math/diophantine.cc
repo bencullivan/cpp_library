@@ -23,19 +23,6 @@ long long extended_euclidean(long long a, long long b, long long &x,
   return a;
 }
 /**
- * Modular inverse of a, mod m
- * If m is prime, this is equivalent to mpow(a,m-2)
- * Only exists if a and m are coprime
- * Time: O(log(min(a,m)))
- */
-long long minv(long long a, long long m, bool prime = true) {
-  if (prime)
-    return mpow(a, m - 2);
-  long long x, y;
-  extended_euclidean(a, m, x, y);
-  return (x % m + m) % m;
-}
-/**
  * Solves the linear diophantine equation ax + by = c
  * Also can be used to solve the linear congruence relation
  * ax % m = b % m, rewritten as ax+my = b
