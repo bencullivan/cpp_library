@@ -102,18 +102,27 @@ template <typename T> T pow(T a, long long b) {
 using mint = modnum<1000000007>;
 // using mint = modnum<998244353>;
  
-vector<mint> facts, ifacts;
+std::vector<mint> facts, ifacts;
 
-void gen_facts(int MXF) {
-  facts.resize(MXF + 1);
-  ifacts.resize(MXF + 1);
-  facts[0] = 1;
-  for (int i = 1; i <= MXF; i++) facts[i] = facts[i - 1] * i;
-  ifacts[MXF] = facts[MXF].inv();
-  for (int i = MXF; i > 0; i--) ifacts[i - 1] = ifacts[i] * i;
+void gen_facts(int n) {
+	assert(n >= 0);
+	if (n < (int)facts.size())
+		return;
+	int cur_max = facts.size();
+	cur_max--;
+	facts.resize(n + 1);
+	ifacts.resize(n + 1);
+	if (cur_max == -1)
+		facts[0] = 1;
+	for (int i = max(cur_max + 1, 1); i <= n; i++)
+		facts[i] = facts[i - 1] * i;
+	ifacts[n] = facts[n].inv();
+	for (int i = n; i - 1 > cur_max; i--)
+		ifacts[i - 1] = ifacts[i] * i;
 }
 
 mint C(int n, int k) {
-  //assert(n >= 0 && k >= 0 && k <= n);
-  return facts[n] * ifacts[n - k] * ifacts[k];
+	assert(k >= 0 && k <= n);
+	gen_facts(n);
+	return facts[n] * ifacts[n - k] * ifacts[k];
 }

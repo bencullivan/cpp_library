@@ -1,7 +1,5 @@
 #include <bits/stdc++.h>
-#ifdef NOT_ONLINE_JUDGE
-#include <debug.h>
-#else
+#ifndef LOCAL
 #define dbg(...) 0
 #define dba(...) 0
 #endif
@@ -39,7 +37,7 @@ ll nl() { ll l; cin >> l; return l; }
 void solve() {
 }
 signed main() {
-    ios_base::sync_with_stdio(0);
-    cin.tie(0);
-    solve();
+	ios_base::sync_with_stdio(0);
+	cin.tie(0);
+	solve();
 }
