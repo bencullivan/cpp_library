@@ -26,6 +26,7 @@ template <typename T, bool use_min = true> struct RMQ {
 }; // RMQ
 
 // Build in O(N*log(N)). Query in O(1).
+// based on the implementation from cpalgorithms: https://cp-algorithms.com/graph/lca.html
 struct LCA {
   vector<int> first_euler, euler;
   vector<int> depth;

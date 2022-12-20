@@ -172,119 +172,120 @@ template <class S, S (*op)(S, S), S (*e)()> struct segtree {
 
 // Build in O(N*log(N)). Query in O(1). Sources: kactl, Neal Wu.
 template <typename T> struct HLD_RMQ {
-  vector<T> vals;
-  vector<vector<int>> table;
-  int select_index(int a, int b) { return vals[a] < vals[b] ? a : b; }
-  HLD_RMQ() {}
-  HLD_RMQ(const vector<T> &_vals) { build(_vals); }
-  void build(const vector<T> &_vals) {
-    vals = _vals;
-    table.resize(1, vector<int>(vals.size()));
-    for (int i = 0; i < (int)vals.size(); i++)
-      table[0][i] = i;
-    for (int pw = 1, k = 1; pw * 2 <= (int)vals.size(); pw *= 2, k++) {
-      table.emplace_back((int)vals.size() - pw * 2 + 1);
-      for (int j = 0; j < (int)table[k].size(); j++)
-        table[k][j] = select_index(table[k - 1][j], table[k - 1][j + pw]);
-    }
-  }
-  T get_index(int a, int b) { // gets the minimum of the range [a, b)
-    int dep = 31 - __builtin_clz(b - a);
-    return select_index(table[dep][a], table[dep][b - (1 << dep)]);
-  }
-  T get_val(int a, int b) { return vals[get_index(a, b)]; }
+	vector<T> vals;
+	vector<vector<int>> table;
+	int select_index(int a, int b) { return vals[a] < vals[b] ? a : b; }
+	HLD_RMQ() {}
+	HLD_RMQ(const vector<T> &_vals) { build(_vals); }
+	void build(const vector<T> &_vals) {
+		vals = _vals;
+		table.resize(1, vector<int>(vals.size()));
+		for (int i = 0; i < (int)vals.size(); i++)
+			table[0][i] = i;
+		for (int pw = 1, k = 1; pw * 2 <= (int)vals.size(); pw *= 2, k++) {
+			table.emplace_back((int)vals.size() - pw * 2 + 1);
+			for (int j = 0; j < (int)table[k].size(); j++)
+				table[k][j] = select_index(table[k - 1][j], table[k - 1][j + pw]);
+		}
+	}
+	T get_index(int a, int b) { // gets the minimum of the range [a, b)
+		int dep = 31 - __builtin_clz(b - a);
+		return select_index(table[dep][a], table[dep][b - (1 << dep)]);
+	}
+	T get_val(int a, int b) { return vals[get_index(a, b)]; }
 }; // HLD_RMQ
 
 // Build in O(N*log(N)). Query in O(1).
+// based on the implementation from cpalgorithms: https://cp-algorithms.com/graph/lca.html
 struct HLD_LCA {
-  vector<int> first_euler, euler;
-  vector<int> depth;
-  HLD_RMQ<int> rmq;
-  HLD_LCA() {}
-  HLD_LCA(int root, const vector<vector<int>> &tr) : first_euler(tr.size()) {
-    euler.reserve(2 * tr.size()), depth.reserve(2 * tr.size());
-    dfs(root, -1, 0, tr);
-    rmq.build(depth);
-  }
-  void dfs(int u, int v, int d, const vector<vector<int>> &tr) {
-    first_euler[u] = euler.size();
-    euler.push_back(u), depth.push_back(d);
-    for (int x : tr[u])
-      if (x != v) {
-        dfs(x, u, d + 1, tr);
-        euler.push_back(u), depth.push_back(d);
-      }
-  }
-  int get_lca(int u, int v) {
-    return euler[rmq.get_index(min(first_euler[u], first_euler[v]),
-                               max(first_euler[u], first_euler[v]) + 1)];
-  }
+	vector<int> first_euler, euler;
+	vector<int> depth;
+	HLD_RMQ<int> rmq;
+	HLD_LCA() {}
+	HLD_LCA(int root, const vector<vector<int>> &tr) : first_euler(tr.size()) {
+		euler.reserve(2 * tr.size()), depth.reserve(2 * tr.size());
+		dfs(root, -1, 0, tr);
+		rmq.build(depth);
+	}
+	void dfs(int u, int v, int d, const vector<vector<int>> &tr) {
+		first_euler[u] = euler.size();
+		euler.push_back(u), depth.push_back(d);
+		for (int x : tr[u])
+			if (x != v) {
+				dfs(x, u, d + 1, tr);
+				euler.push_back(u), depth.push_back(d);
+			}
+	}
+	int get_lca(int u, int v) {
+		return euler[rmq.get_index(min(first_euler[u], first_euler[v]),
+															max(first_euler[u], first_euler[v]) + 1)];
+	}
 }; // HLD_LCA
 
 template <bool VALS_EDGES, typename S, S (*op)(S, S), S (*e)()>
 struct HeavyLightDecomposition {
-  vector<int> par, heavy, head, pos;
-  atcoder::segtree<S, op, e> st;
-  HLD_LCA lca;
-  int root;
-  HeavyLightDecomposition(int _root, const vector<vector<int>> &tr)
-      : par(tr.size(), _root), heavy(tr.size(), -1), head(tr.size()),
-        pos(tr.size()), st(tr.size()), lca(_root, tr), root(_root) {
-    assign_heavy(root, tr);
-    int idx = 0;
-    decompose(root, root, idx, tr);
-    assert(idx == (int)tr.size());
-  }
-  HeavyLightDecomposition(int _root, const vector<vector<int>> &tr,
-                          const vector<S> &vals)
-      : par(tr.size(), _root), heavy(tr.size(), -1), head(tr.size()),
-        pos(tr.size()), lca(_root, tr), root(_root) {
-    assign_heavy(root, tr);
-    int idx = 0;
-    decompose(root, root, idx, tr);
-    assert(idx == (int)tr.size());
-    vector<S> ordered_vals(vals.size());
-    for (int i = 0; i < (int)vals.size(); i++)
-      ordered_vals[pos[i]] = vals[i];
-    st = atcoder::segtree<S, op, e>(ordered_vals);
-  }
-  int assign_heavy(int u, const vector<vector<int>> &tr) {
-    int size = 1, max_x_size = 0;
-    for (int x : tr[u])
-      if (x != par[u]) {
-        par[x] = u;
-        int x_size = assign_heavy(x, tr);
-        if (x_size > max_x_size)
-          max_x_size = x_size, heavy[u] = x;
-        size += x_size;
-      }
-    return size;
-  }
-  void decompose(int u, int h, int &idx, const vector<vector<int>> &tr) {
-    head[u] = h, pos[u] = idx++;
-    if (heavy[u] != -1)
-      decompose(heavy[u], h, idx, tr);
-    for (int x : tr[u])
-      if (x != par[u] && x != heavy[u])
-        decompose(x, x, idx, tr);
-  }
-  void upd(int u, const S &x) { st.set(pos[u], x); }
-  S get_vertical(int u, int ancestor, bool dont_get_ancestor) {
-    S res = e();
-    for (; head[u] != head[ancestor]; u = par[head[u]])
-      res = op(res, st.prod(pos[head[u]], pos[u] + 1));
-    return op(res, st.prod(pos[ancestor] + dont_get_ancestor, pos[u] + 1));
-  }
-  S get(int u, int v) {
-    if (u == v)
-      return st.prod(pos[u], pos[u] + 1);
-    int top = lca.get_lca(u, v);
-    if (u == top)
-      return get_vertical(v, top, VALS_EDGES);
-    if (v == top)
-      return get_vertical(u, top, VALS_EDGES);
-    return op(get_vertical(u, top, VALS_EDGES), get_vertical(v, top, 1));
-  }
+	vector<int> par, heavy, head, pos;
+	atcoder::segtree<S, op, e> st;
+	HLD_LCA lca;
+	int root;
+	HeavyLightDecomposition(int _root, const vector<vector<int>> &tr)
+			: par(tr.size(), _root), heavy(tr.size(), -1), head(tr.size()),
+				pos(tr.size()), st(tr.size()), lca(_root, tr), root(_root) {
+		assign_heavy(root, tr);
+		int idx = 0;
+		decompose(root, root, idx, tr);
+		assert(idx == (int)tr.size());
+	}
+	HeavyLightDecomposition(int _root, const vector<vector<int>> &tr,
+													const vector<S> &vals)
+			: par(tr.size(), _root), heavy(tr.size(), -1), head(tr.size()),
+				pos(tr.size()), lca(_root, tr), root(_root) {
+		assign_heavy(root, tr);
+		int idx = 0;
+		decompose(root, root, idx, tr);
+		assert(idx == (int)tr.size());
+		vector<S> ordered_vals(vals.size());
+		for (int i = 0; i < (int)vals.size(); i++)
+			ordered_vals[pos[i]] = vals[i];
+		st = atcoder::segtree<S, op, e>(ordered_vals);
+	}
+	int assign_heavy(int u, const vector<vector<int>> &tr) {
+		int size = 1, max_x_size = 0;
+		for (int x : tr[u])
+			if (x != par[u]) {
+				par[x] = u;
+				int x_size = assign_heavy(x, tr);
+				if (x_size > max_x_size)
+					max_x_size = x_size, heavy[u] = x;
+				size += x_size;
+			}
+		return size;
+	}
+	void decompose(int u, int h, int &idx, const vector<vector<int>> &tr) {
+		head[u] = h, pos[u] = idx++;
+		if (heavy[u] != -1)
+			decompose(heavy[u], h, idx, tr);
+		for (int x : tr[u])
+			if (x != par[u] && x != heavy[u])
+				decompose(x, x, idx, tr);
+	}
+	void upd(int u, const S &x) { st.set(pos[u], x); }
+	S get_vertical(int u, int ancestor, bool dont_get_ancestor) {
+		S res = e();
+		for (; head[u] != head[ancestor]; u = par[head[u]])
+			res = op(res, st.prod(pos[head[u]], pos[u] + 1));
+		return op(res, st.prod(pos[ancestor] + dont_get_ancestor, pos[u] + 1));
+	}
+	S get(int u, int v) {
+		if (u == v)
+			return st.prod(pos[u], pos[u] + 1);
+		int top = lca.get_lca(u, v);
+		if (u == top)
+			return get_vertical(v, top, VALS_EDGES);
+		if (v == top)
+			return get_vertical(u, top, VALS_EDGES);
+		return op(get_vertical(u, top, VALS_EDGES), get_vertical(v, top, 1));
+	}
 };             // HeavyLightDecomposition
 struct S_HLD { // segment
 };

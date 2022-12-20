@@ -122,7 +122,7 @@ void gen_facts(int n) {
 }
 
 mint C(int n, int k) {
-	assert(k >= 0 && k <= n);
+	if (n < 0 || k < 0 || k > n) return 0;
 	gen_facts(n);
 	return facts[n] * ifacts[n - k] * ifacts[k];
 }
