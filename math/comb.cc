@@ -106,19 +106,15 @@ std::vector<mint> facts, ifacts;
 
 void gen_facts(int n) {
 	assert(n >= 0);
-	if (n < (int)facts.size())
-		return;
+	if (n < (int)facts.size()) return;
 	int cur_max = facts.size();
 	cur_max--;
 	facts.resize(n + 1);
 	ifacts.resize(n + 1);
-	if (cur_max == -1)
-		facts[0] = 1;
-	for (int i = max(cur_max + 1, 1); i <= n; i++)
-		facts[i] = facts[i - 1] * i;
+	if (cur_max == -1) facts[0] = 1;
+	for (int i = max(cur_max + 1, 1); i <= n; i++) facts[i] = facts[i - 1] * i;
 	ifacts[n] = facts[n].inv();
-	for (int i = n; i - 1 > cur_max; i--)
-		ifacts[i - 1] = ifacts[i] * i;
+	for (int i = n; i - 1 > cur_max; i--) ifacts[i - 1] = ifacts[i] * i;
 }
 
 mint C(int n, int k) {
