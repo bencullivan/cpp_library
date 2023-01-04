@@ -1,5 +1,11 @@
 #include <bits/stdc++.h>
-using ll=long long;
+#define all(v) v.begin(), v.end()
+#define sz(v) int32_t(v.size())
+#define fi first
+#define se second
+using ll = long long;
+template <typename T> using vec = std::vector<T>;
+template <typename T> using mat = vec<vec<T>>;
 using namespace std;
 
 signed main() {

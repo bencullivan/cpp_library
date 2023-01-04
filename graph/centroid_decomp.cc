@@ -1,7 +1,6 @@
 int centroid_root = 0; // the root of the centroid tree
 
-int get_sizes(int u, int v, const std::vector<std::vector<int>> &tr,
-							std::vector<int> &sizes, std::vector<bool> &seen) {
+int get_sizes(int u, int v, const std::vector<std::vector<int>> &tr, std::vector<int> &sizes, std::vector<bool> &seen) {
 	sizes[u] = 1;
 	for (int x : tr[u])
 		if (x != v && !seen[x])
@@ -9,17 +8,14 @@ int get_sizes(int u, int v, const std::vector<std::vector<int>> &tr,
 	return sizes[u];
 }
 
-int get_centroid(int u, int v, int n, const std::vector<std::vector<int>> &tr,
-								std::vector<int> &sizes, std::vector<bool> &seen) {
+int get_centroid(int u, int v, int n, const std::vector<std::vector<int>> &tr, std::vector<int> &sizes, std::vector<bool> &seen) {
 	for (int x : tr[u])
 		if (x != v && !seen[x] && sizes[x] > n / 2)
 			return get_centroid(x, u, n, tr, sizes, seen);
 	return u;
 }
 
-int centroid_decomp(int u, int v, std::vector<int> &par,
-										const std::vector<std::vector<int>> &tr,
-										std::vector<int> &sizes, std::vector<bool> &seen) {
+int centroid_decomp(int u, int v, std::vector<int> &par, const std::vector<std::vector<int>> &tr, std::vector<int> &sizes, std::vector<bool> &seen) {
 	int n = get_sizes(u, -1, tr, sizes, seen);
 	int centroid = get_centroid(u, -1, n, tr, sizes, seen);
 	par[centroid] = v;

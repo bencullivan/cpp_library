@@ -13,7 +13,7 @@ with open(os.path.join(folder_path, sys.argv[4] + '.cc'), 'r') as destination_fi
     buf = destination_file.readlines()
 
 target_line = ''
-targs = ['#define sz(','using namespace std;']
+targs = ['using namespace std;']
 for targ in targs:
     has_line = False
     for line in buf:
